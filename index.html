@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntiSoya - Dashboard Comercial</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        soya: {
+                            dark: '#1F1209', // Color salsa de soya oscura
+                            light: '#3E2723',
+                            gold: '#D4AF37', // Dorado de la etiqueta
+                            sand: '#EEDC9A', // Fondo de la etiqueta
+                            red: '#8B1E1B'   // Rojo del sello/bandera
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Open Sans', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F8F9FA; color: #333; }
+        .nav-active { background-color: #D4AF37; color: #1F1209 !important; font-weight: 600; }
+        .nav-item { transition: all 0.3s ease; }
+        .nav-item:hover:not(.nav-active) { background-color: #3E2723; color: #EEDC9A; }
+        
+        /* Ocultar secciones dinámicamente */
+        .dashboard-section { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .dashboard-section.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Estilos FODA Cruzado */
+        .foda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .foda-card { 
+            background: white; border-left: 5px solid; border-radius: 0.5rem; 
+            padding: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .foda-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .foda-f { border-color: #10B981; } /* Verde */
+        .foda-o { border-color: #3B82F6; } /* Azul */
+        .foda-d { border-color: #F59E0B; } /* Naranja */
+        .foda-a { border-color: #EF4444; } /* Rojo */
+
+        .cruzado-btn {
+            background: #1F1209; color: #D4AF37; padding: 0.5rem 1rem; border-radius: 0.25rem;
+            text-align: center; cursor: pointer; font-weight: bold; transition: all 0.2s;
+        }
+        .cruzado-btn:hover { background: #8B1E1B; color: white; }
+
+        /* Modal FODA */
+        #foda-modal { display: none; }
+        #foda-modal.flex { display: flex; animation: fadeIn 0.2s ease-in-out; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #1F1209; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar Navegación -->
+    <aside class="w-64 bg-soya-dark text-gray-300 flex flex-col shadow-2xl z-20">
+        <div class="h-20 flex items-center justify-center border-b border-soya-light bg-black">
+            <h1 class="text-3xl font-heading font-bold text-white tracking-widest">
+                Inti<span class="text-soya-gold">Soya</span>
+            </h1>
+        </div>
+        
+        <nav class="flex-1 overflow-y-auto py-4 space-y-2 px-3">
+            <button onclick="switchTab('portada')" id="nav-portada" class="nav-item nav-active w-full flex items-center p-3 rounded-lg">
+                <i class="fa-solid fa-house w-6 text-center mr-3"></i>
+                <span class="font-heading">Inicio / Portada</span>
+            </button>
+            
+            <div class="pt-4 pb-2">
+                <p class="text-xs text-soya-gold font-bold uppercase tracking-wider px-3">Presentación por Integrante</p>
+            </div>
+
+            <button onclick="switchTab('marilin')" id="nav-marilin" class="nav-item w-full flex items-center p-3 rounded-lg">
+                <i class="fa-solid fa-chart-line w-6 text-center mr-3"></i>
+                <div class="text-left">
+                    <span class="font-heading block text-sm">Parte 1: Marilin M.</span>
+                    <span class="text-xs opacity-75">Contexto y Exportación</span>
+                </div>
+            </button>
+
+            <button onclick="switchTab('franchesca')" id="nav-franchesca" class="nav-item w-full flex items-center p-3 rounded-lg">
+                <i class="fa-solid fa-chess-knight w-6 text-center mr-3"></i>
+                <div class="text-left">
+                    <span class="font-heading block text-sm">Parte 2: Franchesca P.</span>
+                    <span class="text-xs opacity-75">Estrategia y Producto</span>
+                </div>
+            </button>
+
+            <button onclick="switchTab('isabella')" id="nav-isabella" class="nav-item w-full flex items-center p-3 rounded-lg">
+                <i class="fa-solid fa-industry w-6 text-center mr-3"></i>
+                <div class="text-left">
+                    <span class="font-heading block text-sm">Parte 3: Isabella M.</span>
+                    <span class="text-xs opacity-75">Oferta y Proveedores</span>
+                </div>
+            </button>
+
+            <button onclick="switchTab('victor')" id="nav-victor" class="nav-item w-full flex items-center p-3 rounded-lg">
+                <i class="fa-solid fa-globe w-6 text-center mr-3"></i>
+                <div class="text-left">
+                    <span class="font-heading block text-sm">Parte 4: Víctor C.</span>
+                    <span class="text-xs opacity-75">Mercados Globales</span>
+                </div>
+            </button>
+
+            <button onclick="switchTab('eric')" id="nav-eric" class="nav-item w-full flex items-center p-3 rounded-lg">
+                <i class="fa-solid fa-bullseye w-6 text-center mr-3"></i>
+                <div class="text-left">
+                    <span class="font-heading block text-sm">Parte 5: Eric M.</span>
+                    <span class="text-xs opacity-75">Marketing y 9 P's</span>
+                </div>
+            </button>
+        </nav>
+        
+        <div class="p-4 bg-soya-light border-t border-soya-dark text-xs text-center text-soya-sand">
+            ADEX Escuela - Ciclo 2026-I
+        </div>
+    </aside>
+
+    <!-- Área de Contenido Principal -->
+    <main class="flex-1 overflow-y-auto bg-gray-50 relative">
+        
+        <!-- Header superior decorativo -->
+        <header class="h-20 bg-white shadow-sm flex items-center justify-between px-8 sticky top-0 z-10">
+            <h2 id="header-title" class="text-2xl font-heading font-bold text-soya-dark">Resumen Ejecutivo</h2>
+            <div class="flex items-center space-x-4">
+                <span class="bg-soya-sand text-soya-dark px-3 py-1 rounded-full text-sm font-bold shadow-sm">Destino: CHILE</span>
+                <span class="bg-soya-red text-white px-3 py-1 rounded-full text-sm font-bold shadow-sm">P.A: 2103.10.00.00</span>
+            </div>
+        </header>
+
+        <div class="p-8">
+            
+            <!-- PORTADA -->
+            <section id="portada" class="dashboard-section active">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-gray-100">
+                    <div class="md:w-1/2 p-10 flex flex-col justify-center bg-gradient-to-br from-white to-soya-sand/30">
+                        <div class="mb-2 text-soya-red font-bold tracking-widest">PROYECTO INTEGRADOR 2026</div>
+                        <h2 class="text-5xl font-heading font-extrabold text-soya-dark mb-6 leading-tight">Plan de Exportación de <span class="text-soya-gold">Salsa de Soya</span> a Chile</h2>
+                        <p class="text-gray-600 mb-8 text-lg">Investigación exhaustiva de mercado, oferta exportable, análisis logístico y mezcla de marketing para la internacionalización del producto IntiSoya.</p>
+                        
+                        <div class="bg-soya-dark rounded-xl p-6 shadow-lg relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-soya-gold rounded-full -mr-10 -mt-10 opacity-20"></div>
+                            <h3 class="text-soya-gold font-heading font-bold text-xl mb-4 border-b border-gray-700 pb-2">Equipo Consultor (Participación)</h3>
+                            <ul class="space-y-3 text-white">
+                                <li class="flex justify-between items-center"><span class="font-semibold"><i class="fa-solid fa-user-tie text-soya-gold mr-2"></i> Víctor Condori</span> <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold">100%</span></li>
+                                <li class="flex justify-between items-center"><span class="font-semibold"><i class="fa-solid fa-user-tie text-soya-gold mr-2"></i> Isabella Mattos</span> <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold">100%</span></li>
+                                <li class="flex justify-between items-center"><span class="font-semibold"><i class="fa-solid fa-user-tie text-soya-gold mr-2"></i> Marilin Medina</span> <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold">100%</span></li>
+                                <li class="flex justify-between items-center"><span class="font-semibold"><i class="fa-solid fa-user-tie text-soya-gold mr-2"></i> Eric Mozombite</span> <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold">100%</span></li>
+                                <li class="flex justify-between items-center"><span class="font-semibold"><i class="fa-solid fa-user-tie text-soya-gold mr-2"></i> Franchesca Pozzo</span> <span class="bg-green-500/20 text-green-400 px-2 py-1 rounded text-xs font-bold">100%</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-gray-100 flex items-center justify-center p-10 relative">
+                        <!-- Imagen de la botella subida por el usuario -->
+                        <div class="relative z-10 w-full max-w-sm">
+                            <img src="IntiSoya_gris.jpg" alt="Botella IntiSoya" class="w-full drop-shadow-2xl rounded-lg">
+                        </div>
+                        <!-- Círculos decorativos de fondo -->
+                        <div class="absolute w-64 h-64 bg-soya-gold rounded-full mix-blend-multiply filter blur-2xl opacity-50 top-20 right-20"></div>
+                        <div class="absolute w-64 h-64 bg-soya-red rounded-full mix-blend-multiply filter blur-2xl opacity-30 bottom-20 left-20"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PARTE 1: MARILIN -->
+            <section id="marilin" class="dashboard-section">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-soya-gold">
+                        <p class="text-sm text-gray-500 uppercase font-bold">Valor FOB 2025</p>
+                        <h3 class="text-3xl font-heading font-bold text-soya-dark mt-1">$3,913,290</h3>
+                        <p class="text-green-500 text-sm mt-2"><i class="fa-solid fa-arrow-up mr-1"></i> 17.15% vs 2024</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-soya-dark">
+                        <p class="text-sm text-gray-500 uppercase font-bold">Volumen Exportado 2025</p>
+                        <h3 class="text-3xl font-heading font-bold text-soya-dark mt-1">3.4M Kg</h3>
+                        <p class="text-green-500 text-sm mt-2"><i class="fa-solid fa-arrow-up mr-1"></i> Crecimiento sostenido</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-soya-red">
+                        <p class="text-sm text-gray-500 uppercase font-bold">Precio Promedio (USD/Kg)</p>
+                        <h3 class="text-3xl font-heading font-bold text-soya-dark mt-1">$1.14</h3>
+                        <p class="text-gray-500 text-sm mt-2">Ligero incremento por factor etiqueta limpia</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Evolución Exportaciones al Mundo (USD)</h3>
+                        <div class="h-72">
+                            <canvas id="chartMarilin1"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Top 3 Mercados Potenciales (FOB 2025)</h3>
+                        <div class="h-72">
+                            <canvas id="chartMarilin2"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-soya-dark text-white rounded-xl shadow mt-6 p-6">
+                    <h3 class="font-heading font-bold text-soya-gold mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>Conclusión Comercial</h3>
+                    <p class="text-gray-300">Las exportaciones peruanas de salsa de soya muestran un crecimiento promedio anual del 12.52%. <strong>Chile se posiciona como el líder indiscutible</strong> recibiendo casi el 50% de nuestras exportaciones globales, superando ampliamente a Bolivia y España, demostrando un mercado cautivo y de alto potencial para IntiSoya.</p>
+                </div>
+            </section>
+
+            <!-- PARTE 2: FRANCHESCA -->
+            <section id="franchesca" class="dashboard-section">
+                
+                <!-- Definición del Producto -->
+                <div class="bg-white rounded-xl shadow p-6 mb-6 flex flex-col md:flex-row gap-6 items-center">
+                    <div class="w-full md:w-1/3 text-center border-r border-gray-200">
+                        <img src="IntiSoya_gris.jpg" alt="Producto IntiSoya" class="h-48 mx-auto object-contain drop-shadow-lg rounded">
+                        <h3 class="font-heading font-bold text-xl mt-4 text-soya-dark">IntiSoya - 210ml</h3>
+                        <p class="text-sm text-soya-red font-bold">P.A. 2103.10.00.00</p>
+                    </div>
+                    <div class="w-full md:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 bg-gray-50 rounded border border-gray-100">
+                            <h4 class="font-bold text-soya-gold mb-2"><i class="fa-solid fa-seedling mr-2"></i>Nivel Esencial</h4>
+                            <p class="text-sm">Condimento a base de soya y trigo que brinda un sabor umami y aroma incomparable a las comidas.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded border border-gray-100">
+                            <h4 class="font-bold text-soya-dark mb-2"><i class="fa-solid fa-bottle-droplet mr-2"></i>Nivel Real</h4>
+                            <p class="text-sm">Líquido oscuro en botella PET transparente de 210ml, etiqueta completa en castellano, tapa con dosificador.</p>
+                        </div>
+                        <div class="p-4 bg-gray-50 rounded border border-gray-100">
+                            <h4 class="font-bold text-soya-red mb-2"><i class="fa-solid fa-certificate mr-2"></i>Nivel Aumentado</h4>
+                            <p class="text-sm">Certificación HACCP, proyección BRCGS, fuente de isoflavonas y proteína vegetal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Interactivo FODA Cruzado -->
+                <div class="bg-gray-100 rounded-xl p-6 border border-gray-200">
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-6 text-center">Dashboard FODA Cruzado (Interactivo)</h3>
+                    
+                    <div class="foda-grid">
+                        <div class="foda-card foda-f bg-white" onclick="openFodaModal('Fortalezas')">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-xl text-emerald-600">Fortalezas (F)</h4>
+                                <i class="fa-solid fa-dumbbell text-emerald-200 text-2xl"></i>
+                            </div>
+                            <ul class="text-sm space-y-1 text-gray-600 list-disc pl-4">
+                                <li>Estructura logística eficiente.</li>
+                                <li>Alianza sólida con proveedores (Campo Grande).</li>
+                                <li>Certificaciones de calidad HACCP.</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="foda-card foda-o bg-white" onclick="openFodaModal('Oportunidades')">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-xl text-blue-600">Oportunidades (O)</h4>
+                                <i class="fa-solid fa-earth-americas text-blue-200 text-2xl"></i>
+                            </div>
+                            <ul class="text-sm space-y-1 text-gray-600 list-disc pl-4">
+                                <li>Arancel 0% TLC Perú-Chile.</li>
+                                <li>Estabilidad política y económica en Chile.</li>
+                                <li>Cercanía geográfica y bajos costos logísticos.</li>
+                            </ul>
+                        </div>
+
+                        <div class="foda-card foda-d bg-white" onclick="openFodaModal('Debilidades')">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-xl text-amber-500">Debilidades (D)</h4>
+                                <i class="fa-solid fa-link-slash text-amber-200 text-2xl"></i>
+                            </div>
+                            <ul class="text-sm space-y-1 text-gray-600 list-disc pl-4">
+                                <li>Portafolio de productos reducido.</li>
+                                <li>Dependencia de intermediarios para fermentación.</li>
+                                <li>Alto contenido natural de sodio.</li>
+                            </ul>
+                        </div>
+
+                        <div class="foda-card foda-a bg-white" onclick="openFodaModal('Amenazas')">
+                            <div class="flex justify-between items-center mb-2">
+                                <h4 class="font-bold text-xl text-red-500">Amenazas (A)</h4>
+                                <i class="fa-solid fa-bolt text-red-200 text-2xl"></i>
+                            </div>
+                            <ul class="text-sm space-y-1 text-gray-600 list-disc pl-4">
+                                <li>EE.UU. y China dominan el 74% de importaciones chilenas.</li>
+                                <li>Presión competitiva por precios bajos.</li>
+                                <li>Múltiples empresas peruanas ya exportando.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Panel Central Cruzado -->
+                    <div class="mt-6 p-6 bg-white rounded-xl shadow-inner border border-gray-200">
+                        <h4 class="text-center font-bold text-gray-700 mb-4 uppercase tracking-widest text-sm">Estrategias Cruzadas (Haz clic)</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="cruzado-btn" onclick="openFodaModal('FO')">Estrategia FO <br><span class="text-xs font-normal">Explotar</span></div>
+                            <div class="cruzado-btn" onclick="openFodaModal('DO')">Estrategia DO <br><span class="text-xs font-normal">Buscar</span></div>
+                            <div class="cruzado-btn" onclick="openFodaModal('FA')">Estrategia FA <br><span class="text-xs font-normal">Confrontar</span></div>
+                            <div class="cruzado-btn" onclick="openFodaModal('DA')">Estrategia DA <br><span class="text-xs font-normal">Evitar</span></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PARTE 3: ISABELLA -->
+            <section id="isabella" class="dashboard-section">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Mapa de Producción (Simulado con Doughnut) -->
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Zonas de Producción de Soya (Perú 2025)</h3>
+                        <div class="h-64 flex justify-center relative">
+                            <canvas id="chartIsabella1"></canvas>
+                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                <span class="text-2xl font-bold text-soya-dark">1,279 Tn</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-center text-gray-500 mt-4">La costa norte (Piura) asegura la materia prima nacional.</p>
+                    </div>
+
+                    <!-- Evaluación de Proveedores -->
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Homologación de Proveedores (Materia Prima)</h3>
+                        <div class="h-64">
+                            <canvas id="chartIsabella2"></canvas>
+                        </div>
+                        <div class="mt-4 p-3 bg-green-50 border-l-4 border-green-500 rounded">
+                            <p class="text-sm font-bold text-green-800">Seleccionado: CAMPO GRANDE PERÚ E.I.R.L.</p>
+                            <p class="text-xs text-green-700 mt-1">Gana por mejor puntaje en calidad, precio por mayor, y disponibilidad constante todo el año.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Producción Estacional -->
+                <div class="bg-white rounded-xl shadow overflow-hidden">
+                    <div class="p-4 border-b border-gray-200 bg-gray-50">
+                        <h3 class="font-heading font-bold text-soya-dark">Calendario de Producción Nacional (Toneladas)</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left">
+                            <thead class="text-xs text-white uppercase bg-soya-dark">
+                                <tr>
+                                    <th class="px-4 py-3">Ene</th><th class="px-4 py-3">Feb</th><th class="px-4 py-3">Mar</th>
+                                    <th class="px-4 py-3">Abr</th><th class="px-4 py-3">May</th><th class="px-4 py-3 text-soya-gold">Jun</th>
+                                    <th class="px-4 py-3 text-soya-gold">Jul</th><th class="px-4 py-3">Ago</th><th class="px-4 py-3">Sep</th>
+                                    <th class="px-4 py-3">Oct</th><th class="px-4 py-3 text-soya-gold">Nov</th><th class="px-4 py-3">Dic</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="bg-white border-b">
+                                    <td class="px-4 py-3">40</td><td class="px-4 py-3">37</td><td class="px-4 py-3">34</td>
+                                    <td class="px-4 py-3">26</td><td class="px-4 py-3">17</td><td class="px-4 py-3 font-bold text-soya-red">217</td>
+                                    <td class="px-4 py-3 font-bold text-soya-red">319</td><td class="px-4 py-3">75</td><td class="px-4 py-3">106</td>
+                                    <td class="px-4 py-3">94</td><td class="px-4 py-3 font-bold text-soya-red">295</td><td class="px-4 py-3">20</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PARTE 4: VÍCTOR -->
+            <section id="victor" class="dashboard-section">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-soya-dark rounded-xl shadow p-6 text-white relative overflow-hidden">
+                        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl"><i class="fa-solid fa-earth-americas"></i></div>
+                        <h3 class="text-xl font-heading font-bold text-soya-gold mb-2">Importadores Mundiales (2024)</h3>
+                        <p class="text-sm text-gray-300 mb-6">Top países que compran Salsa de Soya (Miles USD)</p>
+                        
+                        <div class="space-y-4 relative z-10">
+                            <div>
+                                <div class="flex justify-between text-sm mb-1"><span>1. EE.UU.</span> <span class="font-bold">$142,359</span></div>
+                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 100%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1"><span>2. Francia</span> <span class="font-bold">$63,188</span></div>
+                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-blue-400 h-2 rounded-full" style="width: 44%"></div></div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-sm mb-1"><span>3. Reino Unido</span> <span class="font-bold">$57,301</span></div>
+                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-blue-300 h-2 rounded-full" style="width: 40%"></div></div>
+                            </div>
+                            <div class="pt-2 border-t border-gray-600">
+                                <div class="flex justify-between text-sm mb-1 text-soya-gold"><span>37. Chile (Target)</span> <span class="font-bold">$6,293</span></div>
+                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-soya-gold h-2 rounded-full" style="width: 5%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Competitividad de Proveedores en Chile</h3>
+                        <p class="text-sm text-gray-500 mb-4">¿Quiénes le venden a Chile? (Miles USD)</p>
+                        <div class="h-56">
+                            <canvas id="chartVictor1"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Matriz Atracción vs Competitividad -->
+                <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
+                    <h3 class="text-lg font-heading font-bold text-soya-dark mb-4 text-center">Matriz de Selección de Mercado: Atracción vs Competitividad</h3>
+                    <div class="h-80">
+                        <canvas id="chartVictor2"></canvas>
+                    </div>
+                    <div class="mt-4 grid grid-cols-3 gap-4 text-center text-sm">
+                        <div class="bg-red-50 p-2 rounded border border-red-100"><span class="font-bold text-red-700">Bolivia:</span> Alta competitividad (fácil entrar), pero entorno riesgoso (-10 Atracción).</div>
+                        <div class="bg-green-50 p-2 rounded border border-green-200 shadow-md transform scale-105"><span class="font-bold text-green-700">CHILE:</span> El balance perfecto. Entorno muy atractivo y barreras competitivas superables.</div>
+                        <div class="bg-gray-50 p-2 rounded border border-gray-200"><span class="font-bold text-gray-700">España:</span> Muy atractivo, pero altísima rivalidad (imposible para un nuevo entrante peruano hoy).</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PARTE 5: ERIC -->
+            <section id="eric" class="dashboard-section">
+                
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-6">
+                    
+                    <!-- Perfil del Consumidor -->
+                    <div class="md:col-span-5 bg-white rounded-xl shadow p-6 border-t-4 border-soya-red">
+                        <h3 class="text-xl font-heading font-bold text-soya-dark mb-4"><i class="fa-solid fa-user-tag mr-2 text-soya-red"></i>Perfil del Cliente</h3>
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 text-gray-400 w-6"></i> <div><strong>Nicho:</strong> Región Metropolitana de Santiago (40% de pob. nacional) y Valparaíso.</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-id-card mt-1 text-gray-400 w-6"></i> <div><strong>Demografía:</strong> Jóvenes DINKs y familias C2/C3 (25 a 54 años).</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-utensils mt-1 text-gray-400 w-6"></i> <div><strong>Uso:</strong> Preparación en casa, fusión peruana, reemplazo de sal, acompañamiento de delivery (sushi).</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-shop mt-1 text-gray-400 w-6"></i> <div><strong>Plaza de Compra:</strong> Supermercados (Lider, Jumbo), Oxxo, Tostadurías.</div></li>
+                        </ul>
+                    </div>
+
+                    <!-- Cuantificación -->
+                    <div class="md:col-span-7 bg-soya-dark rounded-xl shadow p-6 text-white">
+                        <h3 class="text-xl font-heading font-bold text-soya-gold mb-4"><i class="fa-solid fa-filter mr-2"></i>Cuantificación de la Demanda</h3>
+                        
+                        <div class="relative pt-2">
+                            <!-- Funnel CSS -->
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="w-1/4 text-center text-xs">Pob. Chile<br><span class="font-bold text-lg text-gray-300">18.4M</span></div>
+                                <div class="w-1/4 text-center text-xs">Región Metro<br><span class="font-bold text-lg text-gray-300">7.4M</span></div>
+                                <div class="w-1/4 text-center text-xs">Público Objetivo<br><span class="font-bold text-lg text-gray-300">1.5M</span></div>
+                                <div class="w-1/4 text-center text-xs text-soya-gold">Nuestra Meta<br><span class="font-bold text-2xl">0.21 Tn</span></div>
+                            </div>
+                            
+                            <div class="w-full flex justify-center flex-col items-center">
+                                <div class="w-full h-8 bg-gray-700 rounded-t-lg mb-1"></div>
+                                <div class="w-3/4 h-8 bg-gray-600 mb-1"></div>
+                                <div class="w-1/2 h-8 bg-gray-500 mb-1"></div>
+                                <div class="w-1/4 h-10 bg-soya-gold rounded-b-lg flex items-center justify-center text-black font-bold">2.5% Share</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9 P's Matrix (Summary) -->
+                <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4">Estrategia Comercial (Mix)</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-blue-500">
+                        <i class="fa-solid fa-tag text-3xl text-blue-500 mb-2"></i>
+                        <h4 class="font-bold text-gray-800">Precio</h4>
+                        <p class="text-xs text-gray-500 mt-2">Competitivo: $3.00 - $4.50 USD. Evita el segmento ultra-bajo dominado por China.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-green-500">
+                        <i class="fa-solid fa-truck-fast text-3xl text-green-500 mb-2"></i>
+                        <h4 class="font-bold text-gray-800">Plaza</h4>
+                        <p class="text-xs text-gray-500 mt-2">Canal Largo: Expo -> Importador/Agente -> Mayorista (Alvi) -> Retail / HORECA.</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-purple-500">
+                        <i class="fa-solid fa-bullhorn text-3xl text-purple-500 mb-2"></i>
+                        <h4 class="font-bold text-gray-800">Promoción</h4>
+                        <p class="text-xs text-gray-500 mt-2">Feria B2B AQUASUR y marketing digital en TikTok con recetas "Marca Perú".</p>
+                    </div>
+                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-red-500">
+                        <i class="fa-solid fa-file-shield text-3xl text-red-500 mb-2"></i>
+                        <h4 class="font-bold text-gray-800">Permisos</h4>
+                        <p class="text-xs text-gray-500 mt-2">Arancel 0%, Reglamento Sanitario de Alimentos (RSA), Ley de Etiquetado (Octógonos).</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal FODA Overlay -->
+    <div id="foda-modal" class="fixed inset-0 bg-black/60 z-50 items-center justify-center hidden">
+        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 m-4 relative">
+            <button onclick="closeFodaModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            <h3 id="modal-title" class="text-2xl font-heading font-bold mb-4 text-soya-dark border-b pb-2">Título</h3>
+            <div id="modal-content" class="text-gray-700 text-sm leading-relaxed space-y-3">
+                <!-- Contenido Dinámico -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Script de Interactividad y Gráficos -->
+    <script>
+        // Variables de estado
+        let chartsInitialized = {
+            marilin: false,
+            isabella: false,
+            victor: false
+        };
+
+        const titles = {
+            'portada': 'Resumen Ejecutivo',
+            'marilin': 'Parte 1: Análisis Comercial (Marilin M.)',
+            'franchesca': 'Parte 2: FODA y Producto (Franchesca P.)',
+            'isabella': 'Parte 3: Oferta y Proveedores (Isabella M.)',
+            'victor': 'Parte 4: Mercado Global y Destino (Víctor C.)',
+            'eric': 'Parte 5: Segmentación y Marketing (Eric M.)'
+        };
+
+        function switchTab(tabId) {
+            // Actualizar Nav
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('nav-active');
+            });
+            document.getElementById('nav-' + tabId).classList.add('nav-active');
+
+            // Actualizar Titulo Header
+            document.getElementById('header-title').innerText = titles[tabId];
+
+            // Ocultar todas las secciones
+            document.querySelectorAll('.dashboard-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Mostrar seleccionada
+            document.getElementById(tabId).classList.add('active');
+
+            // Inicializar gráficos si es la primera vez que se entra a la tab
+            if(tabId === 'marilin' && !chartsInitialized.marilin) {
+                initMarilinCharts();
+                chartsInitialized.marilin = true;
+            }
+            if(tabId === 'isabella' && !chartsInitialized.isabella) {
+                initIsabellaCharts();
+                chartsInitialized.isabella = true;
+            }
+            if(tabId === 'victor' && !chartsInitialized.victor) {
+                initVictorCharts();
+                chartsInitialized.victor = true;
+            }
+        }
+
+        // --- DATOS FODA CRUZADO ---
+        const fodaData = {
+            'Fortalezas': '<ul><li>1. Estructura logística bien organizada y eficiente.</li><li>2. Alianza con proveedores maquiladores (Campo Grande).</li><li>3. Experiencia en gestión de exportación.</li><li>4. Certificaciones voluntarias que respaldan calidad (HACCP).</li><li>5. Estandarización del producto.</li></ul>',
+            'Oportunidades': '<ul><li>1. Ingreso al mercado chileno con arancel 0% (TLC).</li><li>2. Estabilidad política y económica de Chile (Bajo riesgo).</li><li>3. Crecimiento progresivo de exportaciones hacia Chile.</li><li>4. Bajos requisitos regulatorios en destino.</li><li>5. Cercanía geográfica que reduce costos de flete.</li></ul>',
+            'Debilidades': '<ul><li>1. Portafolio de productos poco amplio.</li><li>2. Baja presencia en redes sociales digitales.</li><li>3. Material promocional en proceso de adaptación.</li><li>4. Dependencia de terceros para fermentación.</li><li>5. Alto contenido de sodio por naturaleza del producto.</li></ul>',
+            'Amenazas': '<ul><li>1. EE.UU. y China controlan >74% de importaciones chilenas.</li><li>2. Muchos productos sustitutos (otras salsas).</li><li>3. Concentración de exportaciones en 2 empresas peruanas.</li><li>4. 93 empresas peruanas exportan a Chile actualmente.</li><li>5. Presión por precios bajos en supermercados.</li></ul>',
+            'FO': '<h4 class="font-bold text-green-700">EXPLOTAR (Max-Max)</h4><p class="mt-2"><strong>FO1:</strong> Aprovechar la creciente demanda chilena y nuestro arancel 0% para ingresar con precios competitivos utilizando nuestra eficiente estructura logística.</p><p><strong>FO2:</strong> Utilizar las certificaciones de calidad para gestionar contactos comerciales en ruedas de negocios en Valparaíso.</p>',
+            'DO': '<h4 class="font-bold text-blue-700">BUSCAR (Min-Max)</h4><p class="mt-2"><strong>DO1:</strong> Mitigar la falta de material promocional presentando nuestra propuesta de valor directamente en eventos y ferias (AQUASUR).</p><p><strong>DO2:</strong> Compensar el portafolio reducido enfocándonos en un nicho específico aprovechando la cercanía geográfica para entregas rápidas.</p>',
+            'FA': '<h4 class="font-bold text-orange-700">CONFRONTAR (Max-Min)</h4><p class="mt-2"><strong>FA1:</strong> Usar la calidad estandarizada y alianzas de maquila para defenderse de la presión de precios de los productos asiáticos (China).</p><p><strong>FA2:</strong> Fortalecer certificaciones voluntarias (BRCGS) para destacar frente a las 93 empresas peruanas competidoras en el mercado chileno.</p>',
+            'DA': '<h4 class="font-bold text-red-700">EVITAR (Min-Min)</h4><p class="mt-2"><strong>DA1:</strong> Mejorar urgentemente la presencia en redes sociales para que los consumidores nos elijan sobre los sustitutos existentes.</p><p><strong>DA2:</strong> Diversificar procesos para reducir la dependencia de terceros, evitando cuellos de botella ante el agresivo dominio de EE.UU. en Chile.</p>'
+        };
+
+        function openFodaModal(type) {
+            document.getElementById('modal-title').innerHTML = type;
+            document.getElementById('modal-content').innerHTML = fodaData[type];
+            document.getElementById('foda-modal').classList.remove('hidden');
+            document.getElementById('foda-modal').classList.add('flex');
+        }
+
+        function closeFodaModal() {
+            document.getElementById('foda-modal').classList.add('hidden');
+            document.getElementById('foda-modal').classList.remove('flex');
+        }
+
+        // --- GRÁFICOS CHART.JS ---
+        
+        // Colores Generales
+        const cDark = '#1F1209';
+        const cGold = '#D4AF37';
+        const cRed = '#8B1E1B';
+
+        function initMarilinCharts() {
+            // Chart 1: Evolución
+            new Chart(document.getElementById('chartMarilin1'), {
+                type: 'line',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024', '2025'],
+                    datasets: [{
+                        label: 'Valor FOB (US$)',
+                        data: [2441475, 2551804, 2825823, 3340492, 3913290],
+                        borderColor: cGold,
+                        backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Chart 2: Top 3 Mercados
+            new Chart(document.getElementById('chartMarilin2'), {
+                type: 'bar',
+                data: {
+                    labels: ['Chile', 'Bolivia', 'España'],
+                    datasets: [{
+                        label: 'Valor FOB 2025',
+                        data: [1875264, 962923, 470713],
+                        backgroundColor: [cRed, cDark, cGold],
+                        borderRadius: 6
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+        }
+
+        function initIsabellaCharts() {
+            // Chart 1: Doughnut Zonas
+            new Chart(document.getElementById('chartIsabella1'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Piura', 'Ucayali', 'Amazonas', 'Otros'],
+                    datasets: [{
+                        data: [760, 255, 191, 72],
+                        backgroundColor: [cGold, '#b45309', '#047857', cDark],
+                        borderWidth: 0
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%', plugins: { legend: { position: 'right' } } }
+            });
+
+            // Chart 2: Proveedores Score
+            new Chart(document.getElementById('chartIsabella2'), {
+                type: 'bar',
+                indexAxis: 'y',
+                data: {
+                    labels: ['Campo Grande', 'Corporación Lider', 'Reino del Valle'],
+                    datasets: [{
+                        label: 'Puntaje Ponderado',
+                        data: [2.85, 1.70, 1.70],
+                        backgroundColor: ['#10B981', '#94A3B8', '#94A3B8'],
+                        borderRadius: 4
+                    }]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { legend: { display: false } },
+                    scales: { x: { max: 3 } }
+                }
+            });
+        }
+
+        function initVictorCharts() {
+            // Chart 1: Proveedores Chile
+            new Chart(document.getElementById('chartVictor1'), {
+                type: 'bar',
+                data: {
+                    labels: ['EE.UU.', 'China', 'Perú', 'Brasil'],
+                    datasets: [{
+                        label: 'Miles USD',
+                        data: [2994, 1692, 899, 312],
+                        backgroundColor: ['#3B82F6', '#EF4444', cGold, '#10B981'],
+                        borderRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+            });
+
+            // Chart 2: Matriz Scatter
+            new Chart(document.getElementById('chartVictor2'), {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        { label: 'Chile', data: [{x: 19, y: 40.2}], backgroundColor: 'green', pointRadius: 10 },
+                        { label: 'España', data: [{x: 31, y: 8.0}], backgroundColor: 'orange', pointRadius: 8 },
+                        { label: 'Bolivia', data: [{x: -10, y: 58.7}], backgroundColor: 'red', pointRadius: 8 }
+                    ]
+                },
+                options: { 
+                    responsive: true, maintainAspectRatio: false,
+                    scales: {
+                        x: { title: { display: true, text: 'Atracción del Mercado (Score)' }, min: -20, max: 40 },
+                        y: { title: { display: true, text: 'Competitividad (Score)' }, min: 0, max: 70 }
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) { return ctx.dataset.label + ': (Atracción: ' + ctx.raw.x + ', Comp: ' + ctx.raw.y + ')'; }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+```
