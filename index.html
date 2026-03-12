@@ -75,6 +75,37 @@
         #foda-modal { display: none; }
         #foda-modal.flex { display: flex; animation: fadeIn 0.2s ease-in-out; }
         
+        /* Efecto Flip para Tarjetas de Gráficos (Parte 1) */
+        .flip-card {
+            perspective: 1000px;
+            height: 400px; 
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 0.75rem; 
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
@@ -222,35 +253,109 @@
 
             <!-- PARTE 1: MARILIN -->
             <section id="marilin" class="dashboard-section">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6">
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6 border-l-4 border-soya-gold">
-                        <p class="text-xs md:text-sm text-gray-500 uppercase font-bold">Valor FOB 2025</p>
-                        <h3 class="text-2xl md:text-3xl font-heading font-bold text-soya-dark mt-1">$3,913,290</h3>
-                        <p class="text-green-500 text-xs md:text-sm mt-2"><i class="fa-solid fa-arrow-up mr-1"></i> 17.15% vs 2024</p>
+                <!-- Fichas Interactivas de Objetivos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Objetivo Principal -->
+                    <div class="bg-soya-dark text-white rounded-xl shadow p-6 border-l-4 border-soya-gold cursor-pointer hover:bg-soya-light transition duration-300 relative overflow-hidden" onclick="toggleObj('obj-prin')">
+                        <div class="absolute -right-4 -top-4 opacity-10"><i class="fa-solid fa-bullseye text-8xl"></i></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <h3 class="text-xl md:text-2xl font-heading font-bold text-soya-gold"><i class="fa-solid fa-flag-checkered mr-2"></i>Objetivo Principal</h3>
+                            <i class="fa-solid fa-chevron-down text-xl text-soya-gold" id="icon-obj-prin"></i>
+                        </div>
+                        <div id="obj-prin" class="mt-4 text-gray-200 text-sm md:text-base leading-relaxed hidden relative z-10 animation-fadeIn">
+                            <p>Determinar la viabilidad comercial para la exportación de salsa de Soya (P.A: 2103.10.00.00) hacia el mercado de Chile, en el periodo de tiempo de Enero a Marzo de 2026.</p>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6 border-l-4 border-soya-dark">
-                        <p class="text-xs md:text-sm text-gray-500 uppercase font-bold">Volumen Exportado 2025</p>
-                        <h3 class="text-2xl md:text-3xl font-heading font-bold text-soya-dark mt-1">3.4M Kg</h3>
-                        <p class="text-green-500 text-xs md:text-sm mt-2"><i class="fa-solid fa-arrow-up mr-1"></i> Crecimiento sostenido</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6 border-l-4 border-soya-red">
-                        <p class="text-xs md:text-sm text-gray-500 uppercase font-bold">Precio Promedio (USD/Kg)</p>
-                        <h3 class="text-2xl md:text-3xl font-heading font-bold text-soya-dark mt-1">$1.14</h3>
-                        <p class="text-gray-500 text-xs md:text-sm mt-2">Ligero incremento por factor etiqueta limpia</p>
+
+                    <!-- Objetivos Específicos -->
+                    <div class="bg-white rounded-xl shadow p-6 border-l-4 border-soya-red cursor-pointer hover:bg-gray-50 transition duration-300 relative overflow-hidden" onclick="toggleObj('obj-esp')">
+                        <div class="absolute -right-4 -top-4 opacity-[0.03]"><i class="fa-solid fa-list-check text-8xl text-soya-dark"></i></div>
+                        <div class="flex justify-between items-center relative z-10">
+                            <h3 class="text-xl md:text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-list-ul mr-2 text-soya-red"></i>Objetivos Específicos</h3>
+                            <i class="fa-solid fa-chevron-down text-xl text-gray-400" id="icon-obj-esp"></i>
+                        </div>
+                        <div id="obj-esp" class="mt-4 hidden text-xs md:text-sm text-gray-700 space-y-3 relative z-10 animation-fadeIn">
+                            <p class="flex items-start"><span class="font-bold text-soya-red mr-2">1.</span> Identificar las 5 principales zonas de producción nacional de grano de soya y trigo.</p>
+                            <p class="flex items-start"><span class="font-bold text-soya-red mr-2">2.</span> Analizar a las 5 principales empresas peruanas exportadoras de salsa de soya a Chile.</p>
+                            <p class="flex items-start"><span class="font-bold text-soya-red mr-2">3.</span> Identificar los 5 principales países exportadores a nivel mundial del producto.</p>
+                            <p class="flex items-start"><span class="font-bold text-soya-red mr-2">4.</span> Determinar el perfil del consumidor chileno y el tipo de segmentación (B2C/B2B).</p>
+                            <p class="flex items-start"><span class="font-bold text-soya-red mr-2">5.</span> Evaluar los requisitos de acceso al mercado chileno.</p>
+                        </div>
                     </div>
                 </div>
 
+                <!-- Gráficas Giratorias -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6">
-                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Evolución Exportaciones al Mundo (USD)</h3>
-                        <div class="h-64 md:h-72">
-                            <canvas id="chartMarilin1"></canvas>
+                    
+                    <!-- Gráfica 1: Exportaciones de Perú al mundo -->
+                    <div class="flip-card" id="flip-chart1">
+                        <div class="flip-card-inner">
+                            <!-- Frente: FOB + Peso Neto -->
+                            <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Exportaciones al Mundo</h3>
+                                        <p class="text-xs text-gray-500 font-bold uppercase">Valor FOB (US$) + Peso Neto (Kg)</p>
+                                    </div>
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition tooltip-container">
+                                        <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1 relative w-full h-full">
+                                    <canvas id="chartMarilin1Front"></canvas>
+                                </div>
+                            </div>
+                            <!-- Dorso: Precio Promedio -->
+                            <div class="flip-card-back cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Evolución de Precio Promedio</h3>
+                                        <p class="text-xs text-gray-500 font-bold uppercase">USD / Kilogramo (2021-2025)</p>
+                                    </div>
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                        <i class="fa-solid fa-rotate-left text-soya-gold text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1 relative w-full h-full">
+                                    <canvas id="chartMarilin1Back"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6">
-                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Top 3 Mercados Potenciales (FOB 2025)</h3>
-                        <div class="h-64 md:h-72">
-                            <canvas id="chartMarilin2"></canvas>
+
+                    <!-- Gráfica 2: Top 3 mercados potenciales (2025) -->
+                    <div class="flip-card" id="flip-chart2">
+                        <div class="flip-card-inner">
+                            <!-- Frente: FOB + Peso Neto -->
+                            <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Top 3 Mercados Destino (2025)</h3>
+                                        <p class="text-xs text-gray-500 font-bold uppercase">Valor FOB (US$) + Peso Neto (Kg)</p>
+                                    </div>
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                        <i class="fa-solid fa-rotate text-soya-dark text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1 relative w-full h-full">
+                                    <canvas id="chartMarilin2Front"></canvas>
+                                </div>
+                            </div>
+                            <!-- Dorso: Precio Promedio Top 3 -->
+                            <div class="flip-card-back cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Precio Promedio Top 3 (2025)</h3>
+                                        <p class="text-xs text-gray-500 font-bold uppercase">Comparativa en USD / Kilogramo</p>
+                                    </div>
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                        <i class="fa-solid fa-rotate-left text-soya-dark text-xl"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-1 relative w-full h-full">
+                                    <canvas id="chartMarilin2Back"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -585,6 +690,21 @@
             isabella: false,
             victor: false
         };
+        
+        // Función para Acordeón de Objetivos
+        window.toggleObj = function(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById('icon-' + id);
+            if(el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                el.classList.add('hidden');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        };
 
         const titles = {
             'portada': 'Resumen Ejecutivo',
@@ -669,45 +789,123 @@
         const cRed = '#8B1E1B';
 
         function initMarilinCharts() {
-            new Chart(document.getElementById('chartMarilin1'), {
+            // GRAFICA 1 FRENTE: Exportaciones al Mundo (FOB + Peso Neto)
+            new Chart(document.getElementById('chartMarilin1Front'), {
+                type: 'bar',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024', '2025'],
+                    datasets: [
+                        {
+                            label: 'Valor FOB (US$)',
+                            data: [2441475, 2551804, 2825823, 3340492, 3913290],
+                            backgroundColor: cGold,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Peso Neto (Kg)',
+                            data: [2121242, 2320159, 2593223, 3004890, 3427882],
+                            type: 'line',
+                            borderColor: cDark,
+                            borderWidth: 3,
+                            pointBackgroundColor: cDark,
+                            yAxisID: 'y1'
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'FOB (US$)' } },
+                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Peso Neto (Kg)' }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+
+            // GRAFICA 1 DORSO: Precio Promedio
+            new Chart(document.getElementById('chartMarilin1Back'), {
                 type: 'line',
                 data: {
                     labels: ['2021', '2022', '2023', '2024', '2025'],
                     datasets: [{
-                        label: 'Valor FOB (US$)',
-                        data: [2441475, 2551804, 2825823, 3340492, 3913290],
-                        borderColor: cGold,
-                        backgroundColor: 'rgba(212, 175, 55, 0.2)',
-                        borderWidth: 3,
+                        label: 'Precio Promedio (US$/Kg)',
+                        data: [1.15, 1.10, 1.09, 1.11, 1.14],
+                        borderColor: cRed,
+                        backgroundColor: 'rgba(139, 30, 27, 0.2)',
+                        borderWidth: 4,
                         fill: true,
-                        tension: 0.3,
-                        pointBackgroundColor: cGold,
-                        pointRadius: 4
+                        tension: 0.4,
+                        pointBackgroundColor: cRed,
+                        pointRadius: 6
                     }]
                 },
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false, 
                     plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: false } }
+                    scales: { y: { min: 1.05, max: 1.20 } }
                 }
             });
 
-            new Chart(document.getElementById('chartMarilin2'), {
+            // GRAFICA 2 FRENTE: Top 3 Mercados (FOB + Peso Neto)
+            new Chart(document.getElementById('chartMarilin2Front'), {
+                type: 'bar',
+                data: {
+                    labels: ['Chile', 'Bolivia', 'España'],
+                    datasets: [
+                        {
+                            label: 'Valor FOB (US$)',
+                            data: [1875264, 962923, 470713],
+                            backgroundColor: cDark,
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Peso Neto (Kg)',
+                            data: [1718311, 885944, 381329],
+                            backgroundColor: '#9ca3af', // Gris para diferenciar
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US').format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // GRAFICA 2 DORSO: Precio Promedio Top 3
+            new Chart(document.getElementById('chartMarilin2Back'), {
                 type: 'bar',
                 data: {
                     labels: ['Chile', 'Bolivia', 'España'],
                     datasets: [{
-                        label: 'Valor FOB 2025',
-                        data: [1875264, 962923, 470713],
-                        backgroundColor: [cRed, cDark, cGold],
-                        borderRadius: 6
+                        label: 'Precio Promedio (US$/Kg)',
+                        data: [1.09, 1.09, 1.23],
+                        backgroundColor: [cRed, cGold, cDark],
+                        borderRadius: 6,
+                        barPercentage: 0.6
                     }]
                 },
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } }
+                    plugins: { legend: { display: false } },
+                    scales: { y: { min: 0, title: { display: true, text: 'USD / Kilogramo' } } }
                 }
             });
         }
