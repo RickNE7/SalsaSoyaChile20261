@@ -209,7 +209,8 @@
                     
                     <!-- Imagen de producto ocupando toda el área vertical -->
                     <div class="w-full xl:w-1/2 bg-gray-100 relative overflow-hidden min-h-[400px] xl:min-h-full flex items-center justify-center p-0">
-                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET-fondo).png" alt="Botella IntiSoya con Fondo" class="w-full h-full object-cover absolute inset-0 z-10">                        
+                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET-fondo).png" alt="Botella IntiSoya con Fondo" class="w-full h-full object-cover absolute inset-0 z-10">
+                        
                         <!-- QR Flotante -->
                         <div class="absolute top-6 right-6 z-20 bg-white/95 p-3 rounded-xl shadow-2xl backdrop-blur-sm border border-gray-200 transform hover:scale-105 transition flex flex-col items-center">
                             <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoyaQR.png" alt="QR Code IntiSoya" class="w-20 h-20 md:w-24 md:h-24 rounded border border-gray-100 mb-1">
@@ -772,11 +773,17 @@
                 }
             });
 
-            // Cargar imágenes de banderas para el plugin (Formatos PNG desde FlagCDN)
+            // Cargar imágenes de banderas personalizadas desde GitHub
+            const flagUrls = {
+                'cl': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Chile.png',
+                'es': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Espa%C3%B1a.png',
+                'bo': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Bolivia.png'
+            };
+            
             const flagImages = {};
-            ['cl', 'es', 'bo'].forEach(code => {
+            Object.keys(flagUrls).forEach(code => {
                 const img = new Image();
-                img.src = `https://flagcdn.com/w80/${code}.png`;
+                img.src = flagUrls[code];
                 img.onload = () => { if(window.victorChart2) window.victorChart2.update(); };
                 flagImages[code] = img;
             });
@@ -786,6 +793,9 @@
                 id: 'flagPlugin',
                 afterDatasetsDraw(chart) {
                     const ctx = chart.ctx;
+                    // Detectar si la pantalla es móvil para achicar las banderas
+                    const isMobile = window.innerWidth < 768; 
+                    
                     chart.data.datasets.forEach((dataset, i) => {
                         const meta = chart.getDatasetMeta(i);
                         if (!meta.hidden) {
@@ -793,8 +803,10 @@
                                 const dataPoint = dataset.data[index];
                                 const { x, y } = element.tooltipPosition();
                                 
-                                // Aumentamos la escala a * 4 para que la diferencia visual sea notoria (España se verá enorme, Chile la mitad)
-                                const radius = dataPoint.r * 4; 
+                                // Escala adaptativa: multiplicador más pequeño en móviles (1.2), 4 en escritorio.
+                                // Mantiene la relación de tamaño proporcional intacta en ambos dispositivos.
+                                const multiplier = isMobile ? 1.2 : 4; 
+                                const radius = dataPoint.r * multiplier; 
                                 const img = dataset.flagImg;
                                 
                                 if (img && img.complete) {
@@ -809,10 +821,10 @@
                                     ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
                                     ctx.restore();
                                     
-                                    // Borde distintivo
+                                    // Borde distintivo muy delgado
                                     ctx.beginPath();
                                     ctx.arc(x, y, radius, 0, Math.PI * 2);
-                                    ctx.lineWidth = 3;
+                                    ctx.lineWidth = 1;
                                     ctx.strokeStyle = dataset.borderColor || '#333';
                                     ctx.stroke();
                                 }
@@ -837,7 +849,7 @@
                     responsive: true, 
                     maintainAspectRatio: false,
                     layout: {
-                        padding: { top: 40, right: 60, bottom: 20, left: 20 } // Espacio extra grande para que no se corten las banderas de España (radio ~ 57px)
+                        padding: { top: 40, right: 60, bottom: 20, left: 20 }
                     },
                     scales: {
                         x: { 
