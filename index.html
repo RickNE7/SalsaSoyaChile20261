@@ -148,40 +148,48 @@
             <button onclick="switchTab('marilin')" id="nav-marilin" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-chart-line w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 1: Marilin M.</span>
-                    <span class="text-xs opacity-75">Contexto y Exportación</span>
+                    <span class="font-heading block text-sm">Parte 1: Análisis Comercial</span>
+                    <span class="text-xs opacity-75">Marilin M.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('franchesca')" id="nav-franchesca" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-chess-knight w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 2: Franchesca P.</span>
-                    <span class="text-xs opacity-75">Estrategia y Producto</span>
+                    <span class="font-heading block text-sm">Parte 2: FODA y Producto</span>
+                    <span class="text-xs opacity-75">Franchesca P.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('isabella')" id="nav-isabella" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-industry w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 3: Isabella M.</span>
-                    <span class="text-xs opacity-75">Oferta y Proveedores</span>
+                    <span class="font-heading block text-sm">Parte 3: Oferta y Prov.</span>
+                    <span class="text-xs opacity-75">Isabella M.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('victor')" id="nav-victor" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-globe w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 4: Víctor C.</span>
-                    <span class="text-xs opacity-75">Mercados Globales</span>
+                    <span class="font-heading block text-sm">Parte 4: Mercado Global</span>
+                    <span class="text-xs opacity-75">Víctor C.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('eric')" id="nav-eric" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-bullseye w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 5: Eric M.</span>
-                    <span class="text-xs opacity-75">Marketing y 9 P's</span>
+                    <span class="font-heading block text-sm">Parte 5: Marketing</span>
+                    <span class="text-xs opacity-75">Eric M.</span>
+                </div>
+            </button>
+
+            <button onclick="switchTab('conclusiones')" id="nav-conclusiones" class="nav-item w-full flex items-center p-3 rounded-lg mt-4 border border-soya-gold/30 hover:border-soya-gold">
+                <i class="fa-solid fa-flag-checkered w-6 text-center mr-3 text-soya-gold"></i>
+                <div class="text-left">
+                    <span class="font-heading block text-sm text-soya-gold">Conclusiones</span>
+                    <span class="text-xs opacity-75">Cierre del Proyecto</span>
                 </div>
             </button>
         </nav>
@@ -507,7 +515,8 @@
                 <div class="mb-8">
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-earth-americas text-soya-gold mr-2"></i>Estructura del Mercado Global</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
                         <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-gold">
                             <h4 class="text-md font-bold text-soya-dark mb-2 text-center">Principales Productores (Mundial)</h4>
                             <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Porcentaje vs Volumen (Tn)</p>
@@ -516,71 +525,27 @@
                             </div>
                         </div>
 
-                        <div class="flip-card h-full min-h-[400px] lg:col-span-2" id="flip-chart3">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front cursor-pointer border-t-4 border-soya-dark" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Exportadores</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorExp"></canvas>
-                                    </div>
-                                </div>
-                                <div class="flip-card-back cursor-pointer border-t-4 border-blue-600" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Importadores</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate-left text-blue-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorImp"></canvas>
-                                    </div>
-                                </div>
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-red-600">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Principales Proveedores a Chile</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorProvChile"></canvas>
                             </div>
                         </div>
-                    </div>
+                        
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-dark">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Exportadores</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorExp"></canvas>
+                            </div>
+                        </div>
 
-                    <div class="grid grid-cols-1 gap-6">
-                        <div class="flip-card h-[400px]" id="flip-chart4">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front cursor-pointer border-t-4 border-red-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Principales Proveedores a Chile</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate text-red-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorProvChile"></canvas>
-                                    </div>
-                                </div>
-                                <div class="flip-card-back cursor-pointer border-t-4 border-green-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Empresas Exportadoras (Perú -> Chile)</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate-left text-green-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorEmpPeru"></canvas>
-                                    </div>
-                                </div>
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-blue-600">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Importadores</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorImp"></canvas>
                             </div>
                         </div>
                     </div>
@@ -590,6 +555,8 @@
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-scale-balanced text-soya-gold mr-2"></i>Índice de Atracción y Competitividad</h3>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        
+                        <!-- Tabla Índice Atracción -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-soya-gold text-lg text-center">Índice de Atracción</h4>
@@ -640,6 +607,7 @@
                             </div>
                         </div>
 
+                        <!-- Tabla Índice Competitividad -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-white text-lg text-center">Índice de Competitividad</h4>
@@ -859,7 +827,61 @@
                         <div class="bg-white p-5 rounded-lg shadow border border-gray-100 border-b-4 border-soya-gold"><i class="fa-solid fa-truck-fast text-soya-gold text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">9. Plaza</h4><p class="text-xs text-gray-600 mt-1">Canal Largo indirecto y estrategia intensiva (Supermercados Walmart, Cencosud, SMU).</p></div>
                     </div>
                 </div>
+            </section>
 
+            <!-- NUEVA SECCIÓN: CONCLUSIONES -->
+            <section id="conclusiones" class="dashboard-section">
+                <div class="mb-8">
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-flag-checkered text-soya-gold mr-2"></i>Conclusiones por Objetivo Específico</h3>
+                    <p class="text-sm text-gray-600 mb-6">Consolidado final de los hallazgos del proyecto de exportación IntiSoya hacia el mercado chileno.</p>
+                    
+                    <div class="space-y-4">
+                        <!-- Conclusión 1 -->
+                        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-soya-gold flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
+                            <div class="bg-yellow-50 text-soya-gold rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">1</div>
+                            <div>
+                                <h4 class="font-bold text-soya-dark text-lg mb-1">Zonas de Producción Nacional</h4>
+                                <p class="text-sm text-gray-700">La producción de soya se concentra mayoritariamente en la costa norte y selva, siendo <strong>Piura el líder con casi el 60%</strong> del volumen. Esto asegura una cadena de suministro de materia prima estable hacia las plantas de maquila en la ciudad de Lima.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Conclusión 2 -->
+                        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-soya-dark flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
+                            <div class="bg-gray-100 text-soya-dark rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">2</div>
+                            <div>
+                                <h4 class="font-bold text-soya-dark text-lg mb-1">Competencia Exportadora Peruana</h4>
+                                <p class="text-sm text-gray-700">El mercado de destino recibe productos de gigantes como <strong>Ajinomoto y Kikko Corporation</strong>, lo que evidencia alta rivalidad. IntiSoya deberá apoyarse en una estrategia intensiva y una fuerte diferenciación por calidad (certificación HACCP) para ganar su cuota.</p>
+                            </div>
+                        </div>
+
+                        <!-- Conclusión 3 -->
+                        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-blue-600 flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
+                            <div class="bg-blue-50 text-blue-600 rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">3</div>
+                            <div>
+                                <h4 class="font-bold text-soya-dark text-lg mb-1">Dominio de Exportadores Mundiales</h4>
+                                <p class="text-sm text-gray-700">A nivel global, <strong>China, Japón y EE.UU.</strong> controlan la oferta. En Chile, estos países imponen grandes barreras de precio bajo y posicionamiento corporativo; sin embargo, Perú equilibra la balanza competitiva gracias a la reducción de fletes y la inmensa sinergia gastronómica regional.</p>
+                            </div>
+                        </div>
+
+                        <!-- Conclusión 4 -->
+                        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-soya-red flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
+                            <div class="bg-red-50 text-soya-red rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">4</div>
+                            <div>
+                                <h4 class="font-bold text-soya-dark text-lg mb-1">Perfil y Segmentación del Consumidor</h4>
+                                <p class="text-sm text-gray-700">El público objetivo radica mayormente en la <strong>Región Metropolitana de Santiago</strong> (sectores socioeconómicos medios y altos). Ostentan un alto consumo de comida fusión, impulsando la decisión de utilizar un abordaje mixto <strong>B2C (Supermercados) y B2B (Canal HORECA e Industrial)</strong>.</p>
+                            </div>
+                        </div>
+
+                        <!-- Conclusión 5 -->
+                        <div class="bg-white rounded-xl shadow p-5 border-l-4 border-green-600 flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
+                            <div class="bg-green-50 text-green-600 rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">5</div>
+                            <div>
+                                <h4 class="font-bold text-soya-dark text-lg mb-1">Requisitos de Acceso al Mercado</h4>
+                                <p class="text-sm text-gray-700">El entorno chileno es sumamente atractivo al gozar de <strong>arancel 0% por el TLC</strong> bilateral. Su mayor exigencia radica en lo técnico: el cumplimiento estricto del Reglamento Sanitario de Alimentos y la inclusión ineludible del <strong>Sello Octogonal de "Alto en Sodio"</strong> (Ley 20.606).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
         </div>
@@ -954,7 +976,8 @@
             'franchesca': 'Parte 2: FODA y Producto',
             'isabella': 'Parte 3: Oferta y Proveedores',
             'victor': 'Parte 4: Mercado Global y Destino',
-            'eric': 'Parte 5: Segmentación y Marketing'
+            'eric': 'Parte 5: Segmentación y Marketing',
+            'conclusiones': 'Conclusiones Finales'
         };
 
         function switchTab(tabId) {
@@ -1164,18 +1187,6 @@
                     datasets: [
                         { label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: 'rgba(139, 30, 27, 0.7)', borderColor: cRed, borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
                         { label: 'Volumen (Tn)', data: [1592, 1660, 636, 324], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
-                    ]
-                },
-                options: dualAxisOptions
-            });
-            
-            new Chart(document.getElementById('chartVictorEmpPeru'), {
-                type: 'bar',
-                data: {
-                    labels: ['Ajinomoto', 'Kikko', 'Eximport', 'Geronimo'],
-                    datasets: [
-                        { label: 'Valor FOB (Miles USD)', data: [678, 482, 134, 86], backgroundColor: 'rgba(16, 185, 129, 0.7)', borderColor: '#10B981', borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
-                        { label: 'Volumen (Tn)', data: [800, 468, 92, 64], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
                     ]
                 },
                 options: dualAxisOptions
