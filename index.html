@@ -19,11 +19,11 @@
                 extend: {
                     colors: {
                         soya: {
-                            dark: '#1F1209', // Color salsa de soya oscura
+                            dark: '#1F1209', 
                             light: '#3E2723',
-                            gold: '#D4AF37', // Dorado de la etiqueta
-                            sand: '#EEDC9A', // Fondo de la etiqueta
-                            red: '#8B1E1B'   // Rojo del sello/bandera
+                            gold: '#D4AF37', 
+                            sand: '#EEDC9A', 
+                            red: '#8B1E1B'   
                         }
                     },
                     fontFamily: {
@@ -40,7 +40,6 @@
         .nav-item { transition: all 0.3s ease; }
         .nav-item:hover:not(.nav-active) { background-color: #3E2723; color: #EEDC9A; }
         
-        /* Ocultar secciones dinámicamente */
         .dashboard-section { display: none; animation: fadeIn 0.5s ease-in-out; }
         .dashboard-section.active { display: block; }
         
@@ -49,7 +48,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Estilos FODA Cruzado */
         .foda-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
         @media (min-width: 768px) { .foda-grid { grid-template-columns: 1fr 1fr; } }
         
@@ -60,10 +58,10 @@
             cursor: pointer;
         }
         .foda-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
-        .foda-f { border-color: #10B981; } /* Verde */
-        .foda-o { border-color: #3B82F6; } /* Azul */
-        .foda-d { border-color: #F59E0B; } /* Naranja */
-        .foda-a { border-color: #EF4444; } /* Rojo */
+        .foda-f { border-color: #10B981; } 
+        .foda-o { border-color: #3B82F6; } 
+        .foda-d { border-color: #F59E0B; } 
+        .foda-a { border-color: #EF4444; } 
 
         .cruzado-btn {
             background: #1F1209; color: #D4AF37; padding: 0.5rem 1rem; border-radius: 0.25rem;
@@ -71,73 +69,49 @@
         }
         .cruzado-btn:hover { background: #8B1E1B; color: white; }
 
-        /* Modal FODA */
         #foda-modal { display: none; }
         #foda-modal.flex { display: flex; animation: fadeIn 0.2s ease-in-out; }
         
-        /* Efecto Flip para Tarjetas de Gráficos (Parte 1) */
-        .flip-card {
-            perspective: 1000px;
-            height: 400px; 
-        }
-        .flip-card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-        .flip-card.flipped .flip-card-inner {
-            transform: rotateY(180deg);
-        }
+        /* Flip Cards General */
+        .flip-card { perspective: 1000px; height: 400px; }
+        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
         .flip-card-front, .flip-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 0.75rem; 
-            background-color: white;
+            position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+            border-radius: 0.75rem; background-color: white;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
+            padding: 1.5rem; display: flex; flex-direction: column;
         }
-        .flip-card-back {
-            transform: rotateY(180deg);
-        }
+        .flip-card-back { transform: rotateY(180deg); }
 
-        /* Custom Scrollbar */
+        /* Flip Card Gigante (Parte 5 - Embudo) */
+        .flip-card-lg { height: 500px; }
+
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #1F1209; }
 
-        /* Para el gráfico de banderas */
         .chart-container { position: relative; height: 100%; width: 100%; }
-        
-        /* Ajuste de Cover Image para asegurar llenado vertical */
         .cover-image-wrapper { height: 100%; min-height: 400px; }
-        @media (min-width: 1280px) {
-            .cover-image-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; }
-        }
+        @media (min-width: 1280px) { .cover-image-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; } }
     </style>
 </head>
 <body class="flex h-[100dvh] overflow-hidden">
 
-    <!-- Overlay para móviles -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden transition-opacity lg:hidden" onclick="toggleSidebar()"></div>
 
-    <!-- Modal Flow inicial (Flujo de Distribución) -->
-    <div id="modalFlow" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-[60]" onclick="closeModal('modalFlow')">
-        <div class="bg-white w-full max-w-2xl rounded-lg shadow-2xl p-8 relative transform scale-100 transition-transform" onclick="event.stopPropagation()">
-            <button onclick="closeModal('modalFlow')" class="absolute top-4 right-4 text-gray-500 hover:text-soya-red text-3xl font-bold focus:outline-none">&times;</button>
+    <!-- Modal Flow (Parte 5) -->
+    <div id="modalFlow" class="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50" onclick="closeModal('modalFlow')">
+        <div class="modal-content bg-white w-full max-w-2xl rounded-lg shadow-2xl p-8 relative transform scale-95" onclick="event.stopPropagation()">
+            <button onclick="closeModal('modalFlow')" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-3xl font-bold">&times;</button>
             <h3 class="text-2xl font-bold mb-4 text-slate-800">Estructura Lógica del Flujograma Documentario</h3>
             <p class="text-gray-700 mb-6 text-justify">Estructura lógica del canal de distribución y flujograma para el caso de exportación de Salsa de Soya hacia Chile.</p>
-            <button onclick="showPdfAndCloseModal('modalFlow', 'https://tinyurl.com/FlujoSoyaChile')" class="inline-block bg-soya-dark text-soya-gold font-bold py-3 px-6 rounded-lg hover:bg-soya-red hover:text-white transition-colors shadow-md">Ver Flujograma</button>
+            <button onclick="showPdfAndCloseModal('modalFlow', 'https://tinyurl.com/FlujoSoyaChile')" class="inline-block bg-soya-gold text-soya-dark font-bold py-2 px-5 rounded-lg hover:bg-soya-red hover:text-white transition-colors">Ver Flujograma</button>
         </div>
     </div>
 
-    <!-- Overlay para Flujo Interactivo Fullscreen -->
+    <!-- Overlay Iframe -->
     <div id="flujo-iframe-overlay" class="fixed inset-0 bg-gray-900 z-[100] hidden flex-col animation-fadeIn">
         <div class="h-16 bg-black flex items-center px-4 shadow-md justify-between z-10 flex-shrink-0">
             <button onclick="closeIframeFlujo()" class="bg-soya-gold text-soya-dark px-4 py-2 rounded-lg font-bold hover:bg-white transition flex items-center focus:outline-none">
@@ -174,40 +148,40 @@
             <button onclick="switchTab('marilin')" id="nav-marilin" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-chart-line w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 1: Análisis Comercial</span>
-                    <span class="text-xs opacity-75">Marilin M.</span>
+                    <span class="font-heading block text-sm">Parte 1: Marilin M.</span>
+                    <span class="text-xs opacity-75">Contexto y Exportación</span>
                 </div>
             </button>
 
             <button onclick="switchTab('franchesca')" id="nav-franchesca" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-chess-knight w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 2: FODA y Producto</span>
-                    <span class="text-xs opacity-75">Franchesca P.</span>
+                    <span class="font-heading block text-sm">Parte 2: Franchesca P.</span>
+                    <span class="text-xs opacity-75">Estrategia y Producto</span>
                 </div>
             </button>
 
             <button onclick="switchTab('isabella')" id="nav-isabella" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-industry w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 3: Oferta y Prov.</span>
-                    <span class="text-xs opacity-75">Isabella M.</span>
+                    <span class="font-heading block text-sm">Parte 3: Isabella M.</span>
+                    <span class="text-xs opacity-75">Oferta y Proveedores</span>
                 </div>
             </button>
 
             <button onclick="switchTab('victor')" id="nav-victor" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-globe w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 4: Mercado Global</span>
-                    <span class="text-xs opacity-75">Víctor C.</span>
+                    <span class="font-heading block text-sm">Parte 4: Víctor C.</span>
+                    <span class="text-xs opacity-75">Mercados Globales</span>
                 </div>
             </button>
 
             <button onclick="switchTab('eric')" id="nav-eric" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-bullseye w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 5: Marketing</span>
-                    <span class="text-xs opacity-75">Eric M.</span>
+                    <span class="font-heading block text-sm">Parte 5: Eric M.</span>
+                    <span class="text-xs opacity-75">Marketing y 9 P's</span>
                 </div>
             </button>
         </nav>
@@ -217,10 +191,8 @@
         </div>
     </aside>
 
-    <!-- Área de Contenido Principal -->
     <main class="flex-1 h-[100dvh] overflow-y-auto bg-gray-50 flex flex-col relative w-full pb-10">
         
-        <!-- Header superior -->
         <header class="h-20 bg-white shadow-sm flex items-center justify-between px-4 md:px-8 sticky top-0 z-20 flex-shrink-0">
             <div class="flex items-center">
                 <button onclick="toggleSidebar()" class="mr-4 text-soya-dark hover:text-soya-gold transition focus:outline-none">
@@ -234,7 +206,6 @@
             </div>
         </header>
 
-        <!-- Contenedor general que permite scroll -->
         <div class="p-4 md:p-8 flex-1 pb-20">
             
             <!-- PORTADA -->
@@ -271,7 +242,6 @@
 
             <!-- PARTE 1: MARILIN -->
             <section id="marilin" class="dashboard-section">
-                <!-- Fichas Interactivas de Objetivos -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="bg-soya-dark text-white rounded-xl shadow p-6 border-l-4 border-soya-gold cursor-pointer hover:bg-soya-light transition duration-300 relative overflow-hidden" onclick="toggleObj('obj-prin')">
                         <div class="absolute -right-4 -top-4 opacity-10"><i class="fa-solid fa-bullseye text-8xl"></i></div>
@@ -301,7 +271,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Gráfica 1 -->
                     <div class="flip-card" id="flip-chart1">
                         <div class="flip-card-inner">
                             <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
@@ -335,7 +304,6 @@
                         </div>
                     </div>
 
-                    <!-- Gráfica 2 -->
                     <div class="flip-card" id="flip-chart2">
                         <div class="flip-card-inner">
                             <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
@@ -536,12 +504,10 @@
 
             <!-- PARTE 4: VÍCTOR -->
             <section id="victor" class="dashboard-section">
-                <!-- SECCIÓN A: Estructura del Mercado Global -->
                 <div class="mb-8">
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-earth-americas text-soya-gold mr-2"></i>Estructura del Mercado Global</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                         <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-gold">
                             <h4 class="text-md font-bold text-soya-dark mb-2 text-center">Principales Productores (Mundial)</h4>
                             <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Porcentaje vs Volumen (Tn)</p>
@@ -550,42 +516,80 @@
                             </div>
                         </div>
 
-                        <!-- Proveedores a Chile (Solo Valor FOB, Barras Simples, sin Flip) -->
-                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-red-600">
-                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Principales Proveedores a Chile</h4>
-                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
-                            <div class="h-64 relative">
-                                <canvas id="chartVictorProvChile"></canvas>
+                        <div class="flip-card h-full min-h-[400px] lg:col-span-2" id="flip-chart3">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front cursor-pointer border-t-4 border-soya-dark" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Exportadores</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorExp"></canvas>
+                                    </div>
+                                </div>
+                                <div class="flip-card-back cursor-pointer border-t-4 border-blue-600" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Importadores</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate-left text-blue-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorImp"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Top Exportadores (Solo Valor FOB, Barras Simples) -->
-                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-dark">
-                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Exportadores</h4>
-                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
-                            <div class="h-64 relative">
-                                <canvas id="chartVictorExp"></canvas>
-                            </div>
-                        </div>
+                    </div>
 
-                        <!-- Top Importadores (Solo Valor FOB, Barras Simples) -->
-                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-blue-600">
-                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Importadores</h4>
-                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
-                            <div class="h-64 relative">
-                                <canvas id="chartVictorImp"></canvas>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="flip-card h-[400px]" id="flip-chart4">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front cursor-pointer border-t-4 border-red-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Principales Proveedores a Chile</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate text-red-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorProvChile"></canvas>
+                                    </div>
+                                </div>
+                                <div class="flip-card-back cursor-pointer border-t-4 border-green-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Empresas Exportadoras (Perú -> Chile)</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate-left text-green-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorEmpPeru"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SECCIÓN B: Índice de Atracción y Competitividad -->
                 <div class="mb-8">
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-scale-balanced text-soya-gold mr-2"></i>Índice de Atracción y Competitividad</h3>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        
-                        <!-- Tabla Índice Atracción -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-soya-gold text-lg text-center">Índice de Atracción</h4>
@@ -636,7 +640,6 @@
                             </div>
                         </div>
 
-                        <!-- Tabla Índice Competitividad -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-white text-lg text-center">Índice de Competitividad</h4>
@@ -697,7 +700,6 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN C: Selección del Nicho de Mercado -->
                 <div>
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-crosshairs text-soya-gold mr-2"></i>Selección del Nicho de Mercado</h3>
                     
@@ -733,78 +735,131 @@
             <!-- PARTE 5: ERIC -->
             <section id="eric" class="dashboard-section">
                 
-                <div class="bg-white rounded-xl shadow p-6 mb-8 border-t-4 border-soya-gold">
-                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-2 text-center"><i class="fa-solid fa-filter mr-2 text-soya-gold"></i>Cuantificación de la Demanda (Embudo)</h3>
-                    <p class="text-sm text-gray-500 mb-8 text-center">Población y mercado cautivo en Chile para la propuesta de IntiSoya.</p>
-                    
-                    <div class="flex flex-col items-center w-full max-w-2xl mx-auto font-sans space-y-2">
-                        <div class="bg-soya-dark text-white w-full py-4 flex flex-col items-center justify-center shadow-md relative z-40 transition hover:bg-black cursor-default" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
-                            <span class="text-xs text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
-                            <span class="text-3xl font-black">18.4M</span>
-                        </div>
-                        
-                        <div class="bg-gray-700 text-white w-[80%] py-4 flex flex-col items-center justify-center shadow-md relative z-30 -mt-4 transition hover:bg-gray-800 cursor-default" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
-                            <span class="text-xs text-gray-300 uppercase tracking-widest font-bold mt-2">Región Metro.</span>
-                            <span class="text-3xl font-black">7.4M</span>
-                        </div>
-                        
-                        <div class="bg-gray-500 text-white w-[60%] py-4 flex flex-col items-center justify-center shadow-md relative z-20 -mt-4 transition hover:bg-gray-600 cursor-default" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
-                            <span class="text-xs text-gray-200 uppercase tracking-widest font-bold mt-2">Público Obj.</span>
-                            <span class="text-3xl font-black">1.5M</span>
-                        </div>
-                        
-                        <div class="bg-gradient-to-b from-soya-gold to-yellow-600 text-soya-dark w-[40%] py-6 flex flex-col items-center justify-center shadow-2xl relative z-50 -mt-4 rounded-b-xl border-b-4 border-yellow-700 transform hover:scale-105 transition">
-                            <span class="text-xs uppercase tracking-widest font-bold">Nuestra Meta</span>
-                            <span class="text-4xl font-black">0.21 Tn</span>
-                            <span class="text-[11px] font-bold mt-1 text-soya-dark bg-white/30 px-2 py-0.5 rounded-full">(2.5% Share)</span>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-                    <div class="lg:col-span-5 bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-red">
-                        <h3 class="text-xl font-heading font-bold text-soya-dark mb-4"><i class="fa-solid fa-user-tag mr-2 text-soya-red"></i>Perfil del Cliente</h3>
-                        <ul class="space-y-4 text-sm">
-                            <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 text-gray-400 w-6"></i> <div><strong>Nicho:</strong> Región Metropolitana de Santiago y Valparaíso.</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-id-card mt-1 text-gray-400 w-6"></i> <div><strong>Demografía:</strong> Jóvenes DINKs y familias C2/C3 (25 a 54 años).</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-utensils mt-1 text-gray-400 w-6"></i> <div><strong>Uso:</strong> Preparación en casa, fusión peruana, reemplazar sal, delivery.</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-shop mt-1 text-gray-400 w-6"></i> <div><strong>Plaza:</strong> Supermercados, Oxxo, Tostadurías.</div></li>
-                        </ul>
+                    
+                    <!-- Embudo Doble Cara -->
+                    <div class="lg:col-span-7 flip-card flip-card-lg" id="flip-funnel">
+                        <div class="flip-card-inner">
+                            
+                            <!-- Frente: Valparaíso -->
+                            <div class="flip-card-front cursor-pointer bg-white rounded-xl shadow-xl border-t-4 border-soya-gold flex flex-col" onclick="document.getElementById('flip-funnel').classList.toggle('flipped')">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-filter mr-2 text-soya-gold"></i>Análisis Inicial (Valparaíso)</h3>
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                        <i class="fa-solid fa-rotate text-soya-dark text-xl"></i>
+                                    </div>
+                                </div>
+                                <p class="text-xs text-gray-500 mb-6 text-center">Análisis del puerto de entrada principal.</p>
+                                
+                                <div class="flex-1 flex flex-col items-center justify-center w-full max-w-sm mx-auto font-sans space-y-1">
+                                    <div class="bg-gray-800 text-white w-full py-3 flex flex-col items-center justify-center shadow-md z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
+                                        <span class="text-xl font-black">18.4M</span>
+                                    </div>
+                                    <div class="bg-gray-700 text-white w-[80%] py-3 flex flex-col items-center justify-center shadow-md z-30" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
+                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Valparaíso (10%)</span>
+                                        <span class="text-xl font-black">1.89M</span>
+                                    </div>
+                                    <div class="bg-gray-600 text-white w-[60%] py-3 flex flex-col items-center justify-center shadow-md z-20" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
+                                        <span class="text-[10px] text-gray-200 uppercase tracking-widest font-bold">Público Obj.</span>
+                                        <span class="text-xl font-black">401K</span>
+                                    </div>
+                                    <div class="bg-gray-400 text-soya-dark w-[40%] py-4 flex flex-col items-center justify-center shadow-lg z-50 rounded-b-xl border-b-4 border-gray-500">
+                                        <span class="text-[10px] uppercase tracking-widest font-bold">Meta (2.5%)</span>
+                                        <span class="text-2xl font-black">0.06 Tn</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 p-3 bg-red-50 border-l-4 border-red-500 rounded text-xs text-red-700 font-bold text-center">
+                                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> El volumen en Valparaíso es muy bajo. Presione para ver el ajuste logístico.
+                                </div>
+                            </div>
+                            
+                            <!-- Dorso: Región Metropolitana -->
+                            <div class="flip-card-back cursor-pointer bg-white rounded-xl shadow-xl border-t-4 border-soya-red flex flex-col" onclick="document.getElementById('flip-funnel').classList.toggle('flipped')">
+                                <div class="flex justify-between items-center mb-4">
+                                    <h3 class="text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-bullseye mr-2 text-soya-red"></i>Ajuste: Región Metropolitana</h3>
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                        <i class="fa-solid fa-rotate-left text-soya-dark text-xl"></i>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex-1 flex flex-col items-center justify-center w-full max-w-sm mx-auto font-sans space-y-1">
+                                    <div class="bg-soya-dark text-white w-full py-3 flex flex-col items-center justify-center shadow-md z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
+                                        <span class="text-xl font-black">18.4M</span>
+                                    </div>
+                                    <div class="bg-gray-800 text-white w-[80%] py-3 flex flex-col items-center justify-center shadow-md z-30" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
+                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold text-soya-gold">Santiago (40%)</span>
+                                        <span class="text-xl font-black">7.4M</span>
+                                    </div>
+                                    <div class="bg-gray-700 text-white w-[60%] py-3 flex flex-col items-center justify-center shadow-md z-20" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
+                                        <span class="text-[10px] text-gray-200 uppercase tracking-widest font-bold">Público Obj.</span>
+                                        <span class="text-xl font-black">1.5M</span>
+                                    </div>
+                                    <div class="bg-gradient-to-br from-soya-gold to-yellow-600 text-soya-dark w-[40%] py-4 flex flex-col items-center justify-center shadow-[0_5px_15px_rgba(212,175,55,0.5)] z-50 rounded-b-xl border-b-4 border-yellow-700">
+                                        <span class="text-[10px] uppercase tracking-widest font-bold">Meta (2.5%)</span>
+                                        <span class="text-2xl font-black">0.21 Tn</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 p-3 bg-green-50 border-l-4 border-green-500 rounded text-xs text-green-800 text-justify">
+                                    <strong>¿Por qué Santiago?</strong> Aunque la mercadería ingresa por el Puerto de San Antonio (Valparaíso), mantener inventario allí genera sobrecostos. Se traslada a <strong>Santiago</strong> porque concentra el 40% de la población nacional y la mayor densidad de puntos de venta (Retail/Horeca).
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="lg:col-span-7 bg-white rounded-xl shadow p-6 border-l-4 border-blue-600 flex flex-col justify-between">
+                    <!-- Ficha Perfil Consumidor -->
+                    <div class="lg:col-span-5 bg-white rounded-xl shadow-xl p-6 border-l-4 border-soya-red flex flex-col justify-between">
                         <div>
-                            <h3 class="text-xl font-heading font-bold text-soya-dark mb-3"><i class="fa-solid fa-network-wired mr-2 text-blue-600"></i>Canal de Distribución</h3>
-                            <ul class="space-y-2 text-sm text-gray-600 list-disc pl-4">
-                                <li><strong>Canal Largo:</strong> Operación B2B2C (Exportador -> Agente -> Mayorista -> Retail / HORECA -> Consumidor).</li>
-                                <li><strong>Estrategia Intensiva:</strong> Presencia máxima en supermercados y tiendas de conveniencia para garantizar capilaridad.</li>
-                                <li><strong>Adaptación PDM (B2B):</strong> Inclusión estratégica del sector industrial procesador de alimentos de Chile.</li>
+                            <h3 class="text-xl font-heading font-bold text-soya-dark mb-4 border-b pb-2"><i class="fa-solid fa-id-card-clip mr-2 text-soya-red"></i>Perfil del Cliente Target</h3>
+                            <ul class="space-y-5 text-sm text-gray-700">
+                                <li class="flex items-start"><div class="bg-red-50 p-2 rounded mr-3"><i class="fa-solid fa-map-location-dot text-soya-red text-lg"></i></div> <div><strong>Nicho Estratégico:</strong> Región Metropolitana de Santiago. Zonas urbanas de clase media/alta.</div></li>
+                                <li class="flex items-start"><div class="bg-red-50 p-2 rounded mr-3"><i class="fa-solid fa-users text-soya-red text-lg"></i></div> <div><strong>Demografía:</strong> Hombres y mujeres, 25 a 54 años. Segmentos GSE C1a, C1b, C2 y C3. DINKs y familias.</div></li>
+                                <li class="flex items-start"><div class="bg-red-50 p-2 rounded mr-3"><i class="fa-solid fa-bowl-food text-soya-red text-lg"></i></div> <div><strong>Hábito de Consumo:</strong> 2 a 3 veces por semana. Sazona cocina en casa, acompaña delivery de sushi, busca alternativas bajas en sodio.</div></li>
                             </ul>
                         </div>
-                        <button onclick="openFlujo()" class="mt-4 w-full bg-soya-dark text-soya-gold px-4 py-3 rounded-lg font-bold hover:bg-soya-red hover:text-white transition shadow-lg flex items-center justify-center focus:outline-none">
-                            <i class="fa-solid fa-diagram-project mr-2"></i> Ver Flujo Interactivo
-                        </button>
+                        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs font-bold text-gray-500 uppercase">
+                            <span>Ingreso Promedio:</span>
+                            <span class="text-soya-dark">$1,200,000 CLP</span>
+                        </div>
                     </div>
                 </div>
 
-                <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4">Mix de Marketing Adicional</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-blue-500 flex flex-col items-center justify-center">
-                        <i class="fa-solid fa-tag text-3xl text-blue-500 mb-2"></i>
-                        <h4 class="font-bold text-gray-800">Precio</h4>
-                        <p class="text-xs text-gray-500 mt-2">Competitivo: $3.00 - $4.50 USD. Evita segmento bajo asiático.</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-purple-500 flex flex-col items-center justify-center">
-                        <i class="fa-solid fa-bullhorn text-3xl text-purple-500 mb-2"></i>
-                        <h4 class="font-bold text-gray-800">Promoción</h4>
-                        <p class="text-xs text-gray-500 mt-2">Feria AQUASUR y marketing digital en TikTok (Marca Perú).</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-red-500 flex flex-col items-center justify-center">
-                        <i class="fa-solid fa-file-shield text-3xl text-red-500 mb-2"></i>
-                        <h4 class="font-bold text-gray-800">Permisos</h4>
-                        <p class="text-xs text-gray-500 mt-2">Arancel 0%, Reglamento Sanitario, y Ley de Octógonos obligatoria.</p>
+                <!-- Botón 9 P's y Plaza -->
+                <div class="flex flex-col md:flex-row gap-6 mb-6">
+                    <button onclick="render9Ps()" class="flex-1 bg-soya-dark text-soya-gold rounded-xl shadow-lg p-6 hover:bg-black transition flex items-center justify-center group">
+                        <div class="text-left">
+                            <h3 class="text-2xl font-heading font-bold mb-1">Desplegar Análisis de las 9 P's</h3>
+                            <p class="text-xs text-gray-400 uppercase tracking-widest">Mix de Marketing Completo</p>
+                        </div>
+                        <i class="fa-solid fa-circle-chevron-down text-4xl ml-6 group-hover:translate-y-2 transition-transform"></i>
+                    </button>
+                    
+                    <button onclick="openFlujo()" class="flex-1 bg-gradient-to-r from-soya-red to-red-800 text-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition flex items-center justify-center group">
+                        <div class="text-left">
+                            <h3 class="text-2xl font-heading font-bold mb-1">Flujo Interactivo de Plaza</h3>
+                            <p class="text-xs text-red-200 uppercase tracking-widest">Canal de Distribución B2B2C</p>
+                        </div>
+                        <i class="fa-solid fa-diagram-project text-4xl ml-6 group-hover:scale-110 transition-transform"></i>
+                    </button>
+                </div>
+
+                <!-- Contenedor dinámico para las 9 Ps -->
+                <div id="container-9ps" class="hidden animation-fadeIn">
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block">Desarrollo Mix de Marketing (9 P's)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-eye text-soya-gold text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">1. Panorama</h4><p class="text-xs text-gray-600 mt-1">Análisis PESTMA: Estabilidad A3, TLC 0%, PBI per cápita $16,710, y alto consumo de internet (74%).</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-users-viewfinder text-blue-500 text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">2. Personas</h4><p class="text-xs text-gray-600 mt-1">Buscan practicidad, opciones saludables (bajo sodio), influenciados por cadenas de comida rápida y fusión.</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-bottle-droplet text-soya-dark text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">3. Producto</h4><p class="text-xs text-gray-600 mt-1">Salsa premium, color dorado. Envase PET 210ml con dosificador, certificado HACCP.</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-file-shield text-red-500 text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">4. Permisos</h4><p class="text-xs text-gray-600 mt-1">Arancel 0%. Obligatorio Reglamento Sanitario (MINSAL) y control LMR.</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-box-open text-orange-500 text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">5. Packaging</h4><p class="text-xs text-gray-600 mt-1">Etiqueta en español. Aplicación estricta Ley 20.606 (Sello Octogonal Negro: ALTO EN SODIO).</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-tags text-green-500 text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">6. Precio</h4><p class="text-xs text-gray-600 mt-1">Fijación orientada a la competencia. Rango estimado entre $3.00 y $4.50 USD por botella.</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-bullhorn text-purple-500 text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">7. Promoción</h4><p class="text-xs text-gray-600 mt-1">Presencia en Feria AQUASUR (Puerto Varas) 2026. Marketing B2C vía redes sociales.</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100"><i class="fa-solid fa-handshake text-teal-500 text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">8. Prospectos</h4><p class="text-xs text-gray-600 mt-1">Apuntar a importadores como Mercado Asia, Comercial Fandic y distribuidores del canal HORECA.</p></div>
+                        <div class="bg-white p-5 rounded-lg shadow border border-gray-100 border-b-4 border-soya-gold"><i class="fa-solid fa-truck-fast text-soya-gold text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">9. Plaza</h4><p class="text-xs text-gray-600 mt-1">Canal Largo indirecto y estrategia intensiva (Supermercados Walmart, Cencosud, SMU).</p></div>
                     </div>
                 </div>
+
             </section>
 
         </div>
@@ -826,7 +881,6 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
-            
             if (window.innerWidth < 1024) { 
                 sidebar.classList.toggle('-translate-x-full');
                 overlay.classList.toggle('hidden');
@@ -839,6 +893,7 @@
             }
         }
 
+        // Scripts Flujo y 9Ps
         function openFlujo() { document.getElementById('modalFlow').classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
@@ -853,6 +908,16 @@
             document.getElementById('flujo-iframe-overlay').classList.add('hidden');
             document.getElementById('flujo-iframe-overlay').classList.remove('flex');
             document.getElementById('flujo-iframe').src = '';
+        }
+
+        function render9Ps() {
+            const container = document.getElementById('container-9ps');
+            if(container.classList.contains('hidden')){
+                container.classList.remove('hidden');
+                container.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            } else {
+                container.classList.add('hidden');
+            }
         }
 
         window.addEventListener('resize', () => {
@@ -1041,6 +1106,15 @@
                 scales: { y: { beginAtZero: true, title: { display: true, text: 'Miles USD' } } }
             };
 
+            const dualAxisOptions = {
+                responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { display: false } }, 
+                scales: {
+                    y: { type: 'linear', display: true, position: 'left' },
+                    y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false } }
+                }
+            };
+
             new Chart(document.getElementById('chartVictorProd'), {
                 type: 'doughnut',
                 data: {
@@ -1063,27 +1137,48 @@
                 type: 'bar',
                 data: {
                     labels: ['China', 'Japón', 'EE.UU.', 'P.Bajos'],
-                    datasets: [{ label: 'Valor FOB (Miles USD)', data: [200500, 150200, 100400, 80100], backgroundColor: 'rgba(31, 18, 9, 0.7)', borderColor: cDark, borderWidth: 1, borderRadius: 4 }]
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [221724, 80586, 74122, 204187], backgroundColor: 'rgba(31, 18, 9, 0.7)', borderColor: cDark, borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [232583, 54450, 45108, 81432], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
                 },
-                options: barOptions
+                options: dualAxisOptions
             });
 
             new Chart(document.getElementById('chartVictorImp'), {
                 type: 'bar',
                 data: {
                     labels: ['EE.UU.', 'Francia', 'Reino Unido', 'Alemania'],
-                    datasets: [{ label: 'Valor FOB (Miles USD)', data: [142359, 63188, 57301, 50120], backgroundColor: 'rgba(59, 130, 246, 0.7)', borderColor: '#3B82F6', borderWidth: 1, borderRadius: 4 }]
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [142359, 63188, 57301, 55656], backgroundColor: 'rgba(59, 130, 246, 0.7)', borderColor: '#3B82F6', borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [93310, 45000, 27589, 25881], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
                 },
-                options: barOptions
+                options: dualAxisOptions
             });
 
             new Chart(document.getElementById('chartVictorProvChile'), {
                 type: 'bar',
                 data: {
                     labels: ['EE.UU.', 'China', 'Perú', 'Brasil'],
-                    datasets: [{ label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: 'rgba(139, 30, 27, 0.7)', borderColor: cRed, borderWidth: 1, borderRadius: 4 }]
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: 'rgba(139, 30, 27, 0.7)', borderColor: cRed, borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [1592, 1660, 636, 324], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
                 },
-                options: barOptions
+                options: dualAxisOptions
+            });
+            
+            new Chart(document.getElementById('chartVictorEmpPeru'), {
+                type: 'bar',
+                data: {
+                    labels: ['Ajinomoto', 'Kikko', 'Eximport', 'Geronimo'],
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [678, 482, 134, 86], backgroundColor: 'rgba(16, 185, 129, 0.7)', borderColor: '#10B981', borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [800, 468, 92, 64], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
+                },
+                options: dualAxisOptions
             });
 
             const flagUrls = {
