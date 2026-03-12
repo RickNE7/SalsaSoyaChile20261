@@ -84,17 +84,20 @@
         /* Para el gráfico de banderas */
         .chart-container { position: relative; height: 100%; width: 100%; }
         
-        /* Sidebar transition */
-        #sidebar { transition: margin 0.3s ease-in-out, transform 0.3s ease-in-out; }
+        /* Ajuste de Cover Image para asegurar llenado vertical */
+        .cover-image-wrapper { height: 100%; min-height: 400px; }
+        @media (min-width: 1280px) {
+            .cover-image-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; }
+        }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body class="flex h-[100dvh] overflow-hidden">
 
     <!-- Overlay para móviles -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-20 hidden transition-opacity lg:hidden" onclick="toggleSidebar()"></div>
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden transition-opacity lg:hidden" onclick="toggleSidebar()"></div>
 
     <!-- Sidebar Navegación -->
-    <aside id="sidebar" class="w-64 flex-shrink-0 bg-soya-dark text-gray-300 flex flex-col shadow-2xl z-30 absolute inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 h-full">
+    <aside id="sidebar" class="w-64 flex-shrink-0 bg-soya-dark text-gray-300 flex flex-col shadow-2xl z-40 fixed inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition-all duration-300 ease-in-out h-full">
         <div class="h-20 flex items-center justify-between px-4 border-b border-soya-light bg-black">
             <h1 class="text-3xl font-heading font-bold text-white tracking-widest mx-auto lg:mx-0">
                 Inti<span class="text-soya-gold">Soya</span>
@@ -105,7 +108,7 @@
             </button>
         </div>
         
-        <nav class="flex-1 overflow-y-auto py-4 space-y-2 px-3">
+        <nav class="flex-1 overflow-y-auto py-4 space-y-2 px-3 pb-20">
             <button onclick="switchTab('portada')" id="nav-portada" class="nav-item nav-active w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-house w-6 text-center mr-3"></i>
                 <span class="font-heading">Inicio / Portada</span>
@@ -156,18 +159,18 @@
             </button>
         </nav>
         
-        <div class="p-4 bg-soya-light border-t border-soya-dark text-xs text-center text-soya-sand">
+        <div class="p-4 bg-soya-light border-t border-soya-dark text-xs text-center text-soya-sand mt-auto hidden lg:block">
             ADEX Escuela - Ciclo 2026-I
         </div>
     </aside>
 
     <!-- Área de Contenido Principal -->
-    <main class="flex-1 overflow-y-auto bg-gray-50 relative w-full h-full flex flex-col">
+    <main class="flex-1 h-[100dvh] overflow-y-auto bg-gray-50 flex flex-col relative w-full pb-10">
         
         <!-- Header superior decorativo -->
-        <header class="h-20 bg-white shadow-sm flex items-center justify-between px-4 md:px-8 sticky top-0 z-10 flex-shrink-0">
+        <header class="h-20 bg-white shadow-sm flex items-center justify-between px-4 md:px-8 sticky top-0 z-20 flex-shrink-0">
             <div class="flex items-center">
-                <!-- Botón de hamburguesa siempre visible -->
+                <!-- Botón de hamburguesa visible siempre para toggle -->
                 <button onclick="toggleSidebar()" class="mr-4 text-soya-dark hover:text-soya-gold transition focus:outline-none">
                     <i class="fa-solid fa-bars text-2xl"></i>
                 </button>
@@ -179,12 +182,14 @@
             </div>
         </header>
 
-        <div class="p-4 md:p-8 flex-1">
+        <!-- Contenedor general que permite scroll hasta el final -->
+        <div class="p-4 md:p-8 flex-1 pb-20">
             
             <!-- PORTADA -->
-            <section id="portada" class="dashboard-section active h-full min-h-full">
-                <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col xl:flex-row border border-gray-100 h-full min-h-[80vh]">
-                    <div class="w-full xl:w-1/2 p-6 md:p-10 flex flex-col justify-center bg-gradient-to-br from-white to-soya-sand/30">
+            <section id="portada" class="dashboard-section active h-full">
+                <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col xl:flex-row border border-gray-100 min-h-[calc(100vh-12rem)] relative">
+                    
+                    <div class="w-full xl:w-1/2 p-6 md:p-10 flex flex-col justify-center bg-gradient-to-br from-white to-soya-sand/30 z-10 relative">
                         <div class="mb-2 text-soya-red font-bold tracking-widest text-sm md:text-base">PROYECTO INTEGRADOR 2026</div>
                         <h2 class="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-soya-dark mb-6 leading-tight">Plan de Exportación de <br><span class="text-soya-gold">Salsa de Soya</span> a Chile</h2>
                         <p class="text-gray-600 mb-8 text-base md:text-lg lg:pr-10">Investigación exhaustiva de mercado, oferta exportable, análisis logístico y mezcla de marketing para la internacionalización del producto IntiSoya.</p>
@@ -204,12 +209,11 @@
                     
                     <!-- Imagen de producto ocupando toda el área vertical -->
                     <div class="w-full xl:w-1/2 bg-gray-100 relative overflow-hidden min-h-[400px] xl:min-h-full flex items-center justify-center p-0">
-                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET-fondo).png" alt="Botella IntiSoya con Fondo" class="w-full h-full object-cover absolute inset-0 z-10">
-                        
+                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET-fondo).png" alt="Botella IntiSoya con Fondo" class="w-full h-full object-cover absolute inset-0 z-10">                        
                         <!-- QR Flotante -->
-                        <div class="absolute top-6 right-6 z-20 bg-white/90 p-3 rounded-xl shadow-2xl backdrop-blur-sm border border-gray-200 transform hover:scale-105 transition flex flex-col items-center">
+                        <div class="absolute top-6 right-6 z-20 bg-white/95 p-3 rounded-xl shadow-2xl backdrop-blur-sm border border-gray-200 transform hover:scale-105 transition flex flex-col items-center">
                             <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoyaQR.png" alt="QR Code IntiSoya" class="w-20 h-20 md:w-24 md:h-24 rounded border border-gray-100 mb-1">
-                            <span class="text-xs font-bold text-soya-dark">Escanéame</span>
+                            <span class="text-[10px] md:text-xs font-bold text-soya-dark uppercase tracking-wider">Escanéame</span>
                         </div>
                     </div>
                 </div>
@@ -261,8 +265,9 @@
                 
                 <!-- Definición del Producto -->
                 <div class="bg-white rounded-xl shadow p-6 mb-6 flex flex-col md:flex-row gap-6 items-center">
-                    <div class="w-full md:w-1/3 text-center md:border-r border-gray-200">
-                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET).png" alt="Producto IntiSoya PET transparente" class="h-56 mx-auto object-contain drop-shadow-md">
+                    <div class="w-full md:w-1/3 text-center md:border-r border-gray-200 flex flex-col items-center justify-center py-4">
+                        <!-- Imagen actualizada para la Parte 2 -->
+                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET).png" alt="Producto IntiSoya PET transparente sin fondo" class="h-64 object-contain drop-shadow-xl">
                         <h3 class="font-heading font-bold text-xl mt-4 text-soya-dark">IntiSoya - 210ml</h3>
                         <p class="text-sm text-soya-red font-bold">P.A. 2103.10.00.00</p>
                     </div>
@@ -447,7 +452,7 @@
                 <div class="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-100">
                     <h3 class="text-lg font-heading font-bold text-soya-dark mb-2 text-center">Matriz de Selección: Atracción vs Competitividad</h3>
                     <p class="text-xs text-center text-gray-500 mb-4">El tamaño de la bandera es proporcional al <strong>Consumo Per Cápita</strong> (España: 14.24 L, Bolivia: 11.3 L, Chile: 7.48 L)</p>
-                    <div class="h-72 md:h-[400px] chart-container relative w-full overflow-hidden">
+                    <div class="h-80 md:h-[450px] chart-container relative w-full overflow-hidden">
                         <canvas id="chartVictor2"></canvas>
                     </div>
                     <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
@@ -546,21 +551,21 @@
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
             
-            // Para Desktop, usa margen negativo para ocultar. Para móvil, traslada.
-            if (window.innerWidth < 1024) { // Menor a LG (Tailwind xl breakpoint)
+            // Lógica para Mobile (<1024px)
+            if (window.innerWidth < 1024) { 
                 sidebar.classList.toggle('-translate-x-full');
                 overlay.classList.toggle('hidden');
             } else {
-                // Desktop toggle
-                if (sidebar.style.marginLeft === '-16rem') {
-                    sidebar.style.marginLeft = '0';
+                // Lógica para Desktop (Agrega margen negativo izquierdo)
+                if (sidebar.classList.contains('-ml-64')) {
+                    sidebar.classList.remove('-ml-64');
                 } else {
-                    sidebar.style.marginLeft = '-16rem';
+                    sidebar.classList.add('-ml-64');
                 }
             }
         }
 
-        // Evitar bugs de redimensionado de pantalla
+        // Evitar bugs visuales al redimensionar la pantalla
         window.addEventListener('resize', () => {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -568,7 +573,7 @@
                 overlay.classList.add('hidden');
                 sidebar.classList.remove('-translate-x-full');
             } else {
-                sidebar.style.marginLeft = '0';
+                sidebar.classList.remove('-ml-64');
                 sidebar.classList.add('-translate-x-full');
             }
         });
@@ -590,7 +595,7 @@
         };
 
         function switchTab(tabId) {
-            // Actualizar Nav
+            // Actualizar Nav visualmente
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('nav-active');
             });
@@ -607,7 +612,7 @@
             // Mostrar seleccionada
             document.getElementById(tabId).classList.add('active');
 
-            // Cierra el sidebar en la versión móvil al seleccionar un ítem
+            // Cierra el sidebar en la versión móvil al seleccionar un ítem automáticamente
             if (window.innerWidth < 1024) {
                 const sidebar = document.getElementById('sidebar');
                 const overlay = document.getElementById('sidebar-overlay');
@@ -617,17 +622,17 @@
                 }
             }
 
-            // Inicializar gráficos si es la primera vez que se entra a la tab
+            // Inicializar gráficos solo la primera vez que se entra a la sección
             if(tabId === 'marilin' && !chartsInitialized.marilin) {
-                initMarilinCharts();
+                setTimeout(initMarilinCharts, 100);
                 chartsInitialized.marilin = true;
             }
             if(tabId === 'isabella' && !chartsInitialized.isabella) {
-                initIsabellaCharts();
+                setTimeout(initIsabellaCharts, 100);
                 chartsInitialized.isabella = true;
             }
             if(tabId === 'victor' && !chartsInitialized.victor) {
-                initVictorCharts();
+                setTimeout(initVictorCharts, 100);
                 chartsInitialized.victor = true;
             }
         }
@@ -658,13 +663,11 @@
 
         // --- GRÁFICOS CHART.JS ---
         
-        // Colores Generales
         const cDark = '#1F1209';
         const cGold = '#D4AF37';
         const cRed = '#8B1E1B';
 
         function initMarilinCharts() {
-            // Chart 1: Evolución
             new Chart(document.getElementById('chartMarilin1'), {
                 type: 'line',
                 data: {
@@ -689,7 +692,6 @@
                 }
             });
 
-            // Chart 2: Top 3 Mercados
             new Chart(document.getElementById('chartMarilin2'), {
                 type: 'bar',
                 data: {
@@ -710,7 +712,6 @@
         }
 
         function initIsabellaCharts() {
-            // Chart 1: Doughnut Zonas
             new Chart(document.getElementById('chartIsabella1'), {
                 type: 'doughnut',
                 data: {
@@ -731,7 +732,6 @@
                 }
             });
 
-            // Chart 2: Proveedores Score
             new Chart(document.getElementById('chartIsabella2'), {
                 type: 'bar',
                 indexAxis: 'y',
@@ -754,7 +754,6 @@
         }
 
         function initVictorCharts() {
-            // Chart 1: Proveedores Chile
             new Chart(document.getElementById('chartVictor1'), {
                 type: 'bar',
                 data: {
@@ -773,12 +772,16 @@
                 }
             });
 
-            // Pre-cargado de banderas para Chart 2 (Se utiliza un CDN público estable de banderas)
-            const imgCL = new Image(); imgCL.src = 'https://flagcdn.com/w80/cl.png';
-            const imgES = new Image(); imgES.src = 'https://flagcdn.com/w80/es.png';
-            const imgBO = new Image(); imgBO.src = 'https://flagcdn.com/w80/bo.png';
+            // Cargar imágenes de banderas para el plugin (Formatos PNG desde FlagCDN)
+            const flagImages = {};
+            ['cl', 'es', 'bo'].forEach(code => {
+                const img = new Image();
+                img.src = `https://flagcdn.com/w80/${code}.png`;
+                img.onload = () => { if(window.victorChart2) window.victorChart2.update(); };
+                flagImages[code] = img;
+            });
 
-            // Plugin personalizado para dibujar las banderas dentro de los puntos del scatter chart
+            // Plugin personalizado para dibujar las banderas proporcionales al tamaño de 'r'
             const flagPlugin = {
                 id: 'flagPlugin',
                 afterDatasetsDraw(chart) {
@@ -790,34 +793,28 @@
                                 const dataPoint = dataset.data[index];
                                 const { x, y } = element.tooltipPosition();
                                 
-                                // El radio se basa en el Consumo Per Cápita (r). 
-                                // Multiplicador ajustado para que sea estéticamente visible (x 3.5 aprox)
-                                const radius = dataPoint.r * 3.5; 
+                                // Aumentamos la escala a * 4 para que la diferencia visual sea notoria (España se verá enorme, Chile la mitad)
+                                const radius = dataPoint.r * 4; 
                                 const img = dataset.flagImg;
                                 
                                 if (img && img.complete) {
                                     ctx.save();
-                                    
-                                    // Dibujar el trazado circular para recortar (clip) la imagen de la bandera
+                                    // Clip circular
                                     ctx.beginPath();
                                     ctx.arc(x, y, radius, 0, Math.PI * 2);
                                     ctx.closePath();
                                     ctx.clip();
                                     
-                                    // Dibujar la imagen de la bandera centrada y escalada al diámetro del círculo
+                                    // Dibujar imagen centrada
                                     ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
-                                    
                                     ctx.restore();
                                     
-                                    // Dibujar el borde del círculo para resaltar
+                                    // Borde distintivo
                                     ctx.beginPath();
                                     ctx.arc(x, y, radius, 0, Math.PI * 2);
                                     ctx.lineWidth = 3;
                                     ctx.strokeStyle = dataset.borderColor || '#333';
                                     ctx.stroke();
-                                } else if (!img.complete && img.src) {
-                                    // Forzar renderizado si la imagen demora en cargar
-                                    img.onload = () => chart.update();
                                 }
                             });
                         }
@@ -825,23 +822,22 @@
                 }
             };
 
-            // Chart 2: Matriz Scatter con Banderas (Tamaño = Consumo Per Capita)
-            const victorChart2 = new Chart(document.getElementById('chartVictor2'), {
+            // Chart 2: Matriz Scatter con Banderas Proporcionales
+            window.victorChart2 = new Chart(document.getElementById('chartVictor2'), {
                 type: 'scatter',
                 plugins: [flagPlugin],
                 data: {
                     datasets: [
-                        // Radio (r) exacto proporcionado: Chile 7.48, España 14.24, Bolivia 11.3
-                        { label: 'Chile', data: [{x: 19, y: 40.2, r: 7.48}], borderColor: '#10B981', flagImg: imgCL, pointRadius: 0 },
-                        { label: 'España', data: [{x: 31, y: 8.0, r: 14.24}], borderColor: '#F59E0B', flagImg: imgES, pointRadius: 0 },
-                        { label: 'Bolivia', data: [{x: -10, y: 58.7, r: 11.3}], borderColor: '#EF4444', flagImg: imgBO, pointRadius: 0 }
+                        { label: 'Chile', data: [{x: 19, y: 40.2, r: 7.48}], borderColor: '#10B981', flagImg: flagImages['cl'], pointRadius: 0 },
+                        { label: 'España', data: [{x: 31, y: 8.0, r: 14.24}], borderColor: '#F59E0B', flagImg: flagImages['es'], pointRadius: 0 },
+                        { label: 'Bolivia', data: [{x: -10, y: 58.7, r: 11.3}], borderColor: '#EF4444', flagImg: flagImages['bo'], pointRadius: 0 }
                     ]
                 },
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false,
                     layout: {
-                        padding: { top: 20, right: 30, bottom: 10, left: 10 } // Espacio para que las banderas grandes no se corten
+                        padding: { top: 40, right: 60, bottom: 20, left: 20 } // Espacio extra grande para que no se corten las banderas de España (radio ~ 57px)
                     },
                     scales: {
                         x: { 
