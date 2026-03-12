@@ -515,80 +515,37 @@
                 <div class="mb-8">
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-earth-americas text-soya-gold mr-2"></i>Estructura del Mercado Global</h3>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
                         <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-gold">
                             <h4 class="text-md font-bold text-soya-dark mb-2 text-center">Principales Productores (Mundial)</h4>
                             <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Porcentaje vs Volumen (Tn)</p>
-                            <div class="h-64 md:h-[350px] relative flex justify-center items-center">
+                            <div class="h-64 relative flex justify-center items-center">
                                 <canvas id="chartVictorProd"></canvas>
                             </div>
                         </div>
 
-                        <div class="flip-card h-full min-h-[400px]" id="flip-chart3">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front border-t-4 border-soya-dark">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Exportadores</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
-                                            <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorExp"></canvas>
-                                    </div>
-                                </div>
-                                <div class="flip-card-back border-t-4 border-blue-600">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Importadores</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
-                                            <i class="fa-solid fa-rotate-left text-blue-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorImp"></canvas>
-                                    </div>
-                                </div>
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-red-600">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Principales Proveedores a Chile</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorProvChile"></canvas>
                             </div>
                         </div>
-                    </div>
+                        
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-dark">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Exportadores</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorExp"></canvas>
+                            </div>
+                        </div>
 
-                    <div class="grid grid-cols-1 gap-6">
-                        <div class="flip-card h-[400px]" id="flip-chart4">
-                            <div class="flip-card-inner">
-                                <div class="flip-card-front border-t-4 border-red-600">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Principales Proveedores a Chile</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
-                                            <i class="fa-solid fa-rotate text-red-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorProvChile"></canvas>
-                                    </div>
-                                </div>
-                                <div class="flip-card-back border-t-4 border-green-600">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Empresas Exportadoras (Perú -> Chile)</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
-                                            <i class="fa-solid fa-rotate-left text-green-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorEmpPeru"></canvas>
-                                    </div>
-                                </div>
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-blue-600">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Importadores</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorImp"></canvas>
                             </div>
                         </div>
                     </div>
@@ -598,6 +555,8 @@
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-scale-balanced text-soya-gold mr-2"></i>Índice de Atracción y Competitividad</h3>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        
+                        <!-- Tabla Índice Atracción -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-soya-gold text-lg text-center">Índice de Atracción</h4>
@@ -648,6 +607,7 @@
                             </div>
                         </div>
 
+                        <!-- Tabla Índice Competitividad -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-white text-lg text-center">Índice de Competitividad</h4>
@@ -704,37 +664,6 @@
                         <p class="text-xs text-center text-gray-500 mb-4">El tamaño de la bandera es proporcional al <strong>Consumo Per Cápita</strong></p>
                         <div class="h-80 md:h-[400px] chart-container relative w-full overflow-hidden">
                             <canvas id="chartVictor2"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-crosshairs text-soya-gold mr-2"></i>Selección del Nicho de Mercado</h3>
-                    
-                    <div class="bg-white rounded-xl shadow p-6 border-t-4 border-soya-red">
-                        <p class="text-sm text-gray-600 mb-6">El sustento para la selección definitiva del mercado chileno como nicho prioritario se fundamenta en los siguientes criterios comparativos:</p>
-                        
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200">
-                                <i class="fa-solid fa-truck-ramp-box text-3xl text-soya-dark mb-2"></i>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase">Importaciones (2024)</h4>
-                                <span class="text-xl font-bold text-soya-red">~6,293 Tn</span>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200">
-                                <i class="fa-solid fa-users text-3xl text-soya-dark mb-2"></i>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase">Población</h4>
-                                <span class="text-xl font-bold text-soya-red">18.4M</span>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200">
-                                <i class="fa-solid fa-money-bill-trend-up text-3xl text-soya-dark mb-2"></i>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase">Ingreso Per Cápita</h4>
-                                <span class="text-xl font-bold text-soya-red">$15,355</span>
-                            </div>
-                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200 shadow-[inset_0_0_10px_rgba(212,175,55,0.2)]">
-                                <i class="fa-solid fa-door-open text-3xl text-soya-gold mb-2"></i>
-                                <h4 class="text-xs font-bold text-gray-500 uppercase">Facilidad Acceso</h4>
-                                <span class="text-xl font-bold text-green-600">Alta (0% Arancel)</span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -921,7 +850,6 @@
                         <div class="bg-white p-5 rounded-lg shadow border border-gray-100 border-b-4 border-soya-gold"><i class="fa-solid fa-truck-fast text-soya-gold text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">9. Plaza</h4><p class="text-xs text-gray-600 mt-1">Canal Largo indirecto y estrategia intensiva (Supermercados Walmart, Cencosud, SMU).</p></div>
                     </div>
                 </div>
-
             </section>
 
             <!-- NUEVA SECCIÓN: CONCLUSIONES -->
@@ -1305,18 +1233,6 @@
                     datasets: [
                         { label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: 'rgba(139, 30, 27, 0.7)', borderColor: cRed, borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
                         { label: 'Volumen (Tn)', data: [1592, 1660, 636, 324], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
-                    ]
-                },
-                options: dualAxisOptions
-            });
-            
-            new Chart(document.getElementById('chartVictorEmpPeru'), {
-                type: 'bar',
-                data: {
-                    labels: ['Ajinomoto', 'Kikko', 'Eximport', 'Geronimo'],
-                    datasets: [
-                        { label: 'Valor FOB (Miles USD)', data: [678, 482, 134, 86], backgroundColor: 'rgba(16, 185, 129, 0.7)', borderColor: '#10B981', borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
-                        { label: 'Volumen (Tn)', data: [800, 468, 92, 64], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
                     ]
                 },
                 options: dualAxisOptions
