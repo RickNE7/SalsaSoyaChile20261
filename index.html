@@ -19,11 +19,11 @@
                 extend: {
                     colors: {
                         soya: {
-                            dark: '#1F1209', 
+                            dark: '#1F1209', // Color salsa de soya oscura
                             light: '#3E2723',
-                            gold: '#D4AF37', 
-                            sand: '#EEDC9A', 
-                            red: '#8B1E1B'   
+                            gold: '#D4AF37', // Dorado de la etiqueta
+                            sand: '#EEDC9A', // Fondo de la etiqueta
+                            red: '#8B1E1B'   // Rojo del sello/bandera
                         }
                     },
                     fontFamily: {
@@ -71,7 +71,11 @@
         }
         .cruzado-btn:hover { background: #8B1E1B; color: white; }
 
-        /* Efecto Flip para Tarjetas de Gráficos */
+        /* Modal FODA */
+        #foda-modal { display: none; }
+        #foda-modal.flex { display: flex; animation: fadeIn 0.2s ease-in-out; }
+        
+        /* Efecto Flip para Tarjetas de Gráficos (Parte 1) */
         .flip-card {
             perspective: 1000px;
             height: 400px; 
@@ -108,7 +112,10 @@
         ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #1F1209; }
 
+        /* Para el gráfico de banderas */
         .chart-container { position: relative; height: 100%; width: 100%; }
+        
+        /* Ajuste de Cover Image para asegurar llenado vertical */
         .cover-image-wrapper { height: 100%; min-height: 400px; }
         @media (min-width: 1280px) {
             .cover-image-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -167,40 +174,40 @@
             <button onclick="switchTab('marilin')" id="nav-marilin" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-chart-line w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 1: Marilin M.</span>
-                    <span class="text-xs opacity-75">Contexto y Exportación</span>
+                    <span class="font-heading block text-sm">Parte 1: Análisis Comercial</span>
+                    <span class="text-xs opacity-75">Marilin M.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('franchesca')" id="nav-franchesca" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-chess-knight w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 2: Franchesca P.</span>
-                    <span class="text-xs opacity-75">Estrategia y Producto</span>
+                    <span class="font-heading block text-sm">Parte 2: FODA y Producto</span>
+                    <span class="text-xs opacity-75">Franchesca P.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('isabella')" id="nav-isabella" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-industry w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 3: Isabella M.</span>
-                    <span class="text-xs opacity-75">Oferta y Proveedores</span>
+                    <span class="font-heading block text-sm">Parte 3: Oferta y Prov.</span>
+                    <span class="text-xs opacity-75">Isabella M.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('victor')" id="nav-victor" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-globe w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 4: Víctor C.</span>
-                    <span class="text-xs opacity-75">Mercados Globales</span>
+                    <span class="font-heading block text-sm">Parte 4: Mercado Global</span>
+                    <span class="text-xs opacity-75">Víctor C.</span>
                 </div>
             </button>
 
             <button onclick="switchTab('eric')" id="nav-eric" class="nav-item w-full flex items-center p-3 rounded-lg">
                 <i class="fa-solid fa-bullseye w-6 text-center mr-3"></i>
                 <div class="text-left">
-                    <span class="font-heading block text-sm">Parte 5: Eric M.</span>
-                    <span class="text-xs opacity-75">Marketing y 9 P's</span>
+                    <span class="font-heading block text-sm">Parte 5: Marketing</span>
+                    <span class="text-xs opacity-75">Eric M.</span>
                 </div>
             </button>
         </nav>
@@ -227,7 +234,7 @@
             </div>
         </header>
 
-        <!-- Contenedor general -->
+        <!-- Contenedor general que permite scroll -->
         <div class="p-4 md:p-8 flex-1 pb-20">
             
             <!-- PORTADA -->
@@ -264,6 +271,7 @@
 
             <!-- PARTE 1: MARILIN -->
             <section id="marilin" class="dashboard-section">
+                <!-- Fichas Interactivas de Objetivos -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div class="bg-soya-dark text-white rounded-xl shadow p-6 border-l-4 border-soya-gold cursor-pointer hover:bg-soya-light transition duration-300 relative overflow-hidden" onclick="toggleObj('obj-prin')">
                         <div class="absolute -right-4 -top-4 opacity-10"><i class="fa-solid fa-bullseye text-8xl"></i></div>
@@ -296,7 +304,6 @@
                     <!-- Gráfica 1 -->
                     <div class="flip-card" id="flip-chart1">
                         <div class="flip-card-inner">
-                            <!-- Frente -->
                             <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
@@ -311,7 +318,6 @@
                                     <canvas id="chartMarilin1Front"></canvas>
                                 </div>
                             </div>
-                            <!-- Dorso -->
                             <div class="flip-card-back cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
@@ -329,7 +335,7 @@
                         </div>
                     </div>
 
-                    <!-- Gráfica 2 (Ahora Mixta para Toneladas) -->
+                    <!-- Gráfica 2 -->
                     <div class="flip-card" id="flip-chart2">
                         <div class="flip-card-inner">
                             <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
@@ -364,7 +370,6 @@
                     </div>
                 </div>
                 
-                <!-- Conclusión Comercial (Recuperada y resaltada) -->
                 <div class="bg-gradient-to-r from-soya-dark to-gray-800 text-white rounded-xl shadow-xl mt-8 p-6 border-l-8 border-soya-gold">
                     <h3 class="font-heading font-bold text-soya-gold mb-3 text-xl"><i class="fa-solid fa-lightbulb mr-2"></i>Conclusión Comercial</h3>
                     <p class="text-gray-200 text-sm md:text-base leading-relaxed">
@@ -377,10 +382,9 @@
 
             <!-- PARTE 2: FRANCHESCA -->
             <section id="franchesca" class="dashboard-section">
-                
                 <div class="bg-white rounded-xl shadow p-6 mb-6 flex flex-col md:flex-row gap-6 items-center">
                     <div class="w-full md:w-1/3 text-center md:border-r border-gray-200 flex flex-col items-center justify-center py-4">
-                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET).png" alt="Producto IntiSoya PET transparente sin fondo" class="h-64 object-contain drop-shadow-xl">
+                        <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET).png" alt="Producto IntiSoya" class="h-64 object-contain drop-shadow-xl">
                         <h3 class="font-heading font-bold text-xl mt-4 text-soya-dark">IntiSoya - 210ml</h3>
                         <p class="text-sm text-soya-red font-bold">P.A. 2103.10.00.00</p>
                     </div>
@@ -441,7 +445,7 @@
                                 <i class="fa-solid fa-bolt text-red-200 text-2xl"></i>
                             </div>
                             <ul class="text-xs md:text-sm space-y-1 text-gray-600 list-disc pl-4">
-                                <li><strong>Competencia Global:</strong> China y EE. UU. dominan el 74% de las importaciones chilenas.</li>
+                                <li><strong>Competencia Global:</strong> China y EE. UU. dominan el 74% de importaciones chilenas.</li>
                                 <li><strong>Saturación Local:</strong> Existen 93 empresas peruanas exportando salsa de soya a Chile.</li>
                             </ul>
                         </div>
@@ -462,20 +466,19 @@
             <!-- PARTE 3: ISABELLA -->
             <section id="isabella" class="dashboard-section">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6">
+                    <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-gold">
                         <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Producción Nacional (2021-2025)</h3>
                         <div class="h-64 relative">
                             <canvas id="chartIsabella3"></canvas>
                         </div>
                     </div>
 
-                    <!-- Mapa Zonas con total EXACTAMENTE AL CENTRO DEL ANILLO -->
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6">
+                    <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-dark">
                         <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Zonas de Producción (Perú 2025)</h3>
-                        <div class="h-64 relative flex justify-center items-center">
+                        <div class="h-64 flex justify-center relative items-center">
                             <canvas id="chartIsabella1"></canvas>
-                            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                                <span class="text-2xl md:text-3xl font-black text-soya-dark leading-none">1,279 Tn</span>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none mt-4">
+                                <span class="text-3xl font-black text-soya-dark leading-none">1,279 Tn</span>
                                 <span class="text-[10px] font-bold text-gray-500 uppercase mt-1">Total Nacional</span>
                             </div>
                         </div>
@@ -483,7 +486,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6 flex flex-col justify-between">
+                    <div class="bg-white rounded-xl shadow p-4 md:p-6 flex flex-col justify-between border-t-4 border-soya-red">
                         <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Homologación de Proveedores (Soya)</h3>
                         <div class="h-48 mb-4">
                             <canvas id="chartIsabella2"></canvas>
@@ -537,87 +540,40 @@
                 <div class="mb-8">
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-earth-americas text-soya-gold mr-2"></i>Estructura del Mercado Global</h3>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        <!-- 1. Principales Productores -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
                         <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-gold">
                             <h4 class="text-md font-bold text-soya-dark mb-2 text-center">Principales Productores (Mundial)</h4>
                             <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Porcentaje vs Volumen (Tn)</p>
-                            <div class="h-64 md:h-[350px] relative flex justify-center items-center">
+                            <div class="h-64 relative flex justify-center items-center">
                                 <canvas id="chartVictorProd"></canvas>
                             </div>
                         </div>
 
-                        <!-- 2. Flip Card: Países Exportadores / Importadores -->
-                        <div class="flip-card h-full min-h-[400px]" id="flip-chart3">
-                            <div class="flip-card-inner">
-                                <!-- Frente: Exportadores (Gráfico Mixto) -->
-                                <div class="flip-card-front cursor-pointer border-t-4 border-soya-dark" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Exportadores</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorExp"></canvas>
-                                    </div>
-                                </div>
-                                <!-- Dorso: Importadores (Gráfico Mixto) -->
-                                <div class="flip-card-back cursor-pointer border-t-4 border-blue-600" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Importadores</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate-left text-blue-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorImp"></canvas>
-                                    </div>
-                                </div>
+                        <!-- Proveedores a Chile (Solo Valor FOB, Barras Simples, sin Flip) -->
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-red-600">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Principales Proveedores a Chile</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorProvChile"></canvas>
                             </div>
                         </div>
-                    </div>
+                        
+                        <!-- Top Exportadores (Solo Valor FOB, Barras Simples) -->
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-dark">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Exportadores</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorExp"></canvas>
+                            </div>
+                        </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
-                        <!-- 3. Flip Card: Proveedores Chile / Empresas Perú -->
-                        <div class="flip-card h-[400px]" id="flip-chart4">
-                            <div class="flip-card-inner">
-                                <!-- Frente: Proveedores a Chile -->
-                                <div class="flip-card-front cursor-pointer border-t-4 border-red-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Principales Proveedores a Chile</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate text-red-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorProvChile"></canvas>
-                                    </div>
-                                </div>
-                                <!-- Dorso: Empresas Perú -->
-                                <div class="flip-card-back cursor-pointer border-t-4 border-green-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
-                                    <div class="flex justify-between items-start mb-2">
-                                        <div>
-                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Empresas Exportadoras (Perú -> Chile)</h4>
-                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
-                                        </div>
-                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-rotate-left text-green-600 text-xl"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex-1 relative w-full h-full">
-                                        <canvas id="chartVictorEmpPeru"></canvas>
-                                    </div>
-                                </div>
+                        <!-- Top Importadores (Solo Valor FOB, Barras Simples) -->
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-blue-600">
+                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Importadores</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
+                            <div class="h-64 relative">
+                                <canvas id="chartVictorImp"></canvas>
                             </div>
                         </div>
                     </div>
@@ -628,46 +584,110 @@
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-scale-balanced text-soya-gold mr-2"></i>Índice de Atracción y Competitividad</h3>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                        
+                        <!-- Tabla Índice Atracción -->
+                        <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
-                                <h4 class="font-heading font-bold text-soya-gold text-lg text-center">Índice de Atracción (Criterios)</h4>
+                                <h4 class="font-heading font-bold text-soya-gold text-lg text-center">Índice de Atracción</h4>
                             </div>
-                            <div class="p-6">
-                                <ul class="space-y-3 text-sm text-gray-700">
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-shield-halved text-gray-400 mr-2"></i>Riesgo del País:</span> <strong>Bajo (A3)</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-ship text-gray-400 mr-2"></i>Días de Tránsito:</span> <strong>10 días (Callao - San Antonio)</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-users text-gray-400 mr-2"></i>Población:</span> <strong>18.4 Millones</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-utensils text-gray-400 mr-2"></i>Consumo Per Cápita:</span> <strong>7.48 Litros</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-sack-dollar text-gray-400 mr-2"></i>PBI Per Cápita:</span> <strong>USD 15,355</strong></li>
-                                </ul>
-                                <div class="mt-4 bg-green-100 text-green-800 p-3 rounded-lg text-center">
-                                    <span class="text-xs uppercase font-bold">Puntaje Total Ponderado</span><br>
-                                    <span class="text-3xl font-black">19.0 pts</span>
-                                </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                                        <tr>
+                                            <th class="px-4 py-3">Criterio</th>
+                                            <th class="px-4 py-3 text-green-700">Chile</th>
+                                            <th class="px-4 py-3 text-red-700">Bolivia</th>
+                                            <th class="px-4 py-3">España</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">Riesgo País</td>
+                                            <td class="px-4 py-3 text-green-700 font-bold">A3 (Bajo)</td>
+                                            <td class="px-4 py-3 text-red-700 font-bold">D (Alto)</td>
+                                            <td class="px-4 py-3">A2 (Bajo)</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">Población</td>
+                                            <td class="px-4 py-3">18.4 M</td>
+                                            <td class="px-4 py-3">12.4 M</td>
+                                            <td class="px-4 py-3">48.8 M</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">Consumo P/C</td>
+                                            <td class="px-4 py-3">7.48 L</td>
+                                            <td class="px-4 py-3">11.30 L</td>
+                                            <td class="px-4 py-3 font-bold">14.24 L</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">PBI Per Cápita</td>
+                                            <td class="px-4 py-3">$16,710</td>
+                                            <td class="px-4 py-3">$4,421</td>
+                                            <td class="px-4 py-3 font-bold">$35,327</td>
+                                        </tr>
+                                        <tr class="bg-gray-100">
+                                            <td class="px-4 py-3 font-bold uppercase text-soya-dark">Puntaje Total</td>
+                                            <td class="px-4 py-3 font-black text-green-700 text-lg">19.0 pts</td>
+                                            <td class="px-4 py-3 font-black text-red-700 text-lg">-10.0 pts</td>
+                                            <td class="px-4 py-3 font-black text-soya-dark text-lg">31.0 pts</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                        <!-- Tabla Índice Competitividad -->
+                        <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
-                                <h4 class="font-heading font-bold text-white text-lg text-center">Índice de Competitividad (Criterios)</h4>
+                                <h4 class="font-heading font-bold text-white text-lg text-center">Índice de Competitividad</h4>
                             </div>
-                            <div class="p-6">
-                                <ul class="space-y-3 text-sm text-gray-700">
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-percent text-gray-400 mr-2"></i>Arancel:</span> <strong>0% (TLC)</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-handshake text-gray-400 mr-2"></i>Facilidad de Negocios:</span> <strong>Alta (Top Latam)</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-building text-gray-400 mr-2"></i>Nro. Empresas Exportadoras:</span> <strong>93 (Perú)</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-globe text-gray-400 mr-2"></i>Países Competidores:</span> <strong>Alto (EEUU, China)</strong></li>
-                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-bolt text-gray-400 mr-2"></i>Poder Negociación (Perú):</span> <strong>Medio-Bajo</strong></li>
-                                </ul>
-                                <div class="mt-4 bg-blue-100 text-blue-800 p-3 rounded-lg text-center">
-                                    <span class="text-xs uppercase font-bold">Puntaje Total Ponderado</span><br>
-                                    <span class="text-3xl font-black">40.2 pts</span>
-                                </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-sm text-left">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 border-b">
+                                        <tr>
+                                            <th class="px-4 py-3">Criterio</th>
+                                            <th class="px-4 py-3 text-green-700">Chile</th>
+                                            <th class="px-4 py-3 text-red-700">Bolivia</th>
+                                            <th class="px-4 py-3">España</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">Arancel (TLC)</td>
+                                            <td class="px-4 py-3 font-bold text-green-700">0%</td>
+                                            <td class="px-4 py-3 font-bold text-red-700">0%</td>
+                                            <td class="px-4 py-3 font-bold text-soya-dark">0%</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">Facilidad Negocios</td>
+                                            <td class="px-4 py-3">Puesto 59</td>
+                                            <td class="px-4 py-3">Puesto 150</td>
+                                            <td class="px-4 py-3">Puesto 30</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">Empresas Expo (PE)</td>
+                                            <td class="px-4 py-3">5 (Altamente comp.)</td>
+                                            <td class="px-4 py-3">1</td>
+                                            <td class="px-4 py-3">1</td>
+                                        </tr>
+                                        <tr class="border-b">
+                                            <td class="px-4 py-3 font-semibold text-gray-800">Poder Negociación</td>
+                                            <td class="px-4 py-3 font-bold">Alto</td>
+                                            <td class="px-4 py-3">Medio-Alto</td>
+                                            <td class="px-4 py-3">Bajo</td>
+                                        </tr>
+                                        <tr class="bg-gray-100">
+                                            <td class="px-4 py-3 font-bold uppercase text-soya-dark">Puntaje Total</td>
+                                            <td class="px-4 py-3 font-black text-green-700 text-lg">40.2 pts</td>
+                                            <td class="px-4 py-3 font-black text-red-700 text-lg">58.7 pts</td>
+                                            <td class="px-4 py-3 font-black text-soya-dark text-lg">8.0 pts</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Figura 28 (Scatter Plot Banderas) -->
                     <div class="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-100">
                         <h3 class="text-lg font-heading font-bold text-soya-dark mb-2 text-center">Figura 28: Matriz de Selección (Atracción vs Competitividad)</h3>
                         <p class="text-xs text-center text-gray-500 mb-4">El tamaño de la bandera es proporcional al <strong>Consumo Per Cápita</strong></p>
@@ -713,38 +733,35 @@
             <!-- PARTE 5: ERIC -->
             <section id="eric" class="dashboard-section">
                 
-                <!-- Cuantificación en Gráfico de Embudo (Funnel CSS) -->
-                <div class="bg-white rounded-xl shadow-xl p-6 mb-8 border-t-4 border-soya-gold text-center">
-                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-2"><i class="fa-solid fa-filter mr-2 text-soya-gold"></i>Cuantificación de la Demanda (Embudo)</h3>
-                    <p class="text-sm text-gray-500 mb-6">Población y mercado cautivo en Chile para la propuesta de IntiSoya.</p>
+                <div class="bg-white rounded-xl shadow p-6 mb-8 border-t-4 border-soya-gold">
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-2 text-center"><i class="fa-solid fa-filter mr-2 text-soya-gold"></i>Cuantificación de la Demanda (Embudo)</h3>
+                    <p class="text-sm text-gray-500 mb-8 text-center">Población y mercado cautivo en Chile para la propuesta de IntiSoya.</p>
                     
-                    <div class="flex flex-col items-center w-full max-w-lg mx-auto py-2 font-sans">
-                        <!-- Nivel 1 -->
-                        <div class="bg-soya-dark text-white w-full py-4 flex flex-col items-center justify-center shadow-lg relative group transition-transform hover:scale-105 z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%); min-height: 80px;">
+                    <div class="flex flex-col items-center w-full max-w-2xl mx-auto font-sans space-y-2">
+                        <div class="bg-soya-dark text-white w-full py-4 flex flex-col items-center justify-center shadow-md relative z-40 transition hover:bg-black cursor-default" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
                             <span class="text-xs text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
-                            <span class="text-2xl font-black">18.4M</span>
+                            <span class="text-3xl font-black">18.4M</span>
                         </div>
-                        <!-- Nivel 2 -->
-                        <div class="bg-gray-700 text-white w-[80%] py-4 flex flex-col items-center justify-center shadow-lg relative group transition-transform hover:scale-105 z-30 -mt-2" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%); min-height: 80px;">
+                        
+                        <div class="bg-gray-700 text-white w-[80%] py-4 flex flex-col items-center justify-center shadow-md relative z-30 -mt-4 transition hover:bg-gray-800 cursor-default" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
                             <span class="text-xs text-gray-300 uppercase tracking-widest font-bold mt-2">Región Metro.</span>
-                            <span class="text-2xl font-black">7.4M</span>
+                            <span class="text-3xl font-black">7.4M</span>
                         </div>
-                        <!-- Nivel 3 -->
-                        <div class="bg-gray-600 text-white w-[60%] py-4 flex flex-col items-center justify-center shadow-lg relative group transition-transform hover:scale-105 z-20 -mt-2" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%); min-height: 80px;">
-                            <span class="text-xs text-gray-300 uppercase tracking-widest font-bold mt-2">Público Obj.</span>
-                            <span class="text-2xl font-black">1.5M</span>
+                        
+                        <div class="bg-gray-500 text-white w-[60%] py-4 flex flex-col items-center justify-center shadow-md relative z-20 -mt-4 transition hover:bg-gray-600 cursor-default" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
+                            <span class="text-xs text-gray-200 uppercase tracking-widest font-bold mt-2">Público Obj.</span>
+                            <span class="text-3xl font-black">1.5M</span>
                         </div>
-                        <!-- Nivel 4 (Resultado) -->
-                        <div class="bg-gradient-to-br from-soya-gold to-yellow-600 text-soya-dark w-[40%] py-6 flex flex-col items-center justify-center shadow-[0_10px_20px_rgba(212,175,55,0.5)] relative group transition-transform hover:scale-110 z-50 -mt-2 rounded-b-2xl border-b-4 border-yellow-700">
+                        
+                        <div class="bg-gradient-to-b from-soya-gold to-yellow-600 text-soya-dark w-[40%] py-6 flex flex-col items-center justify-center shadow-2xl relative z-50 -mt-4 rounded-b-xl border-b-4 border-yellow-700 transform hover:scale-105 transition">
                             <span class="text-xs uppercase tracking-widest font-bold">Nuestra Meta</span>
-                            <span class="text-3xl font-black">0.21 Tn</span>
-                            <span class="text-[10px] font-bold mt-1 text-soya-dark">(2.5% Market Share)</span>
+                            <span class="text-4xl font-black">0.21 Tn</span>
+                            <span class="text-[11px] font-bold mt-1 text-soya-dark bg-white/30 px-2 py-0.5 rounded-full">(2.5% Share)</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-                    <!-- Perfil del Consumidor -->
                     <div class="lg:col-span-5 bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-red">
                         <h3 class="text-xl font-heading font-bold text-soya-dark mb-4"><i class="fa-solid fa-user-tag mr-2 text-soya-red"></i>Perfil del Cliente</h3>
                         <ul class="space-y-4 text-sm">
@@ -755,7 +772,6 @@
                         </ul>
                     </div>
 
-                    <!-- Canal de Distribución Banner -->
                     <div class="lg:col-span-7 bg-white rounded-xl shadow p-6 border-l-4 border-blue-600 flex flex-col justify-between">
                         <div>
                             <h3 class="text-xl font-heading font-bold text-soya-dark mb-3"><i class="fa-solid fa-network-wired mr-2 text-blue-600"></i>Canal de Distribución</h3>
@@ -771,7 +787,6 @@
                     </div>
                 </div>
 
-                <!-- 9 P's Matrix (Summary) -->
                 <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4">Mix de Marketing Adicional</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-blue-500 flex flex-col items-center justify-center">
@@ -802,9 +817,7 @@
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
             <h3 id="modal-title" class="text-xl md:text-2xl font-heading font-bold mb-4 text-soya-dark border-b pb-2">Título</h3>
-            <div id="modal-content" class="text-gray-700 text-sm leading-relaxed space-y-3">
-                <!-- Contenido Dinámico -->
-            </div>
+            <div id="modal-content" class="text-gray-700 text-sm leading-relaxed space-y-3"></div>
         </div>
     </div>
 
@@ -826,13 +839,8 @@
             }
         }
 
-        function openFlujo() {
-            document.getElementById('modalFlow').classList.remove('hidden');
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).classList.add('hidden');
-        }
+        function openFlujo() { document.getElementById('modalFlow').classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
         function showPdfAndCloseModal(modalId, url) {
             closeModal(modalId);
@@ -885,16 +893,11 @@
         };
 
         function switchTab(tabId) {
-            document.querySelectorAll('.nav-item').forEach(el => {
-                el.classList.remove('nav-active');
-            });
+            document.querySelectorAll('.nav-item').forEach(el => { el.classList.remove('nav-active'); });
             document.getElementById('nav-' + tabId).classList.add('nav-active');
             document.getElementById('header-title').innerText = titles[tabId];
 
-            document.querySelectorAll('.dashboard-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            
+            document.querySelectorAll('.dashboard-section').forEach(el => { el.classList.remove('active'); });
             document.getElementById(tabId).classList.add('active');
 
             if (window.innerWidth < 1024) {
@@ -906,18 +909,9 @@
                 }
             }
 
-            if(tabId === 'marilin' && !chartsInitialized.marilin) {
-                setTimeout(initMarilinCharts, 100);
-                chartsInitialized.marilin = true;
-            }
-            if(tabId === 'isabella' && !chartsInitialized.isabella) {
-                setTimeout(initIsabellaCharts, 100);
-                chartsInitialized.isabella = true;
-            }
-            if(tabId === 'victor' && !chartsInitialized.victor) {
-                setTimeout(initVictorCharts, 100);
-                chartsInitialized.victor = true;
-            }
+            if(tabId === 'marilin' && !chartsInitialized.marilin) { setTimeout(initMarilinCharts, 100); chartsInitialized.marilin = true; }
+            if(tabId === 'isabella' && !chartsInitialized.isabella) { setTimeout(initIsabellaCharts, 100); chartsInitialized.isabella = true; }
+            if(tabId === 'victor' && !chartsInitialized.victor) { setTimeout(initVictorCharts, 100); chartsInitialized.victor = true; }
         }
 
         const fodaData = {
@@ -943,67 +937,55 @@
             document.getElementById('foda-modal').classList.remove('flex');
         }
 
-        const cDark = '#1F1209';
-        const cGold = '#D4AF37';
-        const cRed = '#8B1E1B';
+        const cDark = '#1F1209'; const cGold = '#D4AF37'; const cRed = '#8B1E1B';
 
         function initMarilinCharts() {
-            // GRAFICA 1 FRENTE
             new Chart(document.getElementById('chartMarilin1Front'), {
                 type: 'bar',
                 data: {
                     labels: ['2021', '2022', '2023', '2024', '2025'],
                     datasets: [
-                        { label: 'Valor FOB (US$)', data: [2441475, 2551804, 2825823, 3340492, 3913290], backgroundColor: cGold, yAxisID: 'y' },
+                        { label: 'Valor FOB (US$)', data: [2441475, 2551804, 2825823, 3340492, 3913290], backgroundColor: 'rgba(212, 175, 55, 0.7)', borderColor: cGold, borderWidth: 1, yAxisID: 'y' },
                         { label: 'Peso Neto (Kg)', data: [2121242, 2320159, 2593223, 3004890, 3427882], type: 'line', borderColor: cDark, borderWidth: 3, pointBackgroundColor: cDark, yAxisID: 'y1' }
                     ]
                 },
                 options: { 
                     responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-                    scales: {
-                        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'FOB (US$)' } },
-                        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Peso Neto (Kg)' }, grid: { drawOnChartArea: false } }
-                    }
+                    scales: { y: { type: 'linear', position: 'left' }, y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } } }
                 }
             });
 
-            // GRAFICA 1 DORSO
             new Chart(document.getElementById('chartMarilin1Back'), {
                 type: 'line',
                 data: {
                     labels: ['2021', '2022', '2023', '2024', '2025'],
-                    datasets: [{ label: 'Precio Promedio (US$/Kg)', data: [1.15, 1.10, 1.09, 1.11, 1.14], borderColor: cRed, backgroundColor: 'rgba(139, 30, 27, 0.2)', borderWidth: 4, fill: true, tension: 0.4, pointBackgroundColor: cRed, pointRadius: 6 }]
+                    datasets: [{ label: 'Precio Promedio (US$/Kg)', data: [1.15, 1.10, 1.09, 1.11, 1.14], borderColor: cRed, backgroundColor: 'rgba(139, 30, 27, 0.2)', borderWidth: 4, fill: true, tension: 0.4 }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 1.05, max: 1.20 } } }
             });
 
-            // GRAFICA 2 FRENTE (MIXTA AHORA)
             new Chart(document.getElementById('chartMarilin2Front'), {
                 type: 'bar',
                 data: {
                     labels: ['Chile', 'Bolivia', 'España'],
                     datasets: [
-                        { label: 'Valor FOB (US$)', data: [1875264, 962923, 470713], backgroundColor: cDark, borderRadius: 4, yAxisID: 'y' },
+                        { label: 'Valor FOB (US$)', data: [1875264, 962923, 470713], backgroundColor: 'rgba(31, 18, 9, 0.7)', borderColor: cDark, borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
                         { label: 'Peso Neto (Kg)', data: [1718311, 885944, 381329], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
                     ]
                 },
                 options: { 
                     responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-                    scales: {
-                        y: { type: 'linear', display: true, position: 'left' },
-                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false } }
-                    }
+                    scales: { y: { type: 'linear', position: 'left' }, y1: { type: 'linear', position: 'right', grid: { drawOnChartArea: false } } }
                 }
             });
 
-            // GRAFICA 2 DORSO
             new Chart(document.getElementById('chartMarilin2Back'), {
                 type: 'bar',
                 data: {
                     labels: ['Chile', 'Bolivia', 'España'],
-                    datasets: [{ label: 'Precio Promedio (US$/Kg)', data: [1.09, 1.09, 1.23], backgroundColor: [cRed, cGold, cDark], borderRadius: 6, barPercentage: 0.6 }]
+                    datasets: [{ label: 'Precio Promedio (US$/Kg)', data: [1.09, 1.09, 1.23], backgroundColor: ['rgba(139, 30, 27, 0.7)', 'rgba(212, 175, 55, 0.7)', 'rgba(31, 18, 9, 0.7)'], borderColor: [cRed, cGold, cDark], borderWidth: 1, borderRadius: 6 }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 0, title: { display: true, text: 'USD / Kilogramo' } } } }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 0 } } }
             });
         }
 
@@ -1012,27 +994,16 @@
                 type: 'line',
                 data: {
                     labels: ['2021', '2022', '2023', '2024', '2025'],
-                    datasets: [{
-                        label: 'Toneladas de Soya',
-                        data: [1684, 1686, 2722, 2230, 1279],
-                        borderColor: cGold,
-                        backgroundColor: 'rgba(212, 175, 55, 0.2)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.3,
-                        pointBackgroundColor: cGold,
-                        pointRadius: 4
-                    }]
+                    datasets: [{ label: 'Toneladas de Soya', data: [1684, 1686, 2722, 2230, 1279], borderColor: cGold, backgroundColor: 'rgba(212, 175, 55, 0.2)', borderWidth: 3, fill: true, tension: 0.3 }]
                 },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Toneladas' } } } }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
             });
 
-            // CHART DOUGHNUT CON TOOLTIP % y Tn
             new Chart(document.getElementById('chartIsabella1'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Piura (59.5%)', 'Ucayali (19.9%)', 'Amazonas (15.0%)', 'Otros (5.6%)'],
-                    datasets: [{ data: [760, 255, 191, 72], backgroundColor: [cGold, '#b45309', '#047857', cDark], borderWidth: 0 }]
+                    labels: ['Piura', 'Ucayali', 'Amazonas', 'Otros'],
+                    datasets: [{ data: [760, 255, 191, 72], backgroundColor: ['rgba(212, 175, 55, 0.8)', 'rgba(180, 83, 9, 0.8)', 'rgba(4, 120, 87, 0.8)', 'rgba(31, 18, 9, 0.8)'], borderColor: [cGold, '#b45309', '#047857', cDark], borderWidth: 1 }]
                 },
                 options: { 
                     responsive: true, maintainAspectRatio: false, cutout: '75%', 
@@ -1044,8 +1015,7 @@
                                     let value = ctx.raw;
                                     let total = 1278; 
                                     let percentage = ((value / total) * 100).toFixed(1);
-                                    let labelBase = ctx.label.split(' ')[0]; 
-                                    return ` ${labelBase}: ${value} Tn (${percentage}%)`; 
+                                    return ` ${ctx.label}: ${value} Tn (${percentage}%)`; 
                                 }
                             }
                         }
@@ -1058,151 +1028,89 @@
                 indexAxis: 'y',
                 data: {
                     labels: ['Campo Grande', 'Corporación Lider', 'Reino del Valle'],
-                    datasets: [{ label: 'Puntaje Ponderado', data: [2.85, 1.70, 1.70], backgroundColor: ['#10B981', '#E2E8F0', '#E2E8F0'], borderRadius: 4 }]
+                    datasets: [{ label: 'Puntaje Ponderado', data: [2.85, 1.70, 1.70], backgroundColor: ['rgba(16, 185, 129, 0.7)', 'rgba(226, 232, 240, 0.7)', 'rgba(226, 232, 240, 0.7)'], borderColor: ['#10B981', '#cbd5e1', '#cbd5e1'], borderWidth: 1, borderRadius: 4 }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { max: 3, ticks: { stepSize: 1 } } } }
             });
         }
 
         function initVictorCharts() {
-            
-            const dualAxisOptions = {
-                responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
-                plugins: { legend: { display: false } }, 
-                scales: {
-                    y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Miles USD' } },
-                    y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Toneladas' }, grid: { drawOnChartArea: false } }
-                }
+            const barOptions = {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, title: { display: true, text: 'Miles USD' } } }
             };
 
-            // 1. Principales Productores (Circular/Doughnut con Custom Tooltip para % y Tn)
             new Chart(document.getElementById('chartVictorProd'), {
                 type: 'doughnut',
                 data: {
                     labels: ['China', 'Japón', 'EE.UU.', 'Otros'],
                     datasets: [{ 
-                        data: [45, 25, 15, 15], 
-                        tons: [450000, 250000, 150000, 150000], // Base referencial para toneladas
-                        backgroundColor: [cRed, cDark, '#3B82F6', cGold], 
-                        borderWidth: 0 
+                        data: [45, 25, 15, 15], tons: [450000, 250000, 150000, 150000], 
+                        backgroundColor: ['rgba(139, 30, 27, 0.8)', 'rgba(31, 18, 9, 0.8)', 'rgba(59, 130, 246, 0.8)', 'rgba(212, 175, 55, 0.8)'], borderColor: [cRed, cDark, '#3B82F6', cGold], borderWidth: 1 
                     }]
                 },
                 options: { 
                     responsive: true, maintainAspectRatio: false, 
                     plugins: { 
                         legend: { position: 'bottom', labels: { boxWidth: 12 } },
-                        tooltip: {
-                            callbacks: {
-                                label: function(ctx) {
-                                    let percent = ctx.raw;
-                                    let tons = ctx.dataset.tons[ctx.dataIndex];
-                                    return ` ${ctx.label}: ${percent}% (~${new Intl.NumberFormat('en-US').format(tons)} Tn)`;
-                                }
-                            }
-                        }
+                        tooltip: { callbacks: { label: function(ctx) { return ` ${ctx.label}: ${ctx.raw}% (~${new Intl.NumberFormat('en-US').format(ctx.dataset.tons[ctx.dataIndex])} Tn)`; } } }
                     } 
                 }
             });
 
-            // 2. Exportadores Mundiales (Barra dual MIXTA)
             new Chart(document.getElementById('chartVictorExp'), {
                 type: 'bar',
                 data: {
                     labels: ['China', 'Japón', 'EE.UU.', 'P.Bajos'],
-                    datasets: [
-                        { label: 'Valor FOB (Miles USD)', data: [200500, 150200, 100400, 80100], backgroundColor: cDark, yAxisID: 'y', borderRadius: 4 },
-                        { label: 'Volumen (Tn)', data: [150000, 100000, 70000, 50000], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
-                    ]
+                    datasets: [{ label: 'Valor FOB (Miles USD)', data: [200500, 150200, 100400, 80100], backgroundColor: 'rgba(31, 18, 9, 0.7)', borderColor: cDark, borderWidth: 1, borderRadius: 4 }]
                 },
-                options: dualAxisOptions
+                options: barOptions
             });
 
-            // 3. Importadores Mundiales (Barra dual MIXTA)
             new Chart(document.getElementById('chartVictorImp'), {
                 type: 'bar',
                 data: {
                     labels: ['EE.UU.', 'Francia', 'Reino Unido', 'Alemania'],
-                    datasets: [
-                        { label: 'Valor FOB (Miles USD)', data: [142359, 63188, 57301, 50120], backgroundColor: '#3B82F6', yAxisID: 'y', borderRadius: 4 },
-                        { label: 'Volumen (Tn)', data: [110000, 45000, 40000, 35000], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
-                    ]
+                    datasets: [{ label: 'Valor FOB (Miles USD)', data: [142359, 63188, 57301, 50120], backgroundColor: 'rgba(59, 130, 246, 0.7)', borderColor: '#3B82F6', borderWidth: 1, borderRadius: 4 }]
                 },
-                options: dualAxisOptions
+                options: barOptions
             });
 
-            // 4. Proveedores al Mercado de Chile (Barra dual MIXTA)
             new Chart(document.getElementById('chartVictorProvChile'), {
                 type: 'bar',
                 data: {
                     labels: ['EE.UU.', 'China', 'Perú', 'Brasil'],
-                    datasets: [
-                        { label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: cRed, yAxisID: 'y', borderRadius: 4 },
-                        { label: 'Volumen (Tn)', data: [2500, 2000, 800, 300], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
-                    ]
+                    datasets: [{ label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: 'rgba(139, 30, 27, 0.7)', borderColor: cRed, borderWidth: 1, borderRadius: 4 }]
                 },
-                options: dualAxisOptions
+                options: barOptions
             });
 
-            // 5. Empresas Exportadoras del Perú a Chile (Barra dual MIXTA)
-            new Chart(document.getElementById('chartVictorEmpPeru'), {
-                type: 'bar',
-                data: {
-                    labels: ['Ajinomoto', 'Alicorp', 'A&B', 'Otros'],
-                    datasets: [
-                        { label: 'Valor FOB (Miles USD)', data: [500, 250, 100, 49], backgroundColor: '#10B981', yAxisID: 'y', borderRadius: 4 },
-                        { label: 'Volumen (Tn)', data: [450, 200, 90, 60], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
-                    ]
-                },
-                options: dualAxisOptions
-            });
-
-            // Banderas para Chart Scatter (Figura 28)
             const flagUrls = {
                 'cl': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Chile.png',
                 'es': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Espa%C3%B1a.png',
                 'bo': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Bolivia.png'
             };
-            
             const flagImages = {};
             Object.keys(flagUrls).forEach(code => {
-                const img = new Image();
-                img.src = flagUrls[code];
-                img.onload = () => { if(window.victorChart2) window.victorChart2.update(); };
-                flagImages[code] = img;
+                const img = new Image(); img.src = flagUrls[code];
+                img.onload = () => { if(window.victorChart2) window.victorChart2.update(); }; flagImages[code] = img;
             });
 
             const flagPlugin = {
                 id: 'flagPlugin',
                 afterDatasetsDraw(chart) {
-                    const ctx = chart.ctx;
-                    const isMobile = window.innerWidth < 768; 
-                    
+                    const ctx = chart.ctx; const isMobile = window.innerWidth < 768; 
                     chart.data.datasets.forEach((dataset, i) => {
                         const meta = chart.getDatasetMeta(i);
                         if (!meta.hidden) {
                             meta.data.forEach((element, index) => {
-                                const dataPoint = dataset.data[index];
-                                const { x, y } = element.tooltipPosition();
-                                
-                                const multiplier = isMobile ? 1.2 : 4; 
-                                const radius = dataPoint.r * multiplier; 
-                                const img = dataset.flagImg;
-                                
+                                const dataPoint = dataset.data[index]; const { x, y } = element.tooltipPosition();
+                                const multiplier = isMobile ? 1.2 : 4; const radius = dataPoint.r * multiplier; const img = dataset.flagImg;
                                 if (img && img.complete) {
-                                    ctx.save();
-                                    ctx.beginPath();
-                                    ctx.arc(x, y, radius, 0, Math.PI * 2);
-                                    ctx.closePath();
-                                    ctx.clip();
-                                    
-                                    ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
-                                    ctx.restore();
-                                    
-                                    ctx.beginPath();
-                                    ctx.arc(x, y, radius, 0, Math.PI * 2);
-                                    ctx.lineWidth = 1;
-                                    ctx.strokeStyle = dataset.borderColor || '#333';
-                                    ctx.stroke();
+                                    ctx.save(); ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.closePath(); ctx.clip();
+                                    ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2); ctx.restore();
+                                    ctx.beginPath(); ctx.arc(x, y, radius, 0, Math.PI * 2); ctx.lineWidth = 1; ctx.strokeStyle = dataset.borderColor || '#333'; ctx.stroke();
                                 }
                             });
                         }
@@ -1210,10 +1118,8 @@
                 }
             };
 
-            // Chart Scatter (Figura 28)
             window.victorChart2 = new Chart(document.getElementById('chartVictor2'), {
-                type: 'scatter',
-                plugins: [flagPlugin],
+                type: 'scatter', plugins: [flagPlugin],
                 data: {
                     datasets: [
                         { label: 'Chile', data: [{x: 19, y: 40.2, r: 7.48}], borderColor: '#10B981', flagImg: flagImages['cl'], pointRadius: 0 },
@@ -1222,18 +1128,12 @@
                     ]
                 },
                 options: { 
-                    responsive: true, maintainAspectRatio: false,
-                    layout: { padding: { top: 40, right: 60, bottom: 20, left: 20 } },
+                    responsive: true, maintainAspectRatio: false, layout: { padding: { top: 40, right: 60, bottom: 20, left: 20 } },
                     scales: {
                         x: { title: { display: true, text: 'Atracción del Mercado (Puntos)', font: {weight: 'bold'} }, min: -20, max: 40, grid: { color: '#E2E8F0' } },
                         y: { title: { display: true, text: 'Competitividad (Puntos)', font: {weight: 'bold'} }, min: 0, max: 70, grid: { color: '#E2E8F0' } }
                     },
-                    plugins: {
-                        tooltip: {
-                            backgroundColor: 'rgba(31, 18, 9, 0.9)', titleFont: { size: 14, family: 'Montserrat' }, bodyFont: { size: 13, family: 'Open Sans' }, padding: 12,
-                            callbacks: { label: function(ctx) { return [ ` Atracción: ${ctx.raw.x} pts`, ` Competitividad: ${ctx.raw.y} pts`, ` Consumo: ${ctx.raw.r} Litros p.c.` ]; } }
-                        }
-                    }
+                    plugins: { tooltip: { backgroundColor: 'rgba(31, 18, 9, 0.9)', titleFont: { size: 14, family: 'Montserrat' }, bodyFont: { size: 13, family: 'Open Sans' }, padding: 12, callbacks: { label: function(ctx) { return [ ` Atracción: ${ctx.raw.x} pts`, ` Competitividad: ${ctx.raw.y} pts`, ` Consumo: ${ctx.raw.r} Litros p.c.` ]; } } } }
                 }
             });
         }
