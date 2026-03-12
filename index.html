@@ -281,13 +281,13 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="flip-card" id="flip-chart1">
                         <div class="flip-card-inner">
-                            <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
+                            <div class="flip-card-front">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
                                         <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Exportaciones al Mundo</h3>
                                         <p class="text-xs text-gray-500 font-bold uppercase">Valor FOB (US$) + Peso Neto (Kg)</p>
                                     </div>
-                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition tooltip-container">
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition tooltip-container cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
                                         <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
                                     </div>
                                 </div>
@@ -295,13 +295,13 @@
                                     <canvas id="chartMarilin1Front"></canvas>
                                 </div>
                             </div>
-                            <div class="flip-card-back cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
+                            <div class="flip-card-back">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
                                         <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Evolución de Precio Promedio</h3>
                                         <p class="text-xs text-gray-500 font-bold uppercase">USD / Kilogramo (2021-2025)</p>
                                     </div>
-                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
                                         <i class="fa-solid fa-rotate-left text-soya-gold text-xl"></i>
                                     </div>
                                 </div>
@@ -314,13 +314,13 @@
 
                     <div class="flip-card" id="flip-chart2">
                         <div class="flip-card-inner">
-                            <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
+                            <div class="flip-card-front">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
                                         <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Top 3 Mercados Destino (2025)</h3>
                                         <p class="text-xs text-gray-500 font-bold uppercase">Valor FOB (US$) + Peso Neto (Kg)</p>
                                     </div>
-                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
                                         <i class="fa-solid fa-rotate text-soya-dark text-xl"></i>
                                     </div>
                                 </div>
@@ -328,13 +328,13 @@
                                     <canvas id="chartMarilin2Front"></canvas>
                                 </div>
                             </div>
-                            <div class="flip-card-back cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
+                            <div class="flip-card-back">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
                                         <h3 class="text-lg font-heading font-bold text-soya-dark leading-tight">Precio Promedio Top 3 (2025)</h3>
                                         <p class="text-xs text-gray-500 font-bold uppercase">Comparativa en USD / Kilogramo</p>
                                     </div>
-                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
                                         <i class="fa-solid fa-rotate-left text-soya-dark text-xl"></i>
                                     </div>
                                 </div>
@@ -515,37 +515,80 @@
                 <div class="mb-8">
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-earth-americas text-soya-gold mr-2"></i>Estructura del Mercado Global</h3>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                         <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-gold">
                             <h4 class="text-md font-bold text-soya-dark mb-2 text-center">Principales Productores (Mundial)</h4>
                             <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Porcentaje vs Volumen (Tn)</p>
-                            <div class="h-64 relative flex justify-center items-center">
+                            <div class="h-64 md:h-[350px] relative flex justify-center items-center">
                                 <canvas id="chartVictorProd"></canvas>
                             </div>
                         </div>
 
-                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-red-600">
-                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Principales Proveedores a Chile</h4>
-                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
-                            <div class="h-64 relative">
-                                <canvas id="chartVictorProvChile"></canvas>
+                        <div class="flip-card h-full min-h-[400px]" id="flip-chart3">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front border-t-4 border-soya-dark">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Exportadores</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
+                                            <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorExp"></canvas>
+                                    </div>
+                                </div>
+                                <div class="flip-card-back border-t-4 border-blue-600">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Importadores</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
+                                            <i class="fa-solid fa-rotate-left text-blue-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorImp"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-dark">
-                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Exportadores</h4>
-                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
-                            <div class="h-64 relative">
-                                <canvas id="chartVictorExp"></canvas>
-                            </div>
-                        </div>
+                    </div>
 
-                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-blue-600">
-                            <h4 class="text-md font-bold text-soya-dark mb-1 text-center">Top Países Importadores</h4>
-                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Valor FOB (Miles USD)</p>
-                            <div class="h-64 relative">
-                                <canvas id="chartVictorImp"></canvas>
+                    <div class="grid grid-cols-1 gap-6">
+                        <div class="flip-card h-[400px]" id="flip-chart4">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front border-t-4 border-red-600">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Principales Proveedores a Chile</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
+                                            <i class="fa-solid fa-rotate text-red-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorProvChile"></canvas>
+                                    </div>
+                                </div>
+                                <div class="flip-card-back border-t-4 border-green-600">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Empresas Exportadoras (Perú -> Chile)</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
+                                            <i class="fa-solid fa-rotate-left text-green-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorEmpPeru"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -555,8 +598,6 @@
                     <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-scale-balanced text-soya-gold mr-2"></i>Índice de Atracción y Competitividad</h3>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                        
-                        <!-- Tabla Índice Atracción -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-soya-gold text-lg text-center">Índice de Atracción</h4>
@@ -607,7 +648,6 @@
                             </div>
                         </div>
 
-                        <!-- Tabla Índice Competitividad -->
                         <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
                             <div class="bg-soya-dark p-4">
                                 <h4 class="font-heading font-bold text-white text-lg text-center">Índice de Competitividad</h4>
@@ -705,74 +745,128 @@
                 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
                     
-                    <!-- Embudo Doble Cara -->
-                    <div class="lg:col-span-7 flip-card flip-card-lg" id="flip-funnel">
-                        <div class="flip-card-inner">
+                    <!-- Carrusel/Embudo Multistep -->
+                    <div class="lg:col-span-7 bg-white rounded-xl shadow-xl flex flex-col relative h-[500px] overflow-hidden group">
+                        
+                        <!-- Step 0: Valparaíso (Frente original) -->
+                        <div id="funnel-step-0" class="absolute inset-0 flex flex-col p-6 border-t-4 border-soya-gold bg-white animation-fadeIn z-30 opacity-100 transition-opacity duration-500">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-filter mr-2 text-soya-gold"></i>Análisis Inicial (Valparaíso)</h3>
+                                <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="nextFunnelStep()">
+                                    <i class="fa-solid fa-arrow-right text-soya-dark text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-6 text-center">Análisis del puerto de entrada principal. Presione la flecha para continuar.</p>
                             
-                            <!-- Frente: Valparaíso -->
-                            <div class="flip-card-front cursor-pointer bg-white rounded-xl shadow-xl border-t-4 border-soya-gold flex flex-col" onclick="document.getElementById('flip-funnel').classList.toggle('flipped')">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-filter mr-2 text-soya-gold"></i>Análisis Inicial (Valparaíso)</h3>
-                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                        <i class="fa-solid fa-rotate text-soya-dark text-xl"></i>
+                            <div class="flex-1 flex flex-col items-center justify-center w-full max-w-sm mx-auto font-sans space-y-1">
+                                <div class="bg-gray-800 text-white w-full py-3 flex flex-col items-center justify-center shadow-md z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                    <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
+                                    <span class="text-xl font-black">18.4M</span>
+                                </div>
+                                <div class="bg-gray-700 text-white w-[80%] py-3 flex flex-col items-center justify-center shadow-md z-30" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
+                                    <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Valparaíso (~10%)</span>
+                                    <span class="text-xl font-black">1.89M</span>
+                                </div>
+                                <div class="bg-gray-600 text-white w-[60%] py-3 flex flex-col items-center justify-center shadow-md z-20" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
+                                    <span class="text-[10px] text-gray-200 uppercase tracking-widest font-bold">Público Obj.</span>
+                                    <span class="text-xl font-black">401K</span>
+                                </div>
+                                <div class="bg-gray-400 text-soya-dark w-[40%] py-4 flex flex-col items-center justify-center shadow-lg z-50 rounded-b-xl border-b-4 border-gray-500">
+                                    <span class="text-[10px] uppercase tracking-widest font-bold">Meta (2.5%)</span>
+                                    <span class="text-2xl font-black">0.06 Tn</span>
+                                </div>
+                            </div>
+                            <div class="mt-4 p-3 bg-red-50 border-l-4 border-red-500 rounded text-xs text-red-700 font-bold text-center shadow-sm">
+                                <i class="fa-solid fa-triangle-exclamation mr-1"></i> El volumen en Valparaíso es muy bajo. Presione la flecha superior.
+                            </div>
+                        </div>
+
+                        <!-- Step 1: Contraste Regional (Intermedio) -->
+                        <div id="funnel-step-1" class="absolute inset-0 flex flex-col p-6 border-t-4 border-blue-600 bg-white hidden animation-fadeIn z-10 opacity-0 transition-opacity duration-500">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-chart-pie mr-2 text-blue-600"></i>Contraste Regional</h3>
+                                <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="nextFunnelStep()">
+                                    <i class="fa-solid fa-arrow-right text-soya-dark text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-6 text-center">Importaciones de Soya (Veritrade) vs. Población (Censo 2024)</p>
+
+                            <div class="flex-1 flex flex-col justify-center space-y-8 w-full max-w-md mx-auto">
+                                <!-- Importaciones Bar -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2">1. Concentración de Importaciones (Soya)</h4>
+                                    <div class="flex items-center justify-between text-xs mb-1">
+                                        <span class="font-bold text-soya-dark">Valparaíso (Puerto Principal)</span>
+                                        <span class="font-bold text-blue-600">88.56% (5,734 Tn)</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-4 shadow-inner">
+                                        <div class="bg-blue-600 h-4 rounded-full" style="width: 88.56%"></div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-[10px] text-gray-500 mt-1">
+                                        <span>Datos Veritrade 2024</span>
                                     </div>
                                 </div>
-                                <p class="text-xs text-gray-500 mb-6 text-center">Análisis del puerto de entrada principal.</p>
-                                
-                                <div class="flex-1 flex flex-col items-center justify-center w-full max-w-sm mx-auto font-sans space-y-1">
-                                    <div class="bg-gray-800 text-white w-full py-3 flex flex-col items-center justify-center shadow-md z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
-                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
-                                        <span class="text-xl font-black">18.4M</span>
+
+                                <!-- Censo 2024 Bar -->
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-700 mb-2">2. Distribución Demográfica (Censo 2024)</h4>
+                                    <div class="flex items-center justify-between text-xs mb-1">
+                                        <span class="font-bold text-soya-dark">Región Metropolitana (Santiago)</span>
+                                        <span class="font-bold text-soya-red">40.04% (7.4M hab.)</span>
                                     </div>
-                                    <div class="bg-gray-700 text-white w-[80%] py-3 flex flex-col items-center justify-center shadow-md z-30" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
-                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Valparaíso (10%)</span>
-                                        <span class="text-xl font-black">1.89M</span>
+                                    <div class="w-full bg-gray-200 rounded-full h-4 flex shadow-inner overflow-hidden">
+                                        <div class="bg-soya-red h-4" style="width: 40.04%"></div>
+                                        <div class="bg-orange-400 h-4 border-l border-white" style="width: 10.2%" title="Valparaíso 10.2%"></div>
                                     </div>
-                                    <div class="bg-gray-600 text-white w-[60%] py-3 flex flex-col items-center justify-center shadow-md z-20" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
-                                        <span class="text-[10px] text-gray-200 uppercase tracking-widest font-bold">Público Obj.</span>
-                                        <span class="text-xl font-black">401K</span>
-                                    </div>
-                                    <div class="bg-gray-400 text-soya-dark w-[40%] py-4 flex flex-col items-center justify-center shadow-lg z-50 rounded-b-xl border-b-4 border-gray-500">
-                                        <span class="text-[10px] uppercase tracking-widest font-bold">Meta (2.5%)</span>
-                                        <span class="text-2xl font-black">0.06 Tn</span>
+                                    <div class="flex items-center justify-between text-[10px] text-gray-500 mt-1">
+                                        <span><span class="inline-block w-2 h-2 bg-soya-red rounded-full mr-1"></span>Santiago: 40.04%</span>
+                                        <span><span class="inline-block w-2 h-2 bg-orange-400 rounded-full mr-1"></span>Valparaíso: ~10.2%</span>
                                     </div>
                                 </div>
-                                <div class="mt-4 p-3 bg-red-50 border-l-4 border-red-500 rounded text-xs text-red-700 font-bold text-center">
-                                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> El volumen en Valparaíso es muy bajo. Presione para ver el ajuste logístico.
+                            </div>
+
+                            <div class="mt-4 p-3 bg-blue-50 border-l-4 border-blue-500 rounded text-xs text-blue-800 text-justify shadow-sm">
+                                <strong>Hallazgo Clave:</strong> Existe un desbalance. El producto ingresa masivamente por Valparaíso, pero el volumen crítico de consumidores reside en Santiago.
+                            </div>
+                        </div>
+                        
+                        <!-- Step 2: Santiago (Dorso original) -->
+                        <div id="funnel-step-2" class="absolute inset-0 flex flex-col p-6 border-t-4 border-soya-red bg-white hidden animation-fadeIn z-10 opacity-0 transition-opacity duration-500">
+                            <div class="flex justify-between items-center mb-4">
+                                <h3 class="text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-bullseye mr-2 text-soya-red"></i>Ajuste: Región Metropolitana</h3>
+                                <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition cursor-pointer" onclick="nextFunnelStep()">
+                                    <i class="fa-solid fa-rotate-left text-soya-dark text-xl"></i>
                                 </div>
                             </div>
                             
-                            <!-- Dorso: Región Metropolitana -->
-                            <div class="flip-card-back cursor-pointer bg-white rounded-xl shadow-xl border-t-4 border-soya-red flex flex-col" onclick="document.getElementById('flip-funnel').classList.toggle('flipped')">
-                                <div class="flex justify-between items-center mb-4">
-                                    <h3 class="text-2xl font-heading font-bold text-soya-dark"><i class="fa-solid fa-bullseye mr-2 text-soya-red"></i>Ajuste: Región Metropolitana</h3>
-                                    <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
-                                        <i class="fa-solid fa-rotate-left text-soya-dark text-xl"></i>
-                                    </div>
+                            <div class="flex-1 flex flex-col items-center justify-center w-full max-w-sm mx-auto font-sans space-y-1">
+                                <div class="bg-soya-dark text-white w-full py-3 flex flex-col items-center justify-center shadow-md z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
+                                    <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
+                                    <span class="text-xl font-black">18.4M</span>
                                 </div>
-                                
-                                <div class="flex-1 flex flex-col items-center justify-center w-full max-w-sm mx-auto font-sans space-y-1">
-                                    <div class="bg-soya-dark text-white w-full py-3 flex flex-col items-center justify-center shadow-md z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);">
-                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
-                                        <span class="text-xl font-black">18.4M</span>
-                                    </div>
-                                    <div class="bg-gray-800 text-white w-[80%] py-3 flex flex-col items-center justify-center shadow-md z-30" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
-                                        <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold text-soya-gold">Santiago (40%)</span>
-                                        <span class="text-xl font-black">7.4M</span>
-                                    </div>
-                                    <div class="bg-gray-700 text-white w-[60%] py-3 flex flex-col items-center justify-center shadow-md z-20" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
-                                        <span class="text-[10px] text-gray-200 uppercase tracking-widest font-bold">Público Obj.</span>
-                                        <span class="text-xl font-black">1.5M</span>
-                                    </div>
-                                    <div class="bg-gradient-to-br from-soya-gold to-yellow-600 text-soya-dark w-[40%] py-4 flex flex-col items-center justify-center shadow-[0_5px_15px_rgba(212,175,55,0.5)] z-50 rounded-b-xl border-b-4 border-yellow-700">
-                                        <span class="text-[10px] uppercase tracking-widest font-bold">Meta (2.5%)</span>
-                                        <span class="text-2xl font-black">0.21 Tn</span>
-                                    </div>
+                                <div class="bg-gray-800 text-white w-[80%] py-3 flex flex-col items-center justify-center shadow-md z-30" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);">
+                                    <span class="text-[10px] text-gray-300 uppercase tracking-widest font-bold text-soya-gold">Santiago (40.04%)</span>
+                                    <span class="text-xl font-black">7.4M</span>
                                 </div>
-                                <div class="mt-4 p-3 bg-green-50 border-l-4 border-green-500 rounded text-xs text-green-800 text-justify">
-                                    <strong>¿Por qué Santiago?</strong> Aunque la mercadería ingresa por el Puerto de San Antonio (Valparaíso), mantener inventario allí genera sobrecostos. Se traslada a <strong>Santiago</strong> porque concentra el 40% de la población nacional y la mayor densidad de puntos de venta (Retail/Horeca).
+                                <div class="bg-gray-700 text-white w-[60%] py-3 flex flex-col items-center justify-center shadow-md z-20" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%);">
+                                    <span class="text-[10px] text-gray-200 uppercase tracking-widest font-bold">Público Obj.</span>
+                                    <span class="text-xl font-black">1.5M</span>
+                                </div>
+                                <div class="bg-gradient-to-br from-soya-gold to-yellow-600 text-soya-dark w-[40%] py-4 flex flex-col items-center justify-center shadow-[0_5px_15px_rgba(212,175,55,0.5)] z-50 rounded-b-xl border-b-4 border-yellow-700">
+                                    <span class="text-[10px] uppercase tracking-widest font-bold">Meta (2.5%)</span>
+                                    <span class="text-2xl font-black">0.21 Tn</span>
                                 </div>
                             </div>
+                            <div class="mt-4 p-3 bg-green-50 border-l-4 border-green-500 rounded text-xs text-green-800 text-justify shadow-sm">
+                                <strong>Decisión Final:</strong> Aunque la mercadería ingresa por el Puerto de Valparaíso (San Antonio), mantener inventario allí genera sobrecostos. Se traslada a <strong>Santiago</strong> por concentrar el 40% de la población nacional y la mayor densidad de puntos de venta (Retail/Horeca).
+                            </div>
+                        </div>
+
+                        <!-- Indicadores del Carrusel -->
+                        <div class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                            <div id="dot-0" class="w-2.5 h-2.5 rounded-full bg-soya-gold transition-colors cursor-pointer" onclick="setFunnelStep(0)"></div>
+                            <div id="dot-1" class="w-2.5 h-2.5 rounded-full bg-gray-300 transition-colors cursor-pointer" onclick="setFunnelStep(1)"></div>
+                            <div id="dot-2" class="w-2.5 h-2.5 rounded-full bg-gray-300 transition-colors cursor-pointer" onclick="setFunnelStep(2)"></div>
                         </div>
                     </div>
 
@@ -795,7 +889,7 @@
 
                 <!-- Botón 9 P's y Plaza -->
                 <div class="flex flex-col md:flex-row gap-6 mb-6">
-                    <button onclick="render9Ps()" class="flex-1 bg-soya-dark text-soya-gold rounded-xl shadow-lg p-6 hover:bg-black transition flex items-center justify-center group">
+                    <button onclick="render9Ps()" class="flex-1 bg-soya-dark text-soya-gold rounded-xl shadow-lg p-6 hover:bg-black transition flex items-center justify-center group focus:outline-none">
                         <div class="text-left">
                             <h3 class="text-2xl font-heading font-bold mb-1">Desplegar Análisis de las 9 P's</h3>
                             <p class="text-xs text-gray-400 uppercase tracking-widest">Mix de Marketing Completo</p>
@@ -803,7 +897,7 @@
                         <i class="fa-solid fa-circle-chevron-down text-4xl ml-6 group-hover:translate-y-2 transition-transform"></i>
                     </button>
                     
-                    <button onclick="openFlujo()" class="flex-1 bg-gradient-to-r from-soya-red to-red-800 text-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition flex items-center justify-center group">
+                    <button onclick="openFlujo()" class="flex-1 bg-gradient-to-r from-soya-red to-red-800 text-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition flex items-center justify-center group focus:outline-none">
                         <div class="text-left">
                             <h3 class="text-2xl font-heading font-bold mb-1">Flujo Interactivo de Plaza</h3>
                             <p class="text-xs text-red-200 uppercase tracking-widest">Canal de Distribución B2B2C</p>
@@ -827,6 +921,7 @@
                         <div class="bg-white p-5 rounded-lg shadow border border-gray-100 border-b-4 border-soya-gold"><i class="fa-solid fa-truck-fast text-soya-gold text-2xl mb-2"></i><h4 class="font-bold text-soya-dark">9. Plaza</h4><p class="text-xs text-gray-600 mt-1">Canal Largo indirecto y estrategia intensiva (Supermercados Walmart, Cencosud, SMU).</p></div>
                     </div>
                 </div>
+
             </section>
 
             <!-- NUEVA SECCIÓN: CONCLUSIONES -->
@@ -836,7 +931,6 @@
                     <p class="text-sm text-gray-600 mb-6">Consolidado final de los hallazgos del proyecto de exportación IntiSoya hacia el mercado chileno.</p>
                     
                     <div class="space-y-4">
-                        <!-- Conclusión 1 -->
                         <div class="bg-white rounded-xl shadow p-5 border-l-4 border-soya-gold flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
                             <div class="bg-yellow-50 text-soya-gold rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">1</div>
                             <div>
@@ -845,7 +939,6 @@
                             </div>
                         </div>
                         
-                        <!-- Conclusión 2 -->
                         <div class="bg-white rounded-xl shadow p-5 border-l-4 border-soya-dark flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
                             <div class="bg-gray-100 text-soya-dark rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">2</div>
                             <div>
@@ -854,7 +947,6 @@
                             </div>
                         </div>
 
-                        <!-- Conclusión 3 -->
                         <div class="bg-white rounded-xl shadow p-5 border-l-4 border-blue-600 flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
                             <div class="bg-blue-50 text-blue-600 rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">3</div>
                             <div>
@@ -863,7 +955,6 @@
                             </div>
                         </div>
 
-                        <!-- Conclusión 4 -->
                         <div class="bg-white rounded-xl shadow p-5 border-l-4 border-soya-red flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
                             <div class="bg-red-50 text-soya-red rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">4</div>
                             <div>
@@ -872,7 +963,6 @@
                             </div>
                         </div>
 
-                        <!-- Conclusión 5 -->
                         <div class="bg-white rounded-xl shadow p-5 border-l-4 border-green-600 flex flex-col md:flex-row gap-4 items-center md:items-start hover:shadow-lg transition">
                             <div class="bg-green-50 text-green-600 rounded-full w-12 h-12 flex-shrink-0 flex items-center justify-center font-black text-xl">5</div>
                             <div>
@@ -915,7 +1005,7 @@
             }
         }
 
-        // Scripts Flujo y 9Ps
+        // Scripts Flujo Interactivo
         function openFlujo() { document.getElementById('modalFlow').classList.remove('hidden'); }
         function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
 
@@ -932,6 +1022,7 @@
             document.getElementById('flujo-iframe').src = '';
         }
 
+        // Scripts 9 P's
         function render9Ps() {
             const container = document.getElementById('container-9ps');
             if(container.classList.contains('hidden')){
@@ -940,6 +1031,33 @@
             } else {
                 container.classList.add('hidden');
             }
+        }
+
+        // Scripts Carrusel Embudo (Parte 5)
+        let funnelStep = 0;
+        function nextFunnelStep() {
+            setFunnelStep((funnelStep + 1) % 3);
+        }
+
+        function setFunnelStep(step) {
+            document.getElementById(`funnel-step-${funnelStep}`).classList.add('hidden');
+            document.getElementById(`funnel-step-${funnelStep}`).classList.remove('opacity-100', 'z-30');
+            document.getElementById(`funnel-step-${funnelStep}`).classList.add('opacity-0', 'z-10');
+            
+            document.getElementById(`dot-0`).classList.replace('bg-soya-gold', 'bg-gray-300');
+            document.getElementById(`dot-1`).classList.replace('bg-blue-600', 'bg-gray-300');
+            document.getElementById(`dot-2`).classList.replace('bg-soya-red', 'bg-gray-300');
+
+            funnelStep = step;
+
+            document.getElementById(`funnel-step-${funnelStep}`).classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById(`funnel-step-${funnelStep}`).classList.remove('opacity-0', 'z-10');
+                document.getElementById(`funnel-step-${funnelStep}`).classList.add('opacity-100', 'z-30');
+            }, 50);
+
+            let dotColor = funnelStep === 0 ? 'bg-soya-gold' : (funnelStep === 1 ? 'bg-blue-600' : 'bg-soya-red');
+            document.getElementById(`dot-${funnelStep}`).classList.replace('bg-gray-300', dotColor);
         }
 
         window.addEventListener('resize', () => {
@@ -1187,6 +1305,18 @@
                     datasets: [
                         { label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: 'rgba(139, 30, 27, 0.7)', borderColor: cRed, borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
                         { label: 'Volumen (Tn)', data: [1592, 1660, 636, 324], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
+                },
+                options: dualAxisOptions
+            });
+            
+            new Chart(document.getElementById('chartVictorEmpPeru'), {
+                type: 'bar',
+                data: {
+                    labels: ['Ajinomoto', 'Kikko', 'Eximport', 'Geronimo'],
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [678, 482, 134, 86], backgroundColor: 'rgba(16, 185, 129, 0.7)', borderColor: '#10B981', borderWidth: 1, yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [800, 468, 92, 64], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
                     ]
                 },
                 options: dualAxisOptions
