@@ -19,11 +19,11 @@
                 extend: {
                     colors: {
                         soya: {
-                            dark: '#1F1209', // Color salsa de soya oscura
+                            dark: '#1F1209', 
                             light: '#3E2723',
-                            gold: '#D4AF37', // Dorado de la etiqueta
-                            sand: '#EEDC9A', // Fondo de la etiqueta
-                            red: '#8B1E1B'   // Rojo del sello/bandera
+                            gold: '#D4AF37', 
+                            sand: '#EEDC9A', 
+                            red: '#8B1E1B'   
                         }
                     },
                     fontFamily: {
@@ -71,11 +71,7 @@
         }
         .cruzado-btn:hover { background: #8B1E1B; color: white; }
 
-        /* Modal FODA */
-        #foda-modal { display: none; }
-        #foda-modal.flex { display: flex; animation: fadeIn 0.2s ease-in-out; }
-        
-        /* Efecto Flip para Tarjetas de Gráficos (Parte 1) */
+        /* Efecto Flip para Tarjetas de Gráficos */
         .flip-card {
             perspective: 1000px;
             height: 400px; 
@@ -112,10 +108,7 @@
         ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #1F1209; }
 
-        /* Para el gráfico de banderas */
         .chart-container { position: relative; height: 100%; width: 100%; }
-        
-        /* Ajuste de Cover Image para asegurar llenado vertical */
         .cover-image-wrapper { height: 100%; min-height: 400px; }
         @media (min-width: 1280px) {
             .cover-image-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -127,13 +120,35 @@
     <!-- Overlay para móviles -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/60 z-30 hidden transition-opacity lg:hidden" onclick="toggleSidebar()"></div>
 
+    <!-- Modal Flow inicial (Flujo de Distribución) -->
+    <div id="modalFlow" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-[60]" onclick="closeModal('modalFlow')">
+        <div class="bg-white w-full max-w-2xl rounded-lg shadow-2xl p-8 relative transform scale-100 transition-transform" onclick="event.stopPropagation()">
+            <button onclick="closeModal('modalFlow')" class="absolute top-4 right-4 text-gray-500 hover:text-soya-red text-3xl font-bold focus:outline-none">&times;</button>
+            <h3 class="text-2xl font-bold mb-4 text-slate-800">Estructura Lógica del Flujograma Documentario</h3>
+            <p class="text-gray-700 mb-6 text-justify">Estructura lógica del canal de distribución y flujograma para el caso de exportación de Salsa de Soya hacia Chile.</p>
+            <button onclick="showPdfAndCloseModal('modalFlow', 'https://tinyurl.com/FlujoSoyaChile')" class="inline-block bg-soya-dark text-soya-gold font-bold py-3 px-6 rounded-lg hover:bg-soya-red hover:text-white transition-colors shadow-md">Ver Flujograma</button>
+        </div>
+    </div>
+
+    <!-- Overlay para Flujo Interactivo Fullscreen -->
+    <div id="flujo-iframe-overlay" class="fixed inset-0 bg-gray-900 z-[100] hidden flex-col animation-fadeIn">
+        <div class="h-16 bg-black flex items-center px-4 shadow-md justify-between z-10 flex-shrink-0">
+            <button onclick="closeIframeFlujo()" class="bg-soya-gold text-soya-dark px-4 py-2 rounded-lg font-bold hover:bg-white transition flex items-center focus:outline-none">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Regresar a la Presentación
+            </button>
+            <span class="text-white font-heading font-bold hidden md:block">Flujo de Distribución IntiSoya</span>
+        </div>
+        <div class="flex-1 w-full bg-white relative">
+            <iframe id="flujo-iframe" src="" class="w-full h-full border-0 absolute inset-0"></iframe>
+        </div>
+    </div>
+
     <!-- Sidebar Navegación -->
     <aside id="sidebar" class="w-64 flex-shrink-0 bg-soya-dark text-gray-300 flex flex-col shadow-2xl z-40 fixed inset-y-0 left-0 transform -translate-x-full lg:relative lg:translate-x-0 transition-all duration-300 ease-in-out h-full">
         <div class="h-20 flex items-center justify-between px-4 border-b border-soya-light bg-black">
             <h1 class="text-3xl font-heading font-bold text-white tracking-widest mx-auto lg:mx-0">
                 Inti<span class="text-soya-gold">Soya</span>
             </h1>
-            <!-- Botón cerrar solo para móvil -->
             <button onclick="toggleSidebar()" class="lg:hidden text-gray-400 hover:text-white focus:outline-none">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
@@ -198,10 +213,9 @@
     <!-- Área de Contenido Principal -->
     <main class="flex-1 h-[100dvh] overflow-y-auto bg-gray-50 flex flex-col relative w-full pb-10">
         
-        <!-- Header superior decorativo -->
+        <!-- Header superior -->
         <header class="h-20 bg-white shadow-sm flex items-center justify-between px-4 md:px-8 sticky top-0 z-20 flex-shrink-0">
             <div class="flex items-center">
-                <!-- Botón de hamburguesa visible siempre para toggle -->
                 <button onclick="toggleSidebar()" class="mr-4 text-soya-dark hover:text-soya-gold transition focus:outline-none">
                     <i class="fa-solid fa-bars text-2xl"></i>
                 </button>
@@ -213,13 +227,12 @@
             </div>
         </header>
 
-        <!-- Contenedor general que permite scroll hasta el final -->
+        <!-- Contenedor general -->
         <div class="p-4 md:p-8 flex-1 pb-20">
             
             <!-- PORTADA -->
             <section id="portada" class="dashboard-section active h-full">
                 <div class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col xl:flex-row border border-gray-100 min-h-[calc(100vh-12rem)] relative">
-                    
                     <div class="w-full xl:w-1/2 p-6 md:p-10 flex flex-col justify-center bg-gradient-to-br from-white to-soya-sand/30 z-10 relative">
                         <div class="mb-2 text-soya-red font-bold tracking-widest text-sm md:text-base">PROYECTO INTEGRADOR 2026</div>
                         <h2 class="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-soya-dark mb-6 leading-tight">Plan de Exportación de <br><span class="text-soya-gold">Salsa de Soya</span> a Chile</h2>
@@ -238,11 +251,9 @@
                         </div>
                     </div>
                     
-                    <!-- Imagen de producto ocupando toda el área vertical -->
                     <div class="w-full xl:w-1/2 bg-gray-100 relative overflow-hidden min-h-[400px] xl:min-h-full flex items-center justify-center p-0">
                         <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET-fondo).png" alt="Botella IntiSoya con Fondo" class="w-full h-full object-cover absolute inset-0 z-10">
                         
-                        <!-- QR Flotante -->
                         <div class="absolute top-6 right-6 z-20 bg-white/95 p-3 rounded-xl shadow-2xl backdrop-blur-sm border border-gray-200 transform hover:scale-105 transition flex flex-col items-center">
                             <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoyaQR.png" alt="QR Code IntiSoya" class="w-20 h-20 md:w-24 md:h-24 rounded border border-gray-100 mb-1">
                             <span class="text-[10px] md:text-xs font-bold text-soya-dark uppercase tracking-wider">Escanéame</span>
@@ -253,9 +264,7 @@
 
             <!-- PARTE 1: MARILIN -->
             <section id="marilin" class="dashboard-section">
-                <!-- Fichas Interactivas de Objetivos -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <!-- Objetivo Principal -->
                     <div class="bg-soya-dark text-white rounded-xl shadow p-6 border-l-4 border-soya-gold cursor-pointer hover:bg-soya-light transition duration-300 relative overflow-hidden" onclick="toggleObj('obj-prin')">
                         <div class="absolute -right-4 -top-4 opacity-10"><i class="fa-solid fa-bullseye text-8xl"></i></div>
                         <div class="flex justify-between items-center relative z-10">
@@ -267,7 +276,6 @@
                         </div>
                     </div>
 
-                    <!-- Objetivos Específicos -->
                     <div class="bg-white rounded-xl shadow p-6 border-l-4 border-soya-red cursor-pointer hover:bg-gray-50 transition duration-300 relative overflow-hidden" onclick="toggleObj('obj-esp')">
                         <div class="absolute -right-4 -top-4 opacity-[0.03]"><i class="fa-solid fa-list-check text-8xl text-soya-dark"></i></div>
                         <div class="flex justify-between items-center relative z-10">
@@ -284,13 +292,11 @@
                     </div>
                 </div>
 
-                <!-- Gráficas Giratorias -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
-                    <!-- Gráfica 1: Exportaciones de Perú al mundo -->
+                    <!-- Gráfica 1 -->
                     <div class="flip-card" id="flip-chart1">
                         <div class="flip-card-inner">
-                            <!-- Frente: FOB + Peso Neto -->
+                            <!-- Frente -->
                             <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
@@ -305,7 +311,7 @@
                                     <canvas id="chartMarilin1Front"></canvas>
                                 </div>
                             </div>
-                            <!-- Dorso: Precio Promedio -->
+                            <!-- Dorso -->
                             <div class="flip-card-back cursor-pointer" onclick="document.getElementById('flip-chart1').classList.toggle('flipped')">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
@@ -323,10 +329,9 @@
                         </div>
                     </div>
 
-                    <!-- Gráfica 2: Top 3 mercados potenciales (2025) -->
+                    <!-- Gráfica 2 (Ahora Mixta para Toneladas) -->
                     <div class="flip-card" id="flip-chart2">
                         <div class="flip-card-inner">
-                            <!-- Frente: FOB + Peso Neto -->
                             <div class="flip-card-front cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
@@ -341,7 +346,6 @@
                                     <canvas id="chartMarilin2Front"></canvas>
                                 </div>
                             </div>
-                            <!-- Dorso: Precio Promedio Top 3 -->
                             <div class="flip-card-back cursor-pointer" onclick="document.getElementById('flip-chart2').classList.toggle('flipped')">
                                 <div class="flex justify-between items-start mb-2">
                                     <div>
@@ -360,19 +364,22 @@
                     </div>
                 </div>
                 
-                <div class="bg-soya-dark text-white rounded-xl shadow mt-6 p-4 md:p-6">
-                    <h3 class="font-heading font-bold text-soya-gold mb-2"><i class="fa-solid fa-lightbulb mr-2"></i>Conclusión Comercial</h3>
-                    <p class="text-gray-300 text-sm md:text-base">Las exportaciones peruanas de salsa de soya muestran un crecimiento promedio anual del 12.52%. <strong>Chile se posiciona como el líder indiscutible</strong> recibiendo casi el 50% de nuestras exportaciones globales, superando ampliamente a Bolivia y España, demostrando un mercado cautivo y de alto potencial para IntiSoya.</p>
+                <!-- Conclusión Comercial (Recuperada y resaltada) -->
+                <div class="bg-gradient-to-r from-soya-dark to-gray-800 text-white rounded-xl shadow-xl mt-8 p-6 border-l-8 border-soya-gold">
+                    <h3 class="font-heading font-bold text-soya-gold mb-3 text-xl"><i class="fa-solid fa-lightbulb mr-2"></i>Conclusión Comercial</h3>
+                    <p class="text-gray-200 text-sm md:text-base leading-relaxed">
+                        Las exportaciones peruanas de salsa de soya muestran un crecimiento promedio anual del 12.52%. 
+                        <strong>Chile se posiciona como el líder indiscutible</strong> recibiendo casi el 50% de nuestras exportaciones globales, 
+                        superando ampliamente a Bolivia y España, demostrando un mercado cautivo, dinámico y de alto potencial para el ingreso de la propuesta de <strong>IntiSoya</strong>.
+                    </p>
                 </div>
             </section>
 
             <!-- PARTE 2: FRANCHESCA -->
             <section id="franchesca" class="dashboard-section">
                 
-                <!-- Definición del Producto -->
                 <div class="bg-white rounded-xl shadow p-6 mb-6 flex flex-col md:flex-row gap-6 items-center">
                     <div class="w-full md:w-1/3 text-center md:border-r border-gray-200 flex flex-col items-center justify-center py-4">
-                        <!-- Imagen actualizada para la Parte 2 -->
                         <img src="https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/IntiSoya_gris(PET).png" alt="Producto IntiSoya PET transparente sin fondo" class="h-64 object-contain drop-shadow-xl">
                         <h3 class="font-heading font-bold text-xl mt-4 text-soya-dark">IntiSoya - 210ml</h3>
                         <p class="text-sm text-soya-red font-bold">P.A. 2103.10.00.00</p>
@@ -393,7 +400,6 @@
                     </div>
                 </div>
 
-                <!-- Dashboard Interactivo FODA Cruzado -->
                 <div class="bg-gray-100 rounded-xl p-4 md:p-6 border border-gray-200">
                     <h3 class="text-xl md:text-2xl font-heading font-bold text-soya-dark mb-6 text-center">Dashboard FODA Cruzado (Interactivo)</h3>
                     
@@ -441,7 +447,6 @@
                         </div>
                     </div>
 
-                    <!-- Panel Central Cruzado -->
                     <div class="mt-6 p-4 bg-white rounded-xl shadow-inner border border-gray-200">
                         <h4 class="text-center font-bold text-gray-700 mb-4 uppercase tracking-widest text-xs md:text-sm">Estrategias Cruzadas (Haz clic)</h4>
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
@@ -457,108 +462,250 @@
             <!-- PARTE 3: ISABELLA -->
             <section id="isabella" class="dashboard-section">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                    <!-- Mapa de Producción (Simulado con Doughnut) -->
                     <div class="bg-white rounded-xl shadow p-4 md:p-6">
-                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Zonas de Producción de Soya (Perú 2025)</h3>
-                        <div class="h-64 flex justify-center relative">
-                            <canvas id="chartIsabella1"></canvas>
-                            <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                                <span class="text-2xl font-bold text-soya-dark">1,279 Tn</span>
-                            </div>
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Producción Nacional (2021-2025)</h3>
+                        <div class="h-64 relative">
+                            <canvas id="chartIsabella3"></canvas>
                         </div>
-                        <p class="text-sm text-center text-gray-500 mt-4">La costa norte (Piura) asegura la materia prima nacional.</p>
                     </div>
 
-                    <!-- Evaluación de Proveedores -->
+                    <!-- Mapa Zonas con total EXACTAMENTE AL CENTRO DEL ANILLO -->
                     <div class="bg-white rounded-xl shadow p-4 md:p-6">
-                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Homologación de Proveedores (Soya)</h3>
-                        <div class="h-64">
-                            <canvas id="chartIsabella2"></canvas>
-                        </div>
-                        <div class="mt-4 p-3 bg-green-50 border-l-4 border-green-500 rounded">
-                            <p class="text-sm font-bold text-green-800">Seleccionado: CAMPO GRANDE PERÚ E.I.R.L.</p>
-                            <p class="text-xs text-green-700 mt-1">Gana por mejor puntaje en calidad, precio por mayor, y disponibilidad constante todo el año.</p>
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Zonas de Producción (Perú 2025)</h3>
+                        <div class="h-64 relative flex justify-center items-center">
+                            <canvas id="chartIsabella1"></canvas>
+                            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                                <span class="text-2xl md:text-3xl font-black text-soya-dark leading-none">1,279 Tn</span>
+                                <span class="text-[10px] font-bold text-gray-500 uppercase mt-1">Total Nacional</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Tabla de Producción Estacional -->
-                <div class="bg-white rounded-xl shadow overflow-hidden">
-                    <div class="p-4 border-b border-gray-200 bg-gray-50">
-                        <h3 class="font-heading font-bold text-soya-dark text-sm md:text-base">Calendario de Producción Nacional (Toneladas)</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-xl shadow p-4 md:p-6 flex flex-col justify-between">
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Homologación de Proveedores (Soya)</h3>
+                        <div class="h-48 mb-4">
+                            <canvas id="chartIsabella2"></canvas>
+                        </div>
+                        <div class="p-3 bg-green-50 border-l-4 border-green-500 rounded">
+                            <p class="text-sm font-bold text-green-800">Seleccionado: CAMPO GRANDE PERÚ E.I.R.L.</p>
+                            <p class="text-xs text-green-700 mt-1">Gana por mejor puntaje en calidad, precio por mayor, y disponibilidad constante todo el año.</p>
+                        </div>
                     </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-sm text-left whitespace-nowrap">
-                            <thead class="text-xs text-white uppercase bg-soya-dark">
-                                <tr>
-                                    <th class="px-4 py-3">Ene</th><th class="px-4 py-3">Feb</th><th class="px-4 py-3">Mar</th>
-                                    <th class="px-4 py-3">Abr</th><th class="px-4 py-3">May</th><th class="px-4 py-3 text-soya-gold">Jun</th>
-                                    <th class="px-4 py-3 text-soya-gold">Jul</th><th class="px-4 py-3">Ago</th><th class="px-4 py-3">Sep</th>
-                                    <th class="px-4 py-3">Oct</th><th class="px-4 py-3 text-soya-gold">Nov</th><th class="px-4 py-3">Dic</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="bg-white border-b">
-                                    <td class="px-4 py-3">40</td><td class="px-4 py-3">37</td><td class="px-4 py-3">34</td>
-                                    <td class="px-4 py-3">26</td><td class="px-4 py-3">17</td><td class="px-4 py-3 font-bold text-soya-red">217</td>
-                                    <td class="px-4 py-3 font-bold text-soya-red">319</td><td class="px-4 py-3">75</td><td class="px-4 py-3">106</td>
-                                    <td class="px-4 py-3">94</td><td class="px-4 py-3 font-bold text-soya-red">295</td><td class="px-4 py-3">20</td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                    <div class="bg-white rounded-xl shadow overflow-hidden flex flex-col">
+                        <div class="p-4 border-b border-gray-200 bg-gray-50">
+                            <h3 class="font-heading font-bold text-soya-dark text-sm md:text-base">Producción mensual de soya del año 2026</h3>
+                            <p class="text-xs text-gray-500 mt-1">Expresado en toneladas</p>
+                        </div>
+                        <div class="overflow-x-auto flex-1 flex flex-col justify-center">
+                            <table class="w-full text-sm text-left whitespace-nowrap">
+                                <thead class="text-xs text-white uppercase bg-soya-dark">
+                                    <tr>
+                                        <th class="px-4 py-3">Ene</th><th class="px-4 py-3">Feb</th><th class="px-4 py-3">Mar</th>
+                                        <th class="px-4 py-3">Abr</th><th class="px-4 py-3">May</th><th class="px-4 py-3 text-soya-gold">Jun</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-white border-b">
+                                        <td class="px-4 py-3">40</td><td class="px-4 py-3">37</td><td class="px-4 py-3">34</td>
+                                        <td class="px-4 py-3">26</td><td class="px-4 py-3">17</td><td class="px-4 py-3 font-bold text-soya-red">217</td>
+                                    </tr>
+                                </tbody>
+                                <thead class="text-xs text-white uppercase bg-soya-dark">
+                                    <tr>
+                                        <th class="px-4 py-3 text-soya-gold">Jul</th><th class="px-4 py-3">Ago</th><th class="px-4 py-3">Sep</th>
+                                        <th class="px-4 py-3">Oct</th><th class="px-4 py-3 text-soya-gold">Nov</th><th class="px-4 py-3">Dic</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-white">
+                                        <td class="px-4 py-3 font-bold text-soya-red">319</td><td class="px-4 py-3">75</td><td class="px-4 py-3">106</td>
+                                        <td class="px-4 py-3">94</td><td class="px-4 py-3 font-bold text-soya-red">295</td><td class="px-4 py-3">20</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
 
             <!-- PARTE 4: VÍCTOR -->
             <section id="victor" class="dashboard-section">
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    <div class="bg-soya-dark rounded-xl shadow p-4 md:p-6 text-white relative overflow-hidden">
-                        <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl"><i class="fa-solid fa-earth-americas"></i></div>
-                        <h3 class="text-lg md:text-xl font-heading font-bold text-soya-gold mb-2">Importadores Mundiales (2024)</h3>
-                        <p class="text-xs md:text-sm text-gray-300 mb-6">Top países que compran Salsa de Soya (Miles USD)</p>
-                        
-                        <div class="space-y-4 relative z-10">
-                            <div>
-                                <div class="flex justify-between text-sm mb-1"><span>1. EE.UU.</span> <span class="font-bold">$142,359</span></div>
-                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 100%"></div></div>
+                <!-- SECCIÓN A: Estructura del Mercado Global -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-earth-americas text-soya-gold mr-2"></i>Estructura del Mercado Global</h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <!-- 1. Principales Productores -->
+                        <div class="bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-gold">
+                            <h4 class="text-md font-bold text-soya-dark mb-2 text-center">Principales Productores (Mundial)</h4>
+                            <p class="text-[10px] text-center text-gray-500 mb-2 uppercase">Porcentaje vs Volumen (Tn)</p>
+                            <div class="h-64 md:h-[350px] relative flex justify-center items-center">
+                                <canvas id="chartVictorProd"></canvas>
                             </div>
-                            <div>
-                                <div class="flex justify-between text-sm mb-1"><span>2. Francia</span> <span class="font-bold">$63,188</span></div>
-                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-blue-400 h-2 rounded-full" style="width: 44%"></div></div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between text-sm mb-1"><span>3. Reino Unido</span> <span class="font-bold">$57,301</span></div>
-                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-blue-300 h-2 rounded-full" style="width: 40%"></div></div>
-                            </div>
-                            <div class="pt-2 border-t border-gray-600">
-                                <div class="flex justify-between text-sm mb-1 text-soya-gold"><span>37. Chile (Target)</span> <span class="font-bold">$6,293</span></div>
-                                <div class="w-full bg-gray-700 rounded-full h-2"><div class="bg-soya-gold h-2 rounded-full" style="width: 5%"></div></div>
+                        </div>
+
+                        <!-- 2. Flip Card: Países Exportadores / Importadores -->
+                        <div class="flip-card h-full min-h-[400px]" id="flip-chart3">
+                            <div class="flip-card-inner">
+                                <!-- Frente: Exportadores (Gráfico Mixto) -->
+                                <div class="flip-card-front cursor-pointer border-t-4 border-soya-dark" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Exportadores</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate text-soya-gold text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorExp"></canvas>
+                                    </div>
+                                </div>
+                                <!-- Dorso: Importadores (Gráfico Mixto) -->
+                                <div class="flip-card-back cursor-pointer border-t-4 border-blue-600" onclick="document.getElementById('flip-chart3').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Países Importadores</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate-left text-blue-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorImp"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow p-4 md:p-6">
-                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-4">Competitividad de Proveedores en Chile</h3>
-                        <p class="text-xs md:text-sm text-gray-500 mb-4">¿Quiénes le venden a Chile? (Miles USD)</p>
-                        <div class="h-48 md:h-56">
-                            <canvas id="chartVictor1"></canvas>
+                    <div class="grid grid-cols-1 lg:grid-cols-1 gap-6">
+                        <!-- 3. Flip Card: Proveedores Chile / Empresas Perú -->
+                        <div class="flip-card h-[400px]" id="flip-chart4">
+                            <div class="flip-card-inner">
+                                <!-- Frente: Proveedores a Chile -->
+                                <div class="flip-card-front cursor-pointer border-t-4 border-red-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Principales Proveedores a Chile</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate text-red-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorProvChile"></canvas>
+                                    </div>
+                                </div>
+                                <!-- Dorso: Empresas Perú -->
+                                <div class="flip-card-back cursor-pointer border-t-4 border-green-600" onclick="document.getElementById('flip-chart4').classList.toggle('flipped')">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <div>
+                                            <h4 class="text-md font-bold text-soya-dark leading-tight">Top Empresas Exportadoras (Perú -> Chile)</h4>
+                                            <p class="text-[10px] text-gray-500 uppercase">FOB (Miles USD) vs Peso Neto (Línea)</p>
+                                        </div>
+                                        <div class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition">
+                                            <i class="fa-solid fa-rotate-left text-green-600 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 relative w-full h-full">
+                                        <canvas id="chartVictorEmpPeru"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Matriz Atracción vs Competitividad con Banderas -->
-                <div class="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-100">
-                    <h3 class="text-lg font-heading font-bold text-soya-dark mb-2 text-center">Matriz de Selección: Atracción vs Competitividad</h3>
-                    <p class="text-xs text-center text-gray-500 mb-4">El tamaño de la bandera es proporcional al <strong>Consumo Per Cápita</strong> (España: 14.24 L, Bolivia: 11.3 L, Chile: 7.48 L)</p>
-                    <div class="h-80 md:h-[450px] chart-container relative w-full overflow-hidden">
-                        <canvas id="chartVictor2"></canvas>
+                <!-- SECCIÓN B: Índice de Atracción y Competitividad -->
+                <div class="mb-8">
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-scale-balanced text-soya-gold mr-2"></i>Índice de Atracción y Competitividad</h3>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                            <div class="bg-soya-dark p-4">
+                                <h4 class="font-heading font-bold text-soya-gold text-lg text-center">Índice de Atracción (Criterios)</h4>
+                            </div>
+                            <div class="p-6">
+                                <ul class="space-y-3 text-sm text-gray-700">
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-shield-halved text-gray-400 mr-2"></i>Riesgo del País:</span> <strong>Bajo (A3)</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-ship text-gray-400 mr-2"></i>Días de Tránsito:</span> <strong>10 días (Callao - San Antonio)</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-users text-gray-400 mr-2"></i>Población:</span> <strong>18.4 Millones</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-utensils text-gray-400 mr-2"></i>Consumo Per Cápita:</span> <strong>7.48 Litros</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-sack-dollar text-gray-400 mr-2"></i>PBI Per Cápita:</span> <strong>USD 15,355</strong></li>
+                                </ul>
+                                <div class="mt-4 bg-green-100 text-green-800 p-3 rounded-lg text-center">
+                                    <span class="text-xs uppercase font-bold">Puntaje Total Ponderado</span><br>
+                                    <span class="text-3xl font-black">19.0 pts</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                            <div class="bg-soya-dark p-4">
+                                <h4 class="font-heading font-bold text-white text-lg text-center">Índice de Competitividad (Criterios)</h4>
+                            </div>
+                            <div class="p-6">
+                                <ul class="space-y-3 text-sm text-gray-700">
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-percent text-gray-400 mr-2"></i>Arancel:</span> <strong>0% (TLC)</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-handshake text-gray-400 mr-2"></i>Facilidad de Negocios:</span> <strong>Alta (Top Latam)</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-building text-gray-400 mr-2"></i>Nro. Empresas Exportadoras:</span> <strong>93 (Perú)</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-globe text-gray-400 mr-2"></i>Países Competidores:</span> <strong>Alto (EEUU, China)</strong></li>
+                                    <li class="flex justify-between border-b pb-2"><span><i class="fa-solid fa-bolt text-gray-400 mr-2"></i>Poder Negociación (Perú):</span> <strong>Medio-Bajo</strong></li>
+                                </ul>
+                                <div class="mt-4 bg-blue-100 text-blue-800 p-3 rounded-lg text-center">
+                                    <span class="text-xs uppercase font-bold">Puntaje Total Ponderado</span><br>
+                                    <span class="text-3xl font-black">40.2 pts</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-center text-sm">
-                        <div class="bg-red-50 p-3 rounded border border-red-100 flex flex-col justify-center"><span class="font-bold text-red-700 mb-1">Bolivia</span> Alta competitividad (fácil entrar), pero entorno riesgoso (-10 Atracción).</div>
-                        <div class="bg-green-50 p-3 rounded border border-green-200 shadow-md transform md:scale-105 flex flex-col justify-center"><span class="font-bold text-green-700 mb-1">CHILE</span> El balance perfecto. Entorno muy atractivo y barreras competitivas superables.</div>
-                        <div class="bg-gray-50 p-3 rounded border border-gray-200 flex flex-col justify-center"><span class="font-bold text-gray-700 mb-1">España</span> Alto consumo y atractivo, pero altísima rivalidad (difícil ingreso inicial).</div>
+
+                    <!-- Figura 28 (Scatter Plot Banderas) -->
+                    <div class="bg-white rounded-xl shadow p-4 md:p-6 border border-gray-100">
+                        <h3 class="text-lg font-heading font-bold text-soya-dark mb-2 text-center">Figura 28: Matriz de Selección (Atracción vs Competitividad)</h3>
+                        <p class="text-xs text-center text-gray-500 mb-4">El tamaño de la bandera es proporcional al <strong>Consumo Per Cápita</strong></p>
+                        <div class="h-80 md:h-[400px] chart-container relative w-full overflow-hidden">
+                            <canvas id="chartVictor2"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN C: Selección del Nicho de Mercado -->
+                <div>
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4 border-b-2 border-soya-gold pb-2 inline-block"><i class="fa-solid fa-crosshairs text-soya-gold mr-2"></i>Selección del Nicho de Mercado</h3>
+                    
+                    <div class="bg-white rounded-xl shadow p-6 border-t-4 border-soya-red">
+                        <p class="text-sm text-gray-600 mb-6">El sustento para la selección definitiva del mercado chileno como nicho prioritario se fundamenta en los siguientes criterios comparativos:</p>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200">
+                                <i class="fa-solid fa-truck-ramp-box text-3xl text-soya-dark mb-2"></i>
+                                <h4 class="text-xs font-bold text-gray-500 uppercase">Importaciones (2024)</h4>
+                                <span class="text-xl font-bold text-soya-red">~6,293 Tn</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200">
+                                <i class="fa-solid fa-users text-3xl text-soya-dark mb-2"></i>
+                                <h4 class="text-xs font-bold text-gray-500 uppercase">Población</h4>
+                                <span class="text-xl font-bold text-soya-red">18.4M</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200">
+                                <i class="fa-solid fa-money-bill-trend-up text-3xl text-soya-dark mb-2"></i>
+                                <h4 class="text-xs font-bold text-gray-500 uppercase">Ingreso Per Cápita</h4>
+                                <span class="text-xl font-bold text-soya-red">$15,355</span>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center border border-gray-200 shadow-[inset_0_0_10px_rgba(212,175,55,0.2)]">
+                                <i class="fa-solid fa-door-open text-3xl text-soya-gold mb-2"></i>
+                                <h4 class="text-xs font-bold text-gray-500 uppercase">Facilidad Acceso</h4>
+                                <span class="text-xl font-bold text-green-600">Alta (0% Arancel)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -566,64 +713,81 @@
             <!-- PARTE 5: ERIC -->
             <section id="eric" class="dashboard-section">
                 
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+                <!-- Cuantificación en Gráfico de Embudo (Funnel CSS) -->
+                <div class="bg-white rounded-xl shadow-xl p-6 mb-8 border-t-4 border-soya-gold text-center">
+                    <h3 class="text-2xl font-heading font-bold text-soya-dark mb-2"><i class="fa-solid fa-filter mr-2 text-soya-gold"></i>Cuantificación de la Demanda (Embudo)</h3>
+                    <p class="text-sm text-gray-500 mb-6">Población y mercado cautivo en Chile para la propuesta de IntiSoya.</p>
                     
-                    <!-- Perfil del Consumidor -->
-                    <div class="lg:col-span-5 bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-red">
-                        <h3 class="text-xl font-heading font-bold text-soya-dark mb-4"><i class="fa-solid fa-user-tag mr-2 text-soya-red"></i>Perfil del Cliente</h3>
-                        <ul class="space-y-4 text-sm">
-                            <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 text-gray-400 w-6"></i> <div><strong>Nicho:</strong> Región Metropolitana de Santiago (40% pob.) y Valparaíso.</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-id-card mt-1 text-gray-400 w-6"></i> <div><strong>Demografía:</strong> Jóvenes DINKs y familias C2/C3 (25 a 54 años).</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-utensils mt-1 text-gray-400 w-6"></i> <div><strong>Uso:</strong> Preparación en casa, fusión peruana, reemplazar sal, acompañar delivery.</div></li>
-                            <li class="flex items-start"><i class="fa-solid fa-shop mt-1 text-gray-400 w-6"></i> <div><strong>Plaza:</strong> Supermercados (Lider, Jumbo), Oxxo, Tostadurías.</div></li>
-                        </ul>
-                    </div>
-
-                    <!-- Cuantificación -->
-                    <div class="lg:col-span-7 bg-soya-dark rounded-xl shadow p-4 md:p-6 text-white">
-                        <h3 class="text-xl font-heading font-bold text-soya-gold mb-6"><i class="fa-solid fa-filter mr-2"></i>Cuantificación de la Demanda</h3>
-                        
-                        <div class="relative pt-2">
-                            <!-- Funnel CSS -->
-                            <div class="flex items-center justify-between mb-2">
-                                <div class="w-1/4 text-center text-xs">Pob. Chile<br><span class="font-bold text-sm md:text-lg text-gray-300">18.4M</span></div>
-                                <div class="w-1/4 text-center text-xs border-l border-gray-600">Región Metro<br><span class="font-bold text-sm md:text-lg text-gray-300">7.4M</span></div>
-                                <div class="w-1/4 text-center text-xs border-l border-gray-600">Público Obj.<br><span class="font-bold text-sm md:text-lg text-gray-300">1.5M</span></div>
-                                <div class="w-1/4 text-center text-xs text-soya-gold border-l border-soya-gold">Nuestra Meta<br><span class="font-bold text-lg md:text-2xl">0.21 Tn</span></div>
-                            </div>
-                            
-                            <div class="w-full flex justify-center flex-col items-center mt-4">
-                                <div class="w-full h-8 bg-gray-700 rounded-t-lg mb-1"></div>
-                                <div class="w-3/4 h-8 bg-gray-600 mb-1"></div>
-                                <div class="w-1/2 h-8 bg-gray-500 mb-1"></div>
-                                <div class="w-1/4 h-10 bg-soya-gold rounded-b-lg flex items-center justify-center text-black font-bold text-xs md:text-sm shadow-[0_0_15px_rgba(212,175,55,0.4)]">2.5% Market Share</div>
-                            </div>
+                    <div class="flex flex-col items-center w-full max-w-lg mx-auto py-2 font-sans">
+                        <!-- Nivel 1 -->
+                        <div class="bg-soya-dark text-white w-full py-4 flex flex-col items-center justify-center shadow-lg relative group transition-transform hover:scale-105 z-40" style="clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%); min-height: 80px;">
+                            <span class="text-xs text-gray-300 uppercase tracking-widest font-bold">Población Chile</span>
+                            <span class="text-2xl font-black">18.4M</span>
+                        </div>
+                        <!-- Nivel 2 -->
+                        <div class="bg-gray-700 text-white w-[80%] py-4 flex flex-col items-center justify-center shadow-lg relative group transition-transform hover:scale-105 z-30 -mt-2" style="clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%); min-height: 80px;">
+                            <span class="text-xs text-gray-300 uppercase tracking-widest font-bold mt-2">Región Metro.</span>
+                            <span class="text-2xl font-black">7.4M</span>
+                        </div>
+                        <!-- Nivel 3 -->
+                        <div class="bg-gray-600 text-white w-[60%] py-4 flex flex-col items-center justify-center shadow-lg relative group transition-transform hover:scale-105 z-20 -mt-2" style="clip-path: polygon(0 0, 100% 0, 80% 100%, 20% 100%); min-height: 80px;">
+                            <span class="text-xs text-gray-300 uppercase tracking-widest font-bold mt-2">Público Obj.</span>
+                            <span class="text-2xl font-black">1.5M</span>
+                        </div>
+                        <!-- Nivel 4 (Resultado) -->
+                        <div class="bg-gradient-to-br from-soya-gold to-yellow-600 text-soya-dark w-[40%] py-6 flex flex-col items-center justify-center shadow-[0_10px_20px_rgba(212,175,55,0.5)] relative group transition-transform hover:scale-110 z-50 -mt-2 rounded-b-2xl border-b-4 border-yellow-700">
+                            <span class="text-xs uppercase tracking-widest font-bold">Nuestra Meta</span>
+                            <span class="text-3xl font-black">0.21 Tn</span>
+                            <span class="text-[10px] font-bold mt-1 text-soya-dark">(2.5% Market Share)</span>
                         </div>
                     </div>
                 </div>
 
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+                    <!-- Perfil del Consumidor -->
+                    <div class="lg:col-span-5 bg-white rounded-xl shadow p-4 md:p-6 border-t-4 border-soya-red">
+                        <h3 class="text-xl font-heading font-bold text-soya-dark mb-4"><i class="fa-solid fa-user-tag mr-2 text-soya-red"></i>Perfil del Cliente</h3>
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex items-start"><i class="fa-solid fa-location-dot mt-1 text-gray-400 w-6"></i> <div><strong>Nicho:</strong> Región Metropolitana de Santiago y Valparaíso.</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-id-card mt-1 text-gray-400 w-6"></i> <div><strong>Demografía:</strong> Jóvenes DINKs y familias C2/C3 (25 a 54 años).</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-utensils mt-1 text-gray-400 w-6"></i> <div><strong>Uso:</strong> Preparación en casa, fusión peruana, reemplazar sal, delivery.</div></li>
+                            <li class="flex items-start"><i class="fa-solid fa-shop mt-1 text-gray-400 w-6"></i> <div><strong>Plaza:</strong> Supermercados, Oxxo, Tostadurías.</div></li>
+                        </ul>
+                    </div>
+
+                    <!-- Canal de Distribución Banner -->
+                    <div class="lg:col-span-7 bg-white rounded-xl shadow p-6 border-l-4 border-blue-600 flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-heading font-bold text-soya-dark mb-3"><i class="fa-solid fa-network-wired mr-2 text-blue-600"></i>Canal de Distribución</h3>
+                            <ul class="space-y-2 text-sm text-gray-600 list-disc pl-4">
+                                <li><strong>Canal Largo:</strong> Operación B2B2C (Exportador -> Agente -> Mayorista -> Retail / HORECA -> Consumidor).</li>
+                                <li><strong>Estrategia Intensiva:</strong> Presencia máxima en supermercados y tiendas de conveniencia para garantizar capilaridad.</li>
+                                <li><strong>Adaptación PDM (B2B):</strong> Inclusión estratégica del sector industrial procesador de alimentos de Chile.</li>
+                            </ul>
+                        </div>
+                        <button onclick="openFlujo()" class="mt-4 w-full bg-soya-dark text-soya-gold px-4 py-3 rounded-lg font-bold hover:bg-soya-red hover:text-white transition shadow-lg flex items-center justify-center focus:outline-none">
+                            <i class="fa-solid fa-diagram-project mr-2"></i> Ver Flujo Interactivo
+                        </button>
+                    </div>
+                </div>
+
                 <!-- 9 P's Matrix (Summary) -->
-                <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4">Estrategia Comercial (Mix)</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                <h3 class="text-2xl font-heading font-bold text-soya-dark mb-4">Mix de Marketing Adicional</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-blue-500 flex flex-col items-center justify-center">
                         <i class="fa-solid fa-tag text-3xl text-blue-500 mb-2"></i>
                         <h4 class="font-bold text-gray-800">Precio</h4>
-                        <p class="text-xs text-gray-500 mt-2">Competitivo: $3.00 - $4.50 USD. Evita segmento bajo dominado por China.</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-green-500 flex flex-col items-center justify-center">
-                        <i class="fa-solid fa-truck-fast text-3xl text-green-500 mb-2"></i>
-                        <h4 class="font-bold text-gray-800">Plaza</h4>
-                        <p class="text-xs text-gray-500 mt-2">Canal Largo: Exportador -> Agente/Importador -> Mayorista -> Retail / HORECA.</p>
+                        <p class="text-xs text-gray-500 mt-2">Competitivo: $3.00 - $4.50 USD. Evita segmento bajo asiático.</p>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-purple-500 flex flex-col items-center justify-center">
                         <i class="fa-solid fa-bullhorn text-3xl text-purple-500 mb-2"></i>
                         <h4 class="font-bold text-gray-800">Promoción</h4>
-                        <p class="text-xs text-gray-500 mt-2">Feria AQUASUR y marketing digital en TikTok con recetas "Marca Perú".</p>
+                        <p class="text-xs text-gray-500 mt-2">Feria AQUASUR y marketing digital en TikTok (Marca Perú).</p>
                     </div>
                     <div class="bg-white p-4 rounded-xl shadow text-center border-b-4 border-red-500 flex flex-col items-center justify-center">
                         <i class="fa-solid fa-file-shield text-3xl text-red-500 mb-2"></i>
                         <h4 class="font-bold text-gray-800">Permisos</h4>
-                        <p class="text-xs text-gray-500 mt-2">Arancel 0%, Reglamento Sanitario de Alimentos, y Ley de Octógonos obligatoria.</p>
+                        <p class="text-xs text-gray-500 mt-2">Arancel 0%, Reglamento Sanitario, y Ley de Octógonos obligatoria.</p>
                     </div>
                 </div>
             </section>
@@ -632,9 +796,9 @@
     </main>
 
     <!-- Modal FODA Overlay -->
-    <div id="foda-modal" class="fixed inset-0 bg-black/60 z-50 items-center justify-center hidden p-4">
-        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 relative">
-            <button onclick="closeFodaModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 transition focus:outline-none">
+    <div id="foda-modal" class="fixed inset-0 bg-black/60 z-50 items-center justify-center hidden p-4" onclick="closeFodaModal()">
+        <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full p-6 relative" onclick="event.stopPropagation()">
+            <button onclick="closeFodaModal()" class="absolute top-4 right-4 text-gray-400 hover:text-soya-red transition focus:outline-none">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
             <h3 id="modal-title" class="text-xl md:text-2xl font-heading font-bold mb-4 text-soya-dark border-b pb-2">Título</h3>
@@ -646,17 +810,14 @@
 
     <!-- Script de Interactividad y Gráficos -->
     <script>
-        // Funcionalidad del Menú Lateral (Toggle universal Desktop/Mobile)
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
             
-            // Lógica para Mobile (<1024px)
             if (window.innerWidth < 1024) { 
                 sidebar.classList.toggle('-translate-x-full');
                 overlay.classList.toggle('hidden');
             } else {
-                // Lógica para Desktop (Agrega margen negativo izquierdo)
                 if (sidebar.classList.contains('-ml-64')) {
                     sidebar.classList.remove('-ml-64');
                 } else {
@@ -665,7 +826,27 @@
             }
         }
 
-        // Evitar bugs visuales al redimensionar la pantalla
+        function openFlujo() {
+            document.getElementById('modalFlow').classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function showPdfAndCloseModal(modalId, url) {
+            closeModal(modalId);
+            document.getElementById('flujo-iframe').src = url;
+            document.getElementById('flujo-iframe-overlay').classList.remove('hidden');
+            document.getElementById('flujo-iframe-overlay').classList.add('flex');
+        }
+
+        function closeIframeFlujo() {
+            document.getElementById('flujo-iframe-overlay').classList.add('hidden');
+            document.getElementById('flujo-iframe-overlay').classList.remove('flex');
+            document.getElementById('flujo-iframe').src = '';
+        }
+
         window.addEventListener('resize', () => {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebar-overlay');
@@ -678,14 +859,8 @@
             }
         });
 
-        // Variables de estado
-        let chartsInitialized = {
-            marilin: false,
-            isabella: false,
-            victor: false
-        };
+        let chartsInitialized = { marilin: false, isabella: false, victor: false };
         
-        // Función para Acordeón de Objetivos
         window.toggleObj = function(id) {
             const el = document.getElementById(id);
             const icon = document.getElementById('icon-' + id);
@@ -710,24 +885,18 @@
         };
 
         function switchTab(tabId) {
-            // Actualizar Nav visualmente
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('nav-active');
             });
             document.getElementById('nav-' + tabId).classList.add('nav-active');
-
-            // Actualizar Titulo Header
             document.getElementById('header-title').innerText = titles[tabId];
 
-            // Ocultar todas las secciones
             document.querySelectorAll('.dashboard-section').forEach(el => {
                 el.classList.remove('active');
             });
             
-            // Mostrar seleccionada
             document.getElementById(tabId).classList.add('active');
 
-            // Cierra el sidebar en la versión móvil al seleccionar un ítem automáticamente
             if (window.innerWidth < 1024) {
                 const sidebar = document.getElementById('sidebar');
                 const overlay = document.getElementById('sidebar-overlay');
@@ -737,7 +906,6 @@
                 }
             }
 
-            // Inicializar gráficos solo la primera vez que se entra a la sección
             if(tabId === 'marilin' && !chartsInitialized.marilin) {
                 setTimeout(initMarilinCharts, 100);
                 chartsInitialized.marilin = true;
@@ -752,7 +920,6 @@
             }
         }
 
-        // --- DATOS FODA CRUZADO ---
         const fodaData = {
             'Fortalezas': '<ul class="space-y-2"><li><strong>Logística Eficiente:</strong> Tiempo de tránsito de solo 10 días hacia Chile (Searates.com).</li></ul>',
             'Oportunidades': '<ul class="space-y-2"><li><strong>Ventaja Arancelaria:</strong> Ingreso con Arancel 0 gracias al TLC Perú-Chile.</li><li><strong>Mercado en Crecimiento:</strong> Aumento del 24.94% en exportaciones peruanas a este destino (Exportemos.pe).</li></ul>',
@@ -776,40 +943,23 @@
             document.getElementById('foda-modal').classList.remove('flex');
         }
 
-        // --- GRÁFICOS CHART.JS ---
-        
         const cDark = '#1F1209';
         const cGold = '#D4AF37';
         const cRed = '#8B1E1B';
 
         function initMarilinCharts() {
-            // GRAFICA 1 FRENTE: Exportaciones al Mundo (FOB + Peso Neto)
+            // GRAFICA 1 FRENTE
             new Chart(document.getElementById('chartMarilin1Front'), {
                 type: 'bar',
                 data: {
                     labels: ['2021', '2022', '2023', '2024', '2025'],
                     datasets: [
-                        {
-                            label: 'Valor FOB (US$)',
-                            data: [2441475, 2551804, 2825823, 3340492, 3913290],
-                            backgroundColor: cGold,
-                            yAxisID: 'y'
-                        },
-                        {
-                            label: 'Peso Neto (Kg)',
-                            data: [2121242, 2320159, 2593223, 3004890, 3427882],
-                            type: 'line',
-                            borderColor: cDark,
-                            borderWidth: 3,
-                            pointBackgroundColor: cDark,
-                            yAxisID: 'y1'
-                        }
+                        { label: 'Valor FOB (US$)', data: [2441475, 2551804, 2825823, 3340492, 3913290], backgroundColor: cGold, yAxisID: 'y' },
+                        { label: 'Peso Neto (Kg)', data: [2121242, 2320159, 2593223, 3004890, 3427882], type: 'line', borderColor: cDark, borderWidth: 3, pointBackgroundColor: cDark, yAxisID: 'y1' }
                     ]
                 },
                 options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
+                    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
                     scales: {
                         y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'FOB (US$)' } },
                         y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Peso Neto (Kg)' }, grid: { drawOnChartArea: false } }
@@ -817,110 +967,88 @@
                 }
             });
 
-            // GRAFICA 1 DORSO: Precio Promedio
+            // GRAFICA 1 DORSO
             new Chart(document.getElementById('chartMarilin1Back'), {
                 type: 'line',
                 data: {
                     labels: ['2021', '2022', '2023', '2024', '2025'],
-                    datasets: [{
-                        label: 'Precio Promedio (US$/Kg)',
-                        data: [1.15, 1.10, 1.09, 1.11, 1.14],
-                        borderColor: cRed,
-                        backgroundColor: 'rgba(139, 30, 27, 0.2)',
-                        borderWidth: 4,
-                        fill: true,
-                        tension: 0.4,
-                        pointBackgroundColor: cRed,
-                        pointRadius: 6
-                    }]
+                    datasets: [{ label: 'Precio Promedio (US$/Kg)', data: [1.15, 1.10, 1.09, 1.11, 1.14], borderColor: cRed, backgroundColor: 'rgba(139, 30, 27, 0.2)', borderWidth: 4, fill: true, tension: 0.4, pointBackgroundColor: cRed, pointRadius: 6 }]
                 },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { y: { min: 1.05, max: 1.20 } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 1.05, max: 1.20 } } }
             });
 
-            // GRAFICA 2 FRENTE: Top 3 Mercados (FOB + Peso Neto)
+            // GRAFICA 2 FRENTE (MIXTA AHORA)
             new Chart(document.getElementById('chartMarilin2Front'), {
                 type: 'bar',
                 data: {
                     labels: ['Chile', 'Bolivia', 'España'],
                     datasets: [
-                        {
-                            label: 'Valor FOB (US$)',
-                            data: [1875264, 962923, 470713],
-                            backgroundColor: cDark,
-                            borderRadius: 4
-                        },
-                        {
-                            label: 'Peso Neto (Kg)',
-                            data: [1718311, 885944, 381329],
-                            backgroundColor: '#9ca3af', // Gris para diferenciar
-                            borderRadius: 4
-                        }
+                        { label: 'Valor FOB (US$)', data: [1875264, 962923, 470713], backgroundColor: cDark, borderRadius: 4, yAxisID: 'y' },
+                        { label: 'Peso Neto (Kg)', data: [1718311, 885944, 381329], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
                     ]
                 },
                 options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    plugins: {
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.dataset.label || '';
-                                    if (label) { label += ': '; }
-                                    if (context.parsed.y !== null) {
-                                        label += new Intl.NumberFormat('en-US').format(context.parsed.y);
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
+                    responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+                    scales: {
+                        y: { type: 'linear', display: true, position: 'left' },
+                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false } }
                     }
                 }
             });
 
-            // GRAFICA 2 DORSO: Precio Promedio Top 3
+            // GRAFICA 2 DORSO
             new Chart(document.getElementById('chartMarilin2Back'), {
                 type: 'bar',
                 data: {
                     labels: ['Chile', 'Bolivia', 'España'],
-                    datasets: [{
-                        label: 'Precio Promedio (US$/Kg)',
-                        data: [1.09, 1.09, 1.23],
-                        backgroundColor: [cRed, cGold, cDark],
-                        borderRadius: 6,
-                        barPercentage: 0.6
-                    }]
+                    datasets: [{ label: 'Precio Promedio (US$/Kg)', data: [1.09, 1.09, 1.23], backgroundColor: [cRed, cGold, cDark], borderRadius: 6, barPercentage: 0.6 }]
                 },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { y: { min: 0, title: { display: true, text: 'USD / Kilogramo' } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { min: 0, title: { display: true, text: 'USD / Kilogramo' } } } }
             });
         }
 
         function initIsabellaCharts() {
+            new Chart(document.getElementById('chartIsabella3'), {
+                type: 'line',
+                data: {
+                    labels: ['2021', '2022', '2023', '2024', '2025'],
+                    datasets: [{
+                        label: 'Toneladas de Soya',
+                        data: [1684, 1686, 2722, 2230, 1279],
+                        borderColor: cGold,
+                        backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: cGold,
+                        pointRadius: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Toneladas' } } } }
+            });
+
+            // CHART DOUGHNUT CON TOOLTIP % y Tn
             new Chart(document.getElementById('chartIsabella1'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Piura', 'Ucayali', 'Amazonas', 'Otros'],
-                    datasets: [{
-                        data: [760, 255, 191, 72],
-                        backgroundColor: [cGold, '#b45309', '#047857', cDark],
-                        borderWidth: 0
-                    }]
+                    labels: ['Piura (59.5%)', 'Ucayali (19.9%)', 'Amazonas (15.0%)', 'Otros (5.6%)'],
+                    datasets: [{ data: [760, 255, 191, 72], backgroundColor: [cGold, '#b45309', '#047857', cDark], borderWidth: 0 }]
                 },
                 options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    cutout: '75%', 
+                    responsive: true, maintainAspectRatio: false, cutout: '75%', 
                     plugins: { 
-                        legend: { position: 'right', labels: { boxWidth: 15 } } 
+                        legend: { position: 'right', labels: { boxWidth: 15 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) { 
+                                    let value = ctx.raw;
+                                    let total = 1278; 
+                                    let percentage = ((value / total) * 100).toFixed(1);
+                                    let labelBase = ctx.label.split(' ')[0]; 
+                                    return ` ${labelBase}: ${value} Tn (${percentage}%)`; 
+                                }
+                            }
+                        }
                     } 
                 }
             });
@@ -930,42 +1058,105 @@
                 indexAxis: 'y',
                 data: {
                     labels: ['Campo Grande', 'Corporación Lider', 'Reino del Valle'],
-                    datasets: [{
-                        label: 'Puntaje Ponderado',
-                        data: [2.85, 1.70, 1.70],
-                        backgroundColor: ['#10B981', '#E2E8F0', '#E2E8F0'],
-                        borderRadius: 4
-                    }]
+                    datasets: [{ label: 'Puntaje Ponderado', data: [2.85, 1.70, 1.70], backgroundColor: ['#10B981', '#E2E8F0', '#E2E8F0'], borderRadius: 4 }]
                 },
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } },
-                    scales: { x: { max: 3, ticks: { stepSize: 1 } } }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { max: 3, ticks: { stepSize: 1 } } } }
             });
         }
 
         function initVictorCharts() {
-            new Chart(document.getElementById('chartVictor1'), {
-                type: 'bar',
+            
+            const dualAxisOptions = {
+                responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { display: false } }, 
+                scales: {
+                    y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Miles USD' } },
+                    y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Toneladas' }, grid: { drawOnChartArea: false } }
+                }
+            };
+
+            // 1. Principales Productores (Circular/Doughnut con Custom Tooltip para % y Tn)
+            new Chart(document.getElementById('chartVictorProd'), {
+                type: 'doughnut',
                 data: {
-                    labels: ['EE.UU.', 'China', 'Perú', 'Brasil'],
-                    datasets: [{
-                        label: 'Miles USD (2024)',
-                        data: [2994, 1692, 899, 312],
-                        backgroundColor: ['#3B82F6', '#EF4444', cGold, '#10B981'],
-                        borderRadius: 4
+                    labels: ['China', 'Japón', 'EE.UU.', 'Otros'],
+                    datasets: [{ 
+                        data: [45, 25, 15, 15], 
+                        tons: [450000, 250000, 150000, 150000], // Base referencial para toneladas
+                        backgroundColor: [cRed, cDark, '#3B82F6', cGold], 
+                        borderWidth: 0 
                     }]
                 },
                 options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    plugins: { legend: { display: false } }
+                    responsive: true, maintainAspectRatio: false, 
+                    plugins: { 
+                        legend: { position: 'bottom', labels: { boxWidth: 12 } },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    let percent = ctx.raw;
+                                    let tons = ctx.dataset.tons[ctx.dataIndex];
+                                    return ` ${ctx.label}: ${percent}% (~${new Intl.NumberFormat('en-US').format(tons)} Tn)`;
+                                }
+                            }
+                        }
+                    } 
                 }
             });
 
-            // Cargar imágenes de banderas personalizadas desde GitHub
+            // 2. Exportadores Mundiales (Barra dual MIXTA)
+            new Chart(document.getElementById('chartVictorExp'), {
+                type: 'bar',
+                data: {
+                    labels: ['China', 'Japón', 'EE.UU.', 'P.Bajos'],
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [200500, 150200, 100400, 80100], backgroundColor: cDark, yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [150000, 100000, 70000, 50000], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
+                },
+                options: dualAxisOptions
+            });
+
+            // 3. Importadores Mundiales (Barra dual MIXTA)
+            new Chart(document.getElementById('chartVictorImp'), {
+                type: 'bar',
+                data: {
+                    labels: ['EE.UU.', 'Francia', 'Reino Unido', 'Alemania'],
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [142359, 63188, 57301, 50120], backgroundColor: '#3B82F6', yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [110000, 45000, 40000, 35000], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
+                },
+                options: dualAxisOptions
+            });
+
+            // 4. Proveedores al Mercado de Chile (Barra dual MIXTA)
+            new Chart(document.getElementById('chartVictorProvChile'), {
+                type: 'bar',
+                data: {
+                    labels: ['EE.UU.', 'China', 'Perú', 'Brasil'],
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [2994, 1692, 899, 312], backgroundColor: cRed, yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [2500, 2000, 800, 300], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
+                },
+                options: dualAxisOptions
+            });
+
+            // 5. Empresas Exportadoras del Perú a Chile (Barra dual MIXTA)
+            new Chart(document.getElementById('chartVictorEmpPeru'), {
+                type: 'bar',
+                data: {
+                    labels: ['Ajinomoto', 'Alicorp', 'A&B', 'Otros'],
+                    datasets: [
+                        { label: 'Valor FOB (Miles USD)', data: [500, 250, 100, 49], backgroundColor: '#10B981', yAxisID: 'y', borderRadius: 4 },
+                        { label: 'Volumen (Tn)', data: [450, 200, 90, 60], type: 'line', borderColor: '#9ca3af', borderWidth: 3, pointBackgroundColor: '#9ca3af', yAxisID: 'y1' }
+                    ]
+                },
+                options: dualAxisOptions
+            });
+
+            // Banderas para Chart Scatter (Figura 28)
             const flagUrls = {
                 'cl': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Chile.png',
                 'es': 'https://raw.githubusercontent.com/RickNE7/SalsaSoyaChile20261/main/circleflag_Espa%C3%B1a.png',
@@ -980,12 +1171,10 @@
                 flagImages[code] = img;
             });
 
-            // Plugin personalizado para dibujar las banderas proporcionales al tamaño de 'r'
             const flagPlugin = {
                 id: 'flagPlugin',
                 afterDatasetsDraw(chart) {
                     const ctx = chart.ctx;
-                    // Detectar si la pantalla es móvil para achicar las banderas
                     const isMobile = window.innerWidth < 768; 
                     
                     chart.data.datasets.forEach((dataset, i) => {
@@ -995,25 +1184,20 @@
                                 const dataPoint = dataset.data[index];
                                 const { x, y } = element.tooltipPosition();
                                 
-                                // Escala adaptativa: multiplicador más pequeño en móviles (1.2), 4 en escritorio.
-                                // Mantiene la relación de tamaño proporcional intacta en ambos dispositivos.
                                 const multiplier = isMobile ? 1.2 : 4; 
                                 const radius = dataPoint.r * multiplier; 
                                 const img = dataset.flagImg;
                                 
                                 if (img && img.complete) {
                                     ctx.save();
-                                    // Clip circular
                                     ctx.beginPath();
                                     ctx.arc(x, y, radius, 0, Math.PI * 2);
                                     ctx.closePath();
                                     ctx.clip();
                                     
-                                    // Dibujar imagen centrada
                                     ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
                                     ctx.restore();
                                     
-                                    // Borde distintivo muy delgado
                                     ctx.beginPath();
                                     ctx.arc(x, y, radius, 0, Math.PI * 2);
                                     ctx.lineWidth = 1;
@@ -1026,7 +1210,7 @@
                 }
             };
 
-            // Chart 2: Matriz Scatter con Banderas Proporcionales
+            // Chart Scatter (Figura 28)
             window.victorChart2 = new Chart(document.getElementById('chartVictor2'), {
                 type: 'scatter',
                 plugins: [flagPlugin],
@@ -1038,38 +1222,16 @@
                     ]
                 },
                 options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: { top: 40, right: 60, bottom: 20, left: 20 }
-                    },
+                    responsive: true, maintainAspectRatio: false,
+                    layout: { padding: { top: 40, right: 60, bottom: 20, left: 20 } },
                     scales: {
-                        x: { 
-                            title: { display: true, text: 'Atracción del Mercado (Puntos)', font: {weight: 'bold'} }, 
-                            min: -20, max: 40,
-                            grid: { color: '#E2E8F0' }
-                        },
-                        y: { 
-                            title: { display: true, text: 'Competitividad (Puntos)', font: {weight: 'bold'} }, 
-                            min: 0, max: 70,
-                            grid: { color: '#E2E8F0' }
-                        }
+                        x: { title: { display: true, text: 'Atracción del Mercado (Puntos)', font: {weight: 'bold'} }, min: -20, max: 40, grid: { color: '#E2E8F0' } },
+                        y: { title: { display: true, text: 'Competitividad (Puntos)', font: {weight: 'bold'} }, min: 0, max: 70, grid: { color: '#E2E8F0' } }
                     },
                     plugins: {
                         tooltip: {
-                            backgroundColor: 'rgba(31, 18, 9, 0.9)',
-                            titleFont: { size: 14, family: 'Montserrat' },
-                            bodyFont: { size: 13, family: 'Open Sans' },
-                            padding: 12,
-                            callbacks: {
-                                label: function(ctx) { 
-                                    return [
-                                        ` Atracción: ${ctx.raw.x} pts`, 
-                                        ` Competitividad: ${ctx.raw.y} pts`, 
-                                        ` Consumo: ${ctx.raw.r} Litros p.c.`
-                                    ]; 
-                                }
-                            }
+                            backgroundColor: 'rgba(31, 18, 9, 0.9)', titleFont: { size: 14, family: 'Montserrat' }, bodyFont: { size: 13, family: 'Open Sans' }, padding: 12,
+                            callbacks: { label: function(ctx) { return [ ` Atracción: ${ctx.raw.x} pts`, ` Competitividad: ${ctx.raw.y} pts`, ` Consumo: ${ctx.raw.r} Litros p.c.` ]; } }
                         }
                     }
                 }
